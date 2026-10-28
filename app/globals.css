@@ -113,6 +113,18 @@ img {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
 }
 
+.category-shelf-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.category-shelf-card:hover {
+  transform: translateY(-3px);
+}
+
+.category-shelf-card:hover .cat-thumb-img {
+  transform: scale(1.12);
+}
+
 /* Executive Tactile Buttons */
 .clay-btn {
   padding: 12px 24px;

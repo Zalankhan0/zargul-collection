@@ -22,14 +22,14 @@ export default function HomePage() {
     .slice(0, 12);
 
   const categories = [
-    { title: "Watches", count: "Luxury Editions", icon: "✦", href: "/categories?category=watches", bg: "white" },
-    { title: "Perfumes", count: "French & Oriental", icon: "✦", href: "/categories?category=perfumes", bg: "pink" },
-    { title: "Bags", count: "Handcrafted Luxury", icon: "✦", href: "/categories?category=bags", bg: "lavender" },
-    { title: "Swati Shawls", count: "Pure Woolen", icon: "✦", href: "/categories?category=shawls", bg: "white" },
-    { title: "Coats", count: "Prince Coats & Vests", icon: "✦", href: "/categories?category=coats", bg: "lavender" },
-    { title: "Shoes", count: "Leather & Chappal", icon: "✦", href: "/categories?category=shoes", bg: "pink" },
-    { title: "Gift Sets", count: "Royal Combos", icon: "✦", href: "/categories?category=gifts", bg: "white" },
-    { title: "Special Deals", count: "Limited Time", icon: "✦", href: "/categories?category=sale", bg: "pink" }
+    { title: "Watches", count: "Luxury Editions", image: "/assets/watch.png", href: "/categories?category=watches", bg: "white" },
+    { title: "Perfumes", count: "French & Oriental", image: "/assets/perfume.png", href: "/categories?category=perfumes", bg: "pink" },
+    { title: "Bags", count: "Handcrafted Luxury", image: "/assets/bags/Pearl_Handbag_5500.jpg", href: "/categories?category=bags", bg: "lavender" },
+    { title: "Swati Shawls", count: "Pure Woolen", image: "/assets/hero.png", href: "/categories?category=shawls", bg: "white" },
+    { title: "Coats", count: "Prince Coats & Vests", image: "/assets/wascot.png", href: "/categories?category=coats", bg: "lavender" },
+    { title: "Shoes", count: "Leather & Chappal", image: "/assets/shoes.png", href: "/categories?category=shoes", bg: "pink" },
+    { title: "Gift Sets", count: "Royal Combos", image: "/assets/watches/Bugati_8000.jpg", href: "/categories?category=gifts", bg: "white" },
+    { title: "Special Deals", count: "Limited Time", image: "/assets/perfumes/Warrant_4275.jpg", href: "/categories?category=sale", bg: "pink" }
   ];
 
   return (
@@ -76,27 +76,75 @@ export default function HomePage() {
 
       {/* QUICK CATEGORY SHELVES */}
       <section style={{ padding: "20px 5% 40px", maxWidth: "1400px", margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "18px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "18px" }}>
           {categories.map((cat) => (
             <Link
               key={cat.title}
               href={cat.href}
-              className={`clay-card ${cat.bg}`}
+              className={`clay-card ${cat.bg} category-shelf-card`}
               style={{
-                padding: "24px 20px",
+                padding: "16px 20px",
                 display: "flex",
                 alignItems: "center",
-                gap: "14px",
-                transition: "var(--transition-smooth)"
+                gap: "16px",
+                textDecoration: "none",
+                position: "relative",
+                overflow: "hidden"
               }}
             >
-              <span style={{ fontSize: "2rem" }}>{cat.icon}</span>
-              <div>
-                <h4 style={{ fontFamily: "var(--font-display)", fontWeight: "700", fontSize: "1rem", color: "var(--color-text-dark)" }}>
+              <div
+                style={{
+                  width: "68px",
+                  height: "68px",
+                  borderRadius: "16px",
+                  background: "#ffffff",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                  overflow: "hidden",
+                  boxShadow: "0 4px 14px rgba(0,0,0,0.06)",
+                  border: "1px solid rgba(0,0,0,0.05)"
+                }}
+              >
+                <img
+                  src={cat.image}
+                  alt={cat.title}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "contain",
+                    padding: "4px",
+                    transition: "transform 0.3s ease"
+                  }}
+                  className="cat-thumb-img"
+                  loading="lazy"
+                  decoding="async"
+                  onError={(e) => {
+                    e.currentTarget.src = "/assets/logo.jpg";
+                  }}
+                />
+              </div>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <h4
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: "700",
+                    fontSize: "1.02rem",
+                    color: "var(--color-text-dark)",
+                    margin: "0 0 2px",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis"
+                  }}
+                >
                   {cat.title}
                 </h4>
-                <span style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>{cat.count}</span>
+                <span style={{ fontSize: "0.78rem", color: "var(--color-text-muted)", display: "block" }}>
+                  {cat.count}
+                </span>
               </div>
+              <span style={{ color: "var(--color-accent)", fontSize: "1.1rem", fontWeight: "700" }}>→</span>
             </Link>
           ))}
         </div>
