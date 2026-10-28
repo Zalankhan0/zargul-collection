@@ -1,0 +1,28 @@
+<svg width="180" height="70" viewBox="0 0 180 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logo-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f08ea7" />
+      <stop offset="100%" stop-color="#5c3c67" />
+    </linearGradient>
+  </defs>
+
+  <!-- Framing Brackets -->
+  <path d="M40 20H20V38" stroke="url(#logo-grad)" stroke-width="2" stroke-linecap="round"/>
+  <path d="M125 50H145V32" stroke="url(#logo-grad)" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Logo Typography -->
+  <text x="78" y="37" font-family="'Cormorant Garamond', 'Playfair Display', serif" font-size="25" font-weight="700" fill="url(#logo-grad)" text-anchor="middle">Zargul</text>
+  <text x="78" y="49" font-family="'Poppins', 'Montserrat', sans-serif" font-size="10" font-weight="500" fill="url(#logo-grad)" text-anchor="middle" letter-spacing="1">collection</text>
+
+  <!-- Wing Elements on Top Right -->
+  <g transform="translate(112, 8) scale(0.8)" stroke="url(#logo-grad)" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Left Wing -->
+    <path d="M-2 18C-4 11 -11 2 -20 2C-18 8 -15 12 -10 15" />
+    <path d="M-4 20C-7 14 -13 6 -21 8C-19 12 -16 14 -11 17" />
+    <path d="M-6 22C-9 17 -14 11 -21 13C-19 16 -16 18 -11 19" />
+    <!-- Right Wing -->
+    <path d="M2 18C4 11 11 2 20 2C18 8 15 12 10 15" />
+    <path d="M4 20C7 14 13 6 21 8C19 12 16 14 11 17" />
+    <path d="M6 22C9 17 14 11 21 13C19 16 16 18 11 19" />
+  </g>
+</svg>

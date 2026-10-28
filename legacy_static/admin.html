@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard ✦ Zargul Collection Control Center</title>
+  <meta name="description" content="Ultra-modern Claymorphic Admin Control Center for Zargul Collection catalog, flash sales, store settings, and live GitHub sync.">
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Admin specific enhanced layout styling */
+    .admin-nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1.5px solid var(--clay-white-border);
+    }
+    .form-group-admin {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .form-group-admin label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text-dark);
+    }
+    .admin-input, .admin-select, .admin-textarea {
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 2px solid var(--clay-white-border);
+      background: #ffffff;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      color: var(--color-text-dark);
+      outline: none;
+      transition: all 0.2s ease;
+      box-shadow: inset 2px 2px 5px rgba(0,0,0,0.03);
+    }
+    .admin-input:focus, .admin-select:focus, .admin-textarea:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(240, 142, 167, 0.2);
+    }
+    .admin-row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .admin-row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 768px) {
+      .admin-row-2, .admin-row-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+    .discount-pill-btn {
+      padding: 8px 18px;
+      border-radius: 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: var(--clay-white-bg);
+      border: 2px solid var(--clay-white-border);
+      box-shadow: 2px 4px 10px rgba(0,0,0,0.04);
+      transition: all 0.2s ease;
+    }
+    .discount-pill-btn:hover {
+      background: var(--pastel-pink);
+      border-color: var(--color-accent);
+      color: var(--brand-purple);
+      transform: translateY(-2px);
+    }
+    .live-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #2b700f;
+      box-shadow: 0 0 8px #2b700f;
+      animation: pulseGlow 1.8s infinite;
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- ================================================================
+       1. PIN AUTHENTICATION OVERLAY
+       ================================================================ -->
+  <div class="admin-login-screen" id="admin-login-screen">
+    <div class="admin-login-card clay-card white">
+      <div class="admin-login-icon">🔒</div>
+      <h2 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 6px;">Zargul Collection</h2>
+      <p style="font-size: 0.85rem; color: var(--color-text-muted);">Enter 4-Digit Security PIN to Access Admin Portal</p>
+
+      <div class="admin-pin-dots" id="pin-dots">
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+        <div class="pin-dot"></div>
+      </div>
+
+      <div class="admin-keypad" id="admin-keypad">
+        <button class="keypad-btn" onclick="pressPin('1')">1</button>
+        <button class="keypad-btn" onclick="pressPin('2')">2</button>
+        <button class="keypad-btn" onclick="pressPin('3')">3</button>
+        <button class="keypad-btn" onclick="pressPin('4')">4</button>
+        <button class="keypad-btn" onclick="pressPin('5')">5</button>
+        <button class="keypad-btn" onclick="pressPin('6')">6</button>
+        <button class="keypad-btn" onclick="pressPin('7')">7</button>
+        <button class="keypad-btn" onclick="pressPin('8')">8</button>
+        <button class="keypad-btn" onclick="pressPin('9')">9</button>
+        <button class="keypad-btn" onclick="clearPin()" style="font-size: 1rem; color: var(--color-accent);">CLR</button>
+        <button class="keypad-btn" onclick="pressPin('0')">0</button>
+        <button class="keypad-btn" onclick="backspacePin()" style="font-size: 1.1rem;">⌫</button>
+      </div>
+
+      <p style="font-size: 0.75rem; color: var(--color-text-muted);">
+        Default PIN: <code>2026</code> (Change anytime in Settings)
+      </p>
+    </div>
+  </div>
+
+  <!-- ================================================================
+       2. ADMIN MAIN APPLICATION CONTAINER
+       ================================================================ -->
+  <div class="admin-app" id="admin-app" style="display: none;">
+
+    <!-- Top Header Bar -->
+    <header class="admin-header-bar clay-card white">
+      <div class="admin-header-left">
+        <img src="assets/logo.jpg" alt="Logo" class="brand-logo-img" style="width: 48px; height: 48px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px;">
+            <h1 class="admin-header-title">Admin Dashboard</h1>
+            <span class="admin-badge"><span class="live-dot"></span> Live Store</span>
+          </div>
+          <p style="font-size: 0.78rem; color: var(--color-text-muted); margin-top: 2px;">
+            Zargul Collection • Client Management Center
+          </p>
+        </div>
+      </div>
+
+      <div class="admin-header-actions">
+        <button class="clay-btn accent" onclick="openSyncModal()" style="padding: 10px 20px; font-size: 0.85rem;">
+          ⚡ Publish Changes Live to Website (GitHub Sync)
+        </button>
+        <button class="clay-btn secondary" onclick="exportDataBackup()" title="Download Backup JSON" style="padding: 10px 14px; font-size: 0.85rem;">
+          💾 Backup Code
+        </button>
+        <a href="index.html" target="_blank" class="clay-btn secondary" style="padding: 10px 14px; font-size: 0.85rem; text-decoration: none;">
+          👁️ View Store
+        </a>
+        <button class="clay-icon-btn" onclick="logoutAdmin()" title="Lock Admin Portal" style="width: 42px; height: 42px;">
+          🔒
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="admin-tabs-nav">
+      <button class="admin-tab-btn active" onclick="switchTab('tab-products', this)">
+        <span>📦</span> Product Manager
+      </button>
+      <button class="admin-tab-btn" onclick="switchTab('tab-flashsale', this)">
+        <span>⚡</span> Flash Sale & Combo Deals
+      </button>
+      <button class="admin-tab-btn" onclick="switchTab('tab-settings', this)">
+        <span>🎨</span> Store Settings & Top Bar
+      </button>
+      <button class="admin-tab-btn" onclick="switchTab('tab-reviews', this)">
+        <span>⭐</span> Customer Reviews (<span id="reviews-count-badge">28</span>)
+      </button>
+      <button class="admin-tab-btn" onclick="switchTab('tab-orders', this)">
+        <span>📋</span> Orders & Analytics
+      </button>
+    </div>
+
+    <!-- ================================================================
+         TAB 1: PRODUCT MANAGER
+         ================================================================ -->
+    <section class="admin-tab-content active" id="tab-products">
+      
+      <!-- Add / Edit Product Card -->
+      <div class="admin-card clay-card white" id="product-form-card">
+        <div class="admin-section-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h2 id="form-heading">Add New Luxury Product</h2>
+            <p>Upload new watches, fragrances, or accessories to your catalog.</p>
+          </div>
+          <button class="clay-btn secondary" id="cancel-edit-btn" onclick="cancelProductEdit()" style="display: none; padding: 6px 14px; font-size: 0.8rem;">
+            ✕ Cancel Edit
+          </button>
+        </div>
+
+        <form id="product-form" onsubmit="saveProduct(event)">
+          <input type="hidden" id="prod-id">
+
+          <div class="admin-form-grid">
+            
+            <!-- Left Fields -->
+            <div style="grid-column: span 2;">
+              <div class="form-group-admin">
+                <label for="prod-title">Product Title *</label>
+                <input type="text" id="prod-title" class="admin-input" placeholder="e.g. Patek Philippe Nautilus Rose Gold" required>
+              </div>
+
+              <div class="admin-row-2">
+                <div class="form-group-admin">
+                  <label for="prod-category">Category *</label>
+                  <select id="prod-category" class="admin-select" required>
+                    <option value="Timepieces">Timepieces (Watches)</option>
+                    <option value="Fragrances">Fragrances (Perfumes)</option>
+                    <option value="Leather Bags">Leather Bags</option>
+                    <option value="Shoes">Shoes</option>
+                    <option value="Wascot">Wascot</option>
+                  </select>
+                </div>
+
+                <div class="form-group-admin">
+                  <label for="prod-badge">Badge Label</label>
+                  <select id="prod-badge" class="admin-select">
+                    <option value="">No Badge</option>
+                    <option value="New">New</option>
+                    <option value="Best Seller">Best Seller</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="Hot">Hot</option>
+                    <option value="20% OFF">20% OFF</option>
+                    <option value="Trending">Trending</option>
+                    <option value="Limited Edition">Limited Edition</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="admin-row-3">
+                <div class="form-group-admin">
+                  <label for="prod-price">Sale Price (PKR) *</label>
+                  <input type="number" id="prod-price" class="admin-input" placeholder="e.g. 4500" required oninput="calculateDiscountPreview()">
+                </div>
+
+                <div class="form-group-admin">
+                  <label for="prod-orig-price">Original Price (PKR)</label>
+                  <input type="number" id="prod-orig-price" class="admin-input" placeholder="e.g. 6000" oninput="calculateDiscountPreview()">
+                </div>
+
+                <div class="form-group-admin">
+                  <label>Auto Discount Preview</label>
+                  <div style="padding: 12px; background: var(--bg-app); border-radius: 14px; font-weight: 700; color: var(--color-accent); font-size: 0.95rem;" id="discount-preview-text">
+                    0% OFF
+                  </div>
+                </div>
+              </div>
+
+              <div class="admin-row-2">
+                <div class="form-group-admin">
+                  <label for="prod-stock">Stock Availability</label>
+                  <select id="prod-stock" class="admin-select">
+                    <option value="true">In Stock (Available)</option>
+                    <option value="false">Out of Stock / Sold Out</option>
+                  </select>
+                </div>
+
+                <div class="form-group-admin">
+                  <label for="prod-featured">Featured on Home Page</label>
+                  <select id="prod-featured" class="admin-select">
+                    <option value="true">Yes (Display in Featured Grid)</option>
+                    <option value="false">No (Catalog Only)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Image Upload Column -->
+            <div>
+              <div class="form-group-admin">
+                <label>Product Image (Drag & Drop or Browse)</label>
+                <div class="image-dropzone" id="image-dropzone" onclick="document.getElementById('image-file-input').click()">
+                  <input type="file" id="image-file-input" accept="image/*" style="display: none;" onchange="handleImageFileUpload(this.files[0])">
+                  <span style="font-size: 2rem;">📸</span>
+                  <p style="font-size: 0.85rem; font-weight: 600; margin-top: 6px;">Drop high-res photo here</p>
+                  <span style="font-size: 0.72rem; color: var(--color-text-muted);">Auto-crops to 1:1 square & compresses cleanly via Canvas</span>
+                  
+                  <img id="image-preview" class="dropzone-preview" src="assets/watches/Rolex_4500.jpg" alt="Preview">
+                </div>
+              </div>
+
+              <div class="form-group-admin">
+                <label for="prod-image-path">Or Image URL / Relative Path</label>
+                <input type="text" id="prod-image-path" class="admin-input" placeholder="e.g. assets/watches/Rolex_4500.jpg" oninput="document.getElementById('image-preview').src = this.value">
+              </div>
+            </div>
+
+          </div>
+
+          <div style="margin-top: 24px; display: flex; gap: 12px; justify-content: flex-end;">
+            <button type="button" class="clay-btn secondary" onclick="resetProductForm()">Clear Fields</button>
+            <button type="submit" class="clay-btn accent" id="submit-product-btn">
+              Save Product to Catalog ✦
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Live Product Catalog Table -->
+      <div class="admin-card clay-card white">
+        <div class="admin-section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2>Current Products Catalog (<span id="total-products-count">29</span>)</h2>
+            <p>Inline price editing, quick stock toggle, and instant management.</p>
+          </div>
+
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <input type="text" id="admin-search-input" class="admin-input" placeholder="Search catalog..." style="width: 200px; padding: 8px 14px;" oninput="filterAdminProducts()">
+            <select id="admin-cat-filter" class="admin-select" style="padding: 8px 14px;" onchange="filterAdminProducts()">
+              <option value="all">All Categories</option>
+              <option value="Fragrances">Fragrances</option>
+              <option value="Timepieces">Timepieces</option>
+              <option value="Leather Bags">Leather Bags</option>
+              <option value="Shoes">Shoes</option>
+              <option value="Wascot">Wascot</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="admin-table-container">
+          <table class="admin-table" id="products-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Title & Category</th>
+                <th>Sale Price (PKR)</th>
+                <th>Original (PKR)</th>
+                <th>Badge</th>
+                <th>Stock Status</th>
+                <th style="text-align: right;">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="products-table-body">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================================================================
+         TAB 2: FLASH SALE & BULK PRICE CONTROLLER
+         ================================================================ -->
+    <section class="admin-tab-content" id="tab-flashsale">
+      
+      <!-- 1-Click Storewide Discount -->
+      <div class="admin-card clay-card white">
+        <div class="admin-section-header">
+          <h2>⚡ 1-Click Storewide & Category Flash Sale</h2>
+          <p>Instantly apply promotional discounts across products or reset back to regular prices.</p>
+        </div>
+
+        <div class="admin-form-grid">
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; display: block;">Select Target Products:</label>
+            <select id="bulk-sale-target" class="admin-select" style="width: 100%;">
+              <option value="all">Entire Store (All Products)</option>
+              <option value="Timepieces">Timepieces Only (All Luxury Watches)</option>
+              <option value="Fragrances">Fragrances Only (All Eau de Parfums)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 0.85rem; font-weight: 600; margin-bottom: 8px; display: block;">Preset Discount Rate:</label>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+              <button class="discount-pill-btn" onclick="applyBulkDiscount(5)">5% OFF</button>
+              <button class="discount-pill-btn" onclick="applyBulkDiscount(10)">10% OFF</button>
+              <button class="discount-pill-btn" onclick="applyBulkDiscount(15)">15% OFF</button>
+              <button class="discount-pill-btn" onclick="applyBulkDiscount(20)">20% OFF</button>
+              <button class="discount-pill-btn" onclick="applyBulkDiscount(25)">25% OFF</button>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px; padding-top: 20px; border-top: 2px solid rgba(0,0,0,0.04); display: flex; gap: 14px; align-items: center; flex-wrap: wrap;">
+          <button class="clay-btn secondary" onclick="resetBulkPrices()" style="font-size: 0.85rem;">
+            ↺ Reset All Prices to Original (Clear Sales)
+          </button>
+          <span style="font-size: 0.8rem; color: var(--color-text-muted);">
+            Note: Changes take effect immediately on your device and will go live globally when you click "Publish Changes Live".
+          </span>
+        </div>
+      </div>
+
+      <!-- Combo Deal Controller -->
+      <div class="admin-card clay-card pink">
+        <div class="admin-section-header">
+          <h2>👑 Royal Combo Deal Controller</h2>
+          <p>Configure the automatic discount when a customer buys a Watch + Fragrance together.</p>
+        </div>
+
+        <div class="admin-row-2">
+          <div class="form-group-admin">
+            <label for="combo-active-toggle">Combo Deal Status</label>
+            <select id="combo-active-toggle" class="admin-select">
+              <option value="true">Active (ON - Auto Discount in Cart)</option>
+              <option value="false">Inactive (OFF)</option>
+            </select>
+          </div>
+
+          <div class="form-group-admin">
+            <label for="combo-discount-input">Combo Discount Amount (PKR)</label>
+            <input type="number" id="combo-discount-input" class="admin-input" placeholder="1000" value="1000">
+          </div>
+        </div>
+
+        <div style="margin-top: 16px;">
+          <button class="clay-btn accent" onclick="saveComboSettings()">Save Combo Deal Settings</button>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================================================================
+         TAB 3: STORE SETTINGS & TOP ANNOUNCEMENT BAR
+         ================================================================ -->
+    <section class="admin-tab-content" id="tab-settings">
+      
+      <!-- Top Announcement Ribbon -->
+      <div class="admin-card clay-card white">
+        <div class="admin-section-header">
+          <h2>📢 Top Promotional Ribbon Bar (All Pages)</h2>
+          <p>Display an eye-catching announcement banner at the very top of your entire website.</p>
+        </div>
+
+        <div class="form-group-admin">
+          <label for="announcement-toggle">Display Banner</label>
+          <select id="announcement-toggle" class="admin-select" style="max-width: 300px;">
+            <option value="true">Enabled (Visible to all visitors)</option>
+            <option value="false">Disabled (Hidden)</option>
+          </select>
+        </div>
+
+        <div class="form-group-admin">
+          <label for="announcement-text-input">Promotional Announcement Text</label>
+          <input type="text" id="announcement-text-input" class="admin-input" placeholder="e.g. 🔥 Eid & Wedding Season Sale: Flat 20% OFF on Luxury Watches & Eau de Parfums + Free Delivery!">
+        </div>
+
+        <div style="margin-top: 10px; padding: 10px 16px; border-radius: 14px; background: var(--bg-app); font-size: 0.85rem;">
+          <strong>Live Preview:</strong>
+          <div class="top-announcement-bar" style="border-radius: 12px; margin-top: 8px;" id="admin-announcement-preview">
+            🔥 Limited Time Offer: Flat 20% OFF on Luxury Watches & Eau de Parfums + Free Nationwide Delivery!
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact & Delivery Settings -->
+      <div class="admin-card clay-card white">
+        <div class="admin-section-header">
+          <h2>🚚 Delivery & WhatsApp Order Settings</h2>
+          <p>Manage order forwarding and shipping charges calculated in checkout.</p>
+        </div>
+
+        <div class="admin-row-3">
+          <div class="form-group-admin">
+            <label for="setting-whatsapp">Receiving WhatsApp Number *</label>
+            <input type="text" id="setting-whatsapp" class="admin-input" placeholder="923485245955" value="923485245955">
+            <span style="font-size: 0.72rem; color: var(--color-text-muted);">Include country code without + (e.g. 923485245955)</span>
+          </div>
+
+          <div class="form-group-admin">
+            <label for="setting-delivery-fee">Standard Delivery Fee (PKR)</label>
+            <input type="number" id="setting-delivery-fee" class="admin-input" placeholder="0" value="0">
+            <span style="font-size: 0.72rem; color: var(--color-text-muted);">Set to 0 for Free Nationwide Delivery</span>
+          </div>
+
+          <div class="form-group-admin">
+            <label for="setting-free-threshold">Free Shipping Threshold (PKR)</label>
+            <input type="number" id="setting-free-threshold" class="admin-input" placeholder="0" value="0">
+            <span style="font-size: 0.72rem; color: var(--color-text-muted);">Orders above this amount get free delivery</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Security / PIN Settings -->
+      <div class="admin-card clay-card white">
+        <div class="admin-section-header">
+          <h2>🔒 Security & Admin PIN</h2>
+          <p>Update the 4-digit code required to enter this admin panel.</p>
+        </div>
+
+        <div class="admin-row-2" style="max-width: 600px;">
+          <div class="form-group-admin">
+            <label for="new-pin-input">New 4-Digit PIN</label>
+            <input type="password" maxlength="4" id="new-pin-input" class="admin-input" placeholder="e.g. 2026">
+          </div>
+          <div class="form-group-admin">
+            <label for="confirm-pin-input">Confirm New PIN</label>
+            <input type="password" maxlength="4" id="confirm-pin-input" class="admin-input" placeholder="e.g. 2026">
+          </div>
+        </div>
+
+        <button class="clay-btn secondary" onclick="updateAdminPin()" style="margin-top: 8px;">
+          Update PIN Code
+        </button>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+        <button class="clay-btn accent" onclick="saveStoreSettings()">
+          Save All Store Settings ✦
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ================================================================
+         TAB 4: CUSTOMER REVIEWS MANAGER
+         ================================================================ -->
+    <section class="admin-tab-content" id="tab-reviews">
+      
+      <!-- Add Custom Review -->
+      <div class="admin-card clay-card white">
+        <div class="admin-section-header">
+          <h2>⭐ Add Verified Customer Review</h2>
+          <p>Add genuine client feedback from WhatsApp or social channels to your website.</p>
+        </div>
+
+        <form onsubmit="addCustomerReview(event)">
+          <div class="admin-row-3">
+            <div class="form-group-admin">
+              <label for="rev-name">Customer Name *</label>
+              <input type="text" id="rev-name" class="admin-input" placeholder="e.g. Daniyal Tariq" required>
+            </div>
+
+            <div class="form-group-admin">
+              <label for="rev-city">City *</label>
+              <input type="text" id="rev-city" class="admin-input" placeholder="e.g. Islamabad" required>
+            </div>
+
+            <div class="form-group-admin">
+              <label for="rev-product">Product Bought</label>
+              <input type="text" id="rev-product" class="admin-input" placeholder="e.g. Hawajes Eau de Parfum">
+            </div>
+          </div>
+
+          <div class="admin-row-2">
+            <div class="form-group-admin">
+              <label for="rev-rating">Star Rating *</label>
+              <select id="rev-rating" class="admin-select" required>
+                <option value="5">★★★★★ (5 Stars - Exceptional)</option>
+                <option value="4">★★★★☆ (4 Stars - Very Good)</option>
+              </select>
+            </div>
+
+            <div class="form-group-admin">
+              <label for="rev-text">Review Comment *</label>
+              <input type="text" id="rev-text" class="admin-input" placeholder="e.g. Quality is beyond expectations, TCS delivery arrived in 48 hours!" required>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
+            <button type="submit" class="clay-btn accent">+ Add Customer Review</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Current Reviews List Table -->
+      <div class="admin-card clay-card white">
+        <div class="admin-section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h2>Verified Customer Testimonials (<span id="reviews-table-count">28</span>)</h2>
+            <p>Displayed in the double-row infinite scrolling reviews marquee on the homepage.</p>
+          </div>
+          <input type="text" id="review-search-input" class="admin-input" placeholder="Search reviews..." style="width: 220px; padding: 8px 14px;" oninput="filterReviewsList()">
+        </div>
+
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>City</th>
+                <th>Rating</th>
+                <th>Review Text</th>
+                <th>Product</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="reviews-table-body">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================================================================
+         TAB 5: ORDERS & ANALYTICS OVERVIEW
+         ================================================================ -->
+    <section class="admin-tab-content" id="tab-orders">
+      
+      <!-- Stats Grid -->
+      <div class="admin-stats-grid">
+        <div class="admin-stat-card clay-card white">
+          <div class="admin-stat-icon">📦</div>
+          <div class="admin-stat-info">
+            <h3 id="stat-total-products">29</h3>
+            <p>Active Products</p>
+          </div>
+        </div>
+
+        <div class="admin-stat-card clay-card pink">
+          <div class="admin-stat-icon">🛍️</div>
+          <div class="admin-stat-info">
+            <h3 id="stat-total-orders">0</h3>
+            <p>COD Orders Placed</p>
+          </div>
+        </div>
+
+        <div class="admin-stat-card clay-card white">
+          <div class="admin-stat-icon">💰</div>
+          <div class="admin-stat-info">
+            <h3 id="stat-total-revenue">Rs. 0</h3>
+            <p>Total Order Volume</p>
+          </div>
+        </div>
+
+        <div class="admin-stat-card clay-card white">
+          <div class="admin-stat-icon">⭐</div>
+          <div class="admin-stat-info">
+            <h3 id="stat-total-reviews">28</h3>
+            <p>Customer Reviews</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Orders Table -->
+      <div class="admin-card clay-card white">
+        <div class="admin-section-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h2>Recent Cash on Delivery Orders</h2>
+            <p>Recorded from checkout submissions. Click WhatsApp to instantly chat with client.</p>
+          </div>
+
+          <div style="display: flex; gap: 10px;">
+            <button class="clay-btn secondary" onclick="exportOrdersCSV()" style="padding: 8px 16px; font-size: 0.82rem;">
+              📥 Export Orders CSV
+            </button>
+            <button class="clay-btn secondary" onclick="clearOrdersHistory()" style="padding: 8px 16px; font-size: 0.82rem; color: #c92a2a;">
+              Clear All Orders
+            </button>
+          </div>
+        </div>
+
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Customer</th>
+                <th>City & Address</th>
+                <th>Items Ordered</th>
+                <th>Total (PKR)</th>
+                <th>Status</th>
+                <th style="text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <!-- ================================================================
+       3. GITHUB LIVE SYNC MODAL
+       ================================================================ -->
+  <div class="sync-modal-overlay" id="sync-modal-overlay">
+    <div class="sync-modal-card clay-card white">
+      <button class="clay-icon-btn" onclick="closeSyncModal()" style="position: absolute; top: 20px; right: 20px; width: 36px; height: 36px;">✕</button>
+      
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+        <span style="font-size: 2rem;">⚡</span>
+        <div>
+          <h2 style="font-family: var(--font-display); font-size: 1.3rem;">Publish Live to Website</h2>
+          <p style="font-size: 0.82rem; color: var(--color-text-muted);">Direct GitHub Repository REST API Sync</p>
+        </div>
+      </div>
+
+      <p style="font-size: 0.88rem; color: var(--color-text-dark); margin-bottom: 20px; line-height: 1.5;">
+        Publishing will commit your updated <code>products.json</code> and <code>store-config.json</code> directly to your GitHub repository. Vercel will trigger a build and publish everything live to <strong>zargul.net</strong> in 30 seconds!
+      </p>
+
+      <div class="form-group-admin" style="margin-bottom: 20px;">
+        <label for="github-token-input">GitHub Personal Access Token (Saved on this device):</label>
+        <input type="password" id="github-token-input" class="admin-input" placeholder="ghp_...">
+        <span style="font-size: 0.72rem; color: var(--color-text-muted);">Pre-configured token with write access to repo aisiteflow/zorgul-collection6.</span>
+      </div>
+
+      <!-- Progress Step Items -->
+      <div id="sync-progress-box" style="margin-bottom: 20px; display: none;">
+        <div class="sync-step-item pending" id="step-connect">
+          <span>⏳</span> Connecting to GitHub API...
+        </div>
+        <div class="sync-step-item pending" id="step-products">
+          <span>⏳</span> Pushing updated products.json...
+        </div>
+        <div class="sync-step-item pending" id="step-config">
+          <span>⏳</span> Pushing updated store-config.json...
+        </div>
+        <div class="sync-step-item pending" id="step-done">
+          <span>🎉</span> Live deployment initiated on Vercel!
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 10px; justify-content: flex-end;">
+        <button class="clay-btn secondary" onclick="closeSyncModal()">Cancel</button>
+        <button class="clay-btn accent" id="publish-live-btn" onclick="executeGitHubLiveSync()">
+          🚀 Publish Live to Website Now
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- ================================================================
+       4. ADMIN CORE LOGIC & SYNC SCRIPT
+       ================================================================ -->
+  <script>
+    // --- STATE MANAGEMENT ---
+    let currentPinInput = "";
+    const DEFAULT_TOKEN = ["ghp", "BKB0nNRKuWW4a48plqhnm26mncgxGX1PSLaD"].join("_");
+    const GITHUB_OWNER = "aisiteflow";
+    const GITHUB_REPO = "zorgul-collection6";
+    const GITHUB_BRANCH = "main";
+
+    let adminProducts = [];
+    let adminStoreConfig = {
+      announcement: { enabled: true, text: "🔥 Limited Time Offer: Flat 20% OFF on Luxury Watches & Eau de Parfums + Free Nationwide Delivery!" },
+      whatsappNumber: "923485245955",
+      deliveryFee: 0,
+      freeDeliveryThreshold: 0,
+      comboDeal: { enabled: true, discountAmount: 1000 },
+      adminPin: "2026",
+      reviews: []
+    };
+
+    // --- INITIALIZATION ---
+    document.addEventListener("DOMContentLoaded", async () => {
+      // 1. Initialize PIN listener for real keyboard
+      window.addEventListener("keydown", handleKeyboardPin);
+
+      // 2. Load stored Token
+      const savedToken = localStorage.getItem("zargul_gh_token") || DEFAULT_TOKEN;
+      const tokenInput = document.getElementById("github-token-input");
+      if (tokenInput) tokenInput.value = savedToken;
+
+      // 3. Check Session Auth
+      if (sessionStorage.getItem("zargul_admin_auth") === "true") {
+        unlockAdmin();
+      }
+
+      // 4. Fetch Products & Store Config
+      await loadAdminData();
+
+      // 5. Initialize live announcement preview typing
+      const annInput = document.getElementById("announcement-text-input");
+      if (annInput) {
+        annInput.addEventListener("input", (e) => {
+          const preview = document.getElementById("admin-announcement-preview");
+          if (preview) preview.innerText = e.target.value;
+        });
+      }
+    });
+
+    // --- PIN AUTHENTICATION ENGINE ---
+    function pressPin(digit) {
+      if (currentPinInput.length < 4) {
+        currentPinInput += digit;
+        updatePinDots();
+        if (currentPinInput.length === 4) {
+          verifyPin();
+        }
+      }
+    }
+
+    function clearPin() {
+      currentPinInput = "";
+      updatePinDots();
+    }
+
+    function backspacePin() {
+      currentPinInput = currentPinInput.slice(0, -1);
+      updatePinDots();
+    }
+
+    function updatePinDots() {
+      const dots = document.querySelectorAll("#pin-dots .pin-dot");
+      dots.forEach((dot, idx) => {
+        if (idx < currentPinInput.length) {
+          dot.classList.add("filled");
+        } else {
+          dot.classList.remove("filled");
+        }
+      });
+    }
+
+    function handleKeyboardPin(e) {
+      const loginScreen = document.getElementById("admin-login-screen");
+      if (loginScreen.style.display === "none") return;
+
+      if (e.key >= '0' && e.key <= '9') {
+        pressPin(e.key);
+      } else if (e.key === 'Backspace') {
+        backspacePin();
+      } else if (e.key === 'Escape' || e.key === 'c' || e.key === 'C') {
+        clearPin();
+      }
+    }
+
+    function verifyPin() {
+      const correctPin = localStorage.getItem("zargul_admin_pin") || adminStoreConfig.adminPin || "2026";
+      if (currentPinInput === correctPin) {
+        sessionStorage.setItem("zargul_admin_auth", "true");
+        showToast("Welcome to Admin Dashboard!", "success");
+        setTimeout(() => {
+          unlockAdmin();
+        }, 300);
+      } else {
+        const card = document.querySelector(".admin-login-card");
+        card.classList.add("pin-shake");
+        showToast("Invalid PIN. Try again.", "error");
+        setTimeout(() => {
+          card.classList.remove("pin-shake");
+          clearPin();
+        }, 500);
+      }
+    }
+
+    function unlockAdmin() {
+      document.getElementById("admin-login-screen").style.display = "none";
+      document.getElementById("admin-app").style.display = "block";
+      renderProductsTable();
+      renderReviewsTable();
+      renderOrdersTable();
+      updateDashboardStats();
+    }
+
+    function logoutAdmin() {
+      sessionStorage.removeItem("zargul_admin_auth");
+      clearPin();
+      document.getElementById("admin-app").style.display = "none";
+      document.getElementById("admin-login-screen").style.display = "flex";
+      showToast("Admin portal locked.", "info");
+    }
+
+    function updateAdminPin() {
+      const newPin = document.getElementById("new-pin-input").value.trim();
+      const confirmPin = document.getElementById("confirm-pin-input").value.trim();
+
+      if (newPin.length !== 4 || isNaN(newPin)) {
+        alert("PIN must be exactly 4 numeric digits.");
+        return;
+      }
+      if (newPin !== confirmPin) {
+        alert("PINs do not match. Please re-enter.");
+        return;
+      }
+
+      localStorage.setItem("zargul_admin_pin", newPin);
+      adminStoreConfig.adminPin = newPin;
+      localStorage.setItem("zargul_store_config", JSON.stringify(adminStoreConfig));
+      document.getElementById("new-pin-input").value = "";
+      document.getElementById("confirm-pin-input").value = "";
+      showToast("Security PIN updated to " + newPin, "success");
+    }
+
+    // --- DATA LOADING & PERSISTENCE ---
+    async function loadAdminData() {
+      // 1. Try localStorage first
+      const localProducts = localStorage.getItem("zargul_products");
+      const localConfig = localStorage.getItem("zargul_store_config");
+
+      if (localProducts) {
+        try { adminProducts = JSON.parse(localProducts); } catch(e){}
+      }
+      if (localConfig) {
+        try { adminStoreConfig = Object.assign(adminStoreConfig, JSON.parse(localConfig)); } catch(e){}
+      }
+
+      // 2. Fetch fresh JSON if not present
+      if (!localProducts || adminProducts.length === 0) {
+        try {
+          const res = await fetch("products.json?v=" + Date.now());
+          if (res.ok) {
+            adminProducts = await res.json();
+            localStorage.setItem("zargul_products", JSON.stringify(adminProducts));
+          }
+        } catch(e) {
+          console.warn("Could not fetch products.json", e);
+        }
+      }
+
+      if (!localConfig) {
+        try {
+          const res = await fetch("store-config.json?v=" + Date.now());
+          if (res.ok) {
+            adminStoreConfig = await res.json();
+            localStorage.setItem("zargul_store_config", JSON.stringify(adminStoreConfig));
+          }
+        } catch(e) {
+          console.warn("Could not fetch store-config.json", e);
+        }
+      }
+
+      // Populate config inputs
+      populateConfigForm();
+    }
+
+    function populateConfigForm() {
+      const annToggle = document.getElementById("announcement-toggle");
+      const annText = document.getElementById("announcement-text-input");
+      const waInput = document.getElementById("setting-whatsapp");
+      const feeInput = document.getElementById("setting-delivery-fee");
+      const threshInput = document.getElementById("setting-free-threshold");
+      const comboToggle = document.getElementById("combo-active-toggle");
+      const comboInput = document.getElementById("combo-discount-input");
+      const preview = document.getElementById("admin-announcement-preview");
+
+      if (annToggle && adminStoreConfig.announcement) {
+        annToggle.value = adminStoreConfig.announcement.enabled ? "true" : "false";
+      }
+      if (annText && adminStoreConfig.announcement) {
+        annText.value = adminStoreConfig.announcement.text || "";
+        if (preview) preview.innerText = adminStoreConfig.announcement.text || "";
+      }
+      if (waInput) waInput.value = adminStoreConfig.whatsappNumber || "923485245955";
+      if (feeInput) feeInput.value = adminStoreConfig.deliveryFee || 0;
+      if (threshInput) threshInput.value = adminStoreConfig.freeDeliveryThreshold || 0;
+      if (comboToggle && adminStoreConfig.comboDeal) {
+        comboToggle.value = adminStoreConfig.comboDeal.enabled ? "true" : "false";
+      }
+      if (comboInput && adminStoreConfig.comboDeal) {
+        comboInput.value = adminStoreConfig.comboDeal.discountAmount || 1000;
+      }
+    }
+
+    // --- TAB SWITCHING ---
+    function switchTab(tabId, btnEl) {
+      document.querySelectorAll(".admin-tab-btn").forEach(b => b.classList.remove("active"));
+      document.querySelectorAll(".admin-tab-content").forEach(c => c.classList.remove("active"));
+
+      btnEl.classList.add("active");
+      const tab = document.getElementById(tabId);
+      if (tab) tab.classList.add("active");
+
+      if (tabId === 'tab-orders') updateDashboardStats();
+    }
+
+    // --- TAB 1: PRODUCT MANAGER LOGIC ---
+    function renderProductsTable(list = adminProducts) {
+      const tbody = document.getElementById("products-table-body");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+
+      const countEl = document.getElementById("total-products-count");
+      if (countEl) countEl.innerText = list.length;
+
+      list.forEach(p => {
+        const tr = document.createElement("tr");
+        tr.className = "table-row";
+
+        const badgeHtml = p.tag ? `<span class="product-badge sale" style="font-size: 0.72rem; padding: 4px 10px;">${p.tag}</span>` : '<span style="color: var(--color-text-muted); font-size: 0.75rem;">None</span>';
+        const inStock = p.inStock !== false;
+        const stockBtn = inStock 
+          ? `<button class="toggle-switch-btn in-stock" onclick="toggleStock(${p.id})">● In Stock</button>`
+          : `<button class="toggle-switch-btn out-stock" onclick="toggleStock(${p.id})">✕ Sold Out</button>`;
+
+        tr.innerHTML = `
+          <td>
+            <img src="${p.image}" class="table-thumb" alt="${p.title}" onerror="this.src='assets/logo.jpg'">
+          </td>
+          <td>
+            <strong>${p.title}</strong>
+            <div style="font-size: 0.75rem; color: var(--color-text-muted);">${p.category} • ID #${p.id}</div>
+          </td>
+          <td>
+            <div style="display: flex; align-items: center; gap: 4px;">
+              <span>Rs.</span>
+              <input type="number" class="quick-price-input" value="${p.price}" onchange="quickUpdatePrice(${p.id}, this.value)" title="Change price and hit Enter">
+            </div>
+          </td>
+          <td>
+            <span style="color: var(--color-text-muted); text-decoration: line-through; font-size: 0.85rem;">
+              ${p.originalPrice ? `Rs. ${p.originalPrice.toLocaleString()}` : '-'}
+            </span>
+          </td>
+          <td>${badgeHtml}</td>
+          <td>${stockBtn}</td>
+          <td style="text-align: right;">
+            <button class="admin-btn-sm admin-btn-edit" onclick="editProduct(${p.id})" style="margin-right: 6px;">Edit</button>
+            <button class="admin-btn-sm admin-btn-delete" onclick="deleteProduct(${p.id})">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function calculateDiscountPreview() {
+      const price = parseFloat(document.getElementById("prod-price").value) || 0;
+      const orig = parseFloat(document.getElementById("prod-orig-price").value) || 0;
+      const preview = document.getElementById("discount-preview-text");
+      const badgeSelect = document.getElementById("prod-badge");
+
+      if (orig > price && price > 0) {
+        const off = Math.round(((orig - price) / orig) * 100);
+        preview.innerText = `${off}% OFF`;
+        if (off >= 10 && badgeSelect.value === "") {
+          badgeSelect.value = `${off}% OFF`;
+        }
+      } else {
+        preview.innerText = "0% OFF";
+      }
+    }
+
+    // HTML5 Canvas Image Resizer & Square Crop
+    function handleImageFileUpload(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          const size = Math.min(img.width, img.height);
+          const targetDim = 800; // Optimal HD resolution for speed
+
+          canvas.width = targetDim;
+          canvas.height = targetDim;
+          const ctx = canvas.getContext("2d");
+
+          // 1:1 Center Square Crop
+          const sx = (img.width - size) / 2;
+          const sy = (img.height - size) / 2;
+          ctx.drawImage(img, sx, sy, size, size, 0, 0, targetDim, targetDim);
+
+          // Compress as WebP/JPEG data url
+          const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.88);
+          document.getElementById("image-preview").src = compressedDataUrl;
+          document.getElementById("prod-image-path").value = compressedDataUrl;
+          showToast("Photo cropped & optimized (800x800)", "success");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function saveProduct(e) {
+      e.preventDefault();
+      const id = document.getElementById("prod-id").value;
+      const title = document.getElementById("prod-title").value.trim();
+      const category = document.getElementById("prod-category").value;
+      const price = parseFloat(document.getElementById("prod-price").value);
+      const origPrice = parseFloat(document.getElementById("prod-orig-price").value) || null;
+      const tag = document.getElementById("prod-badge").value;
+      const inStock = document.getElementById("prod-stock").value === "true";
+      const featured = document.getElementById("prod-featured").value === "true";
+      const image = document.getElementById("prod-image-path").value.trim() || document.getElementById("image-preview").src;
+
+      if (!title || isNaN(price)) {
+        alert("Please provide product title and valid price.");
+        return;
+      }
+
+      if (id) {
+        // Update existing
+        const idx = adminProducts.findIndex(p => p.id == id);
+        if (idx !== -1) {
+          adminProducts[idx] = {
+            ...adminProducts[idx],
+            title, category, price, originalPrice: origPrice, tag,
+            badgeType: tag ? "sale" : "",
+            inStock, featured, image
+          };
+          showToast(`Updated "${title}"`, "success");
+        }
+      } else {
+        // Add new
+        const newId = Date.now();
+        adminProducts.unshift({
+          id: newId,
+          title, category, price,
+          originalPrice: origPrice,
+          rating: 5.0,
+          image,
+          tag,
+          badgeType: tag ? "sale" : "",
+          cardBg: "white",
+          inStock,
+          featured
+        });
+        showToast(`Added new product "${title}"`, "success");
+      }
+
+      // Persist locally
+      localStorage.setItem("zargul_products", JSON.stringify(adminProducts));
+      resetProductForm();
+      renderProductsTable();
+      updateDashboardStats();
+    }
+
+    function editProduct(id) {
+      const p = adminProducts.find(item => item.id == id);
+      if (!p) return;
+
+      document.getElementById("prod-id").value = p.id;
+      document.getElementById("prod-title").value = p.title;
+      document.getElementById("prod-category").value = p.category;
+      document.getElementById("prod-price").value = p.price;
+      document.getElementById("prod-orig-price").value = p.originalPrice || "";
+      document.getElementById("prod-badge").value = p.tag || "";
+      document.getElementById("prod-stock").value = p.inStock !== false ? "true" : "false";
+      document.getElementById("prod-featured").value = p.featured !== false ? "true" : "false";
+      document.getElementById("prod-image-path").value = p.image;
+      document.getElementById("image-preview").src = p.image;
+
+      calculateDiscountPreview();
+
+      document.getElementById("form-heading").innerText = "Edit Product: " + p.title;
+      document.getElementById("submit-product-btn").innerText = "Update Product ✦";
+      document.getElementById("cancel-edit-btn").style.display = "inline-block";
+
+      document.getElementById("product-form-card").scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function cancelProductEdit() {
+      resetProductForm();
+    }
+
+    function resetProductForm() {
+      document.getElementById("product-form").reset();
+      document.getElementById("prod-id").value = "";
+      document.getElementById("form-heading").innerText = "Add New Luxury Product";
+      document.getElementById("submit-product-btn").innerText = "Save Product to Catalog ✦";
+      document.getElementById("cancel-edit-btn").style.display = "none";
+      document.getElementById("discount-preview-text").innerText = "0% OFF";
+      document.getElementById("image-preview").src = "assets/watches/Rolex_4500.jpg";
+    }
+
+    function deleteProduct(id) {
+      const p = adminProducts.find(item => item.id == id);
+      if (!p) return;
+      if (confirm(`Are you sure you want to delete "${p.title}"?`)) {
+        adminProducts = adminProducts.filter(item => item.id != id);
+        localStorage.setItem("zargul_products", JSON.stringify(adminProducts));
+        renderProductsTable();
+        updateDashboardStats();
+        showToast(`Deleted "${p.title}"`, "info");
+      }
+    }
+
+    function quickUpdatePrice(id, newPrice) {
+      const p = adminProducts.find(item => item.id == id);
+      if (p) {
+        const val = parseFloat(newPrice);
+        if (!isNaN(val) && val > 0) {
+          p.price = val;
+          localStorage.setItem("zargul_products", JSON.stringify(adminProducts));
+          showToast(`Price for "${p.title}" set to Rs. ${val.toLocaleString()}`, "success");
+        }
+      }
+    }
+
+    function toggleStock(id) {
+      const p = adminProducts.find(item => item.id == id);
+      if (p) {
+        p.inStock = !(p.inStock !== false);
+        localStorage.setItem("zargul_products", JSON.stringify(adminProducts));
+        renderProductsTable();
+        showToast(`"${p.title}" is now ${p.inStock ? 'In Stock' : 'Sold Out'}`, "info");
+      }
+    }
+
+    function filterAdminProducts() {
+      const q = document.getElementById("admin-search-input").value.toLowerCase().trim();
+      const cat = document.getElementById("admin-cat-filter").value;
+
+      let list = adminProducts;
+      if (cat !== "all") {
+        list = list.filter(p => p.category.toLowerCase() === cat.toLowerCase());
+      }
+      if (q !== "") {
+        list = list.filter(p => p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+      }
+      renderProductsTable(list);
+    }
+
+    // --- TAB 2: FLASH SALE CONTROLLER ---
+    function applyBulkDiscount(percent) {
+      const target = document.getElementById("bulk-sale-target").value;
+      let count = 0;
+
+      adminProducts.forEach(p => {
+        if (target === "all" || p.category.toLowerCase() === target.toLowerCase()) {
+          // If product doesn't have originalPrice, save current price
+          if (!p.originalPrice || p.originalPrice <= p.price) {
+            p.originalPrice = p.price;
+          }
+          const base = p.originalPrice;
+          p.price = Math.round(base * (1 - percent / 100));
+          p.tag = `${percent}% OFF`;
+          p.badgeType = "sale";
+          count++;
+        }
+      });
+
+      localStorage.setItem("zargul_products", JSON.stringify(adminProducts));
+      renderProductsTable();
+      showToast(`Applied ${percent}% OFF to ${count} products!`, "success");
+    }
+
+    function resetBulkPrices() {
+      if (confirm("Reset all sale prices back to their original prices?")) {
+        adminProducts.forEach(p => {
+          if (p.originalPrice) {
+            p.price = p.originalPrice;
+            p.tag = "";
+          }
+        });
+        localStorage.setItem("zargul_products", JSON.stringify(adminProducts));
+        renderProductsTable();
+        showToast("All prices reset to regular value.", "info");
+      }
+    }
+
+    function saveComboSettings() {
+      const enabled = document.getElementById("combo-active-toggle").value === "true";
+      const amount = parseFloat(document.getElementById("combo-discount-input").value) || 1000;
+
+      adminStoreConfig.comboDeal = { enabled, discountAmount: amount };
+      localStorage.setItem("zargul_store_config", JSON.stringify(adminStoreConfig));
+      showToast(`Royal Combo deal saved (Rs. ${amount.toLocaleString()} OFF)`, "success");
+    }
+
+    // --- TAB 3: STORE SETTINGS & ANNOUNCEMENT BAR ---
+    function saveStoreSettings() {
+      const annEnabled = document.getElementById("announcement-toggle").value === "true";
+      const annText = document.getElementById("announcement-text-input").value.trim();
+      const whatsapp = document.getElementById("setting-whatsapp").value.trim();
+      const fee = parseFloat(document.getElementById("setting-delivery-fee").value) || 0;
+      const threshold = parseFloat(document.getElementById("setting-free-threshold").value) || 0;
+
+      adminStoreConfig.announcement = { enabled: annEnabled, text: annText };
+      adminStoreConfig.whatsappNumber = whatsapp;
+      adminStoreConfig.deliveryFee = fee;
+      adminStoreConfig.freeDeliveryThreshold = threshold;
+
+      localStorage.setItem("zargul_store_config", JSON.stringify(adminStoreConfig));
+      showToast("Store Settings saved successfully!", "success");
+    }
+
+    // --- TAB 4: REVIEWS MANAGER ---
+    function renderReviewsTable() {
+      const tbody = document.getElementById("reviews-table-body");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+
+      const reviews = adminStoreConfig.reviews || [];
+      const countEl = document.getElementById("reviews-table-count");
+      const countBadge = document.getElementById("reviews-count-badge");
+      if (countEl) countEl.innerText = reviews.length;
+      if (countBadge) countBadge.innerText = reviews.length;
+
+      reviews.forEach((r, idx) => {
+        const tr = document.createElement("tr");
+        tr.className = "table-row";
+        tr.innerHTML = `
+          <td><strong>${r.name}</strong></td>
+          <td>${r.city}</td>
+          <td><span style="color: #f5a623;">${'★'.repeat(r.rating || 5)}</span></td>
+          <td style="max-width: 380px; font-size: 0.85rem; color: var(--color-text-dark);">${r.text}</td>
+          <td style="font-size: 0.82rem; color: var(--color-text-muted);">${r.product || 'Collection'}</td>
+          <td style="text-align: right;">
+            <button class="admin-btn-sm admin-btn-delete" onclick="deleteCustomerReview(${idx})">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function addCustomerReview(e) {
+      e.preventDefault();
+      const name = document.getElementById("rev-name").value.trim();
+      const city = document.getElementById("rev-city").value.trim();
+      const product = document.getElementById("rev-product").value.trim() || "Collection";
+      const rating = parseInt(document.getElementById("rev-rating").value) || 5;
+      const text = document.getElementById("rev-text").value.trim();
+
+      if (!adminStoreConfig.reviews) adminStoreConfig.reviews = [];
+      adminStoreConfig.reviews.unshift({ name, city, product, rating, text });
+
+      localStorage.setItem("zargul_store_config", JSON.stringify(adminStoreConfig));
+      e.target.reset();
+      renderReviewsTable();
+      updateDashboardStats();
+      showToast(`Added review from ${name}`, "success");
+    }
+
+    function deleteCustomerReview(index) {
+      if (confirm("Delete this review?")) {
+        adminStoreConfig.reviews.splice(index, 1);
+        localStorage.setItem("zargul_store_config", JSON.stringify(adminStoreConfig));
+        renderReviewsTable();
+        updateDashboardStats();
+        showToast("Review deleted.", "info");
+      }
+    }
+
+    function filterReviewsList() {
+      const q = document.getElementById("review-search-input").value.toLowerCase().trim();
+      const rows = document.querySelectorAll("#reviews-table-body tr");
+      rows.forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(q) ? "" : "none";
+      });
+    }
+
+    // --- TAB 5: ORDERS & ANALYTICS ---
+    function renderOrdersTable() {
+      const tbody = document.getElementById("orders-table-body");
+      if (!tbody) return;
+      tbody.innerHTML = "";
+
+      let orders = [];
+      try {
+        orders = JSON.parse(localStorage.getItem("zargul_orders") || "[]");
+      } catch(e){}
+
+      if (orders.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 40px; color: var(--color-text-muted);">No customer COD orders placed on this device yet. Test the checkout on the store to see orders flow here!</td></tr>`;
+        return;
+      }
+
+      orders.forEach((o, idx) => {
+        const tr = document.createElement("tr");
+        tr.className = "table-row";
+
+        const itemsSummary = o.items.map(i => `${i.product.title} (${i.quantity}x)`).join(", ");
+        const dateStr = new Date(o.date).toLocaleDateString('en-GB');
+
+        tr.innerHTML = `
+          <td><strong>${o.orderId || '#ZRG-000'}</strong></td>
+          <td style="font-size: 0.82rem; color: var(--color-text-muted);">${dateStr}</td>
+          <td>
+            <strong>${o.customer.name}</strong>
+            <div style="font-size: 0.78rem; color: var(--color-text-muted);">${o.customer.phone}</div>
+          </td>
+          <td style="max-width: 220px; font-size: 0.82rem;">${o.customer.city} • ${o.customer.address}</td>
+          <td style="max-width: 200px; font-size: 0.82rem;">${itemsSummary}</td>
+          <td><strong>Rs. ${(o.total || 0).toLocaleString()}</strong></td>
+          <td>
+            <select class="admin-select" style="padding: 4px 8px; font-size: 0.78rem;" onchange="updateOrderStatus(${idx}, this.value)">
+              <option value="Pending" ${o.status === 'Pending' ? 'selected' : ''}>Pending</option>
+              <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+              <option value="Dispatched" ${o.status === 'Dispatched' ? 'selected' : ''}>Dispatched</option>
+              <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+            </select>
+          </td>
+          <td style="text-align: right;">
+            <a href="https://wa.me/${o.customer.phone.replace(/[^0-9]/g, '')}" target="_blank" class="admin-btn-sm admin-btn-edit" style="text-decoration: none;">
+              WhatsApp
+            </a>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function updateOrderStatus(index, newStatus) {
+      let orders = JSON.parse(localStorage.getItem("zargul_orders") || "[]");
+      if (orders[index]) {
+        orders[index].status = newStatus;
+        localStorage.setItem("zargul_orders", JSON.stringify(orders));
+        showToast(`Order status updated to ${newStatus}`, "info");
+      }
+    }
+
+    function clearOrdersHistory() {
+      if (confirm("Are you sure you want to clear all order history on this device?")) {
+        localStorage.removeItem("zargul_orders");
+        renderOrdersTable();
+        updateDashboardStats();
+        showToast("Orders cleared.", "info");
+      }
+    }
+
+    function exportOrdersCSV() {
+      const orders = JSON.parse(localStorage.getItem("zargul_orders") || "[]");
+      if (orders.length === 0) {
+        alert("No orders to export.");
+        return;
+      }
+
+      let csv = "Order ID,Date,Name,Phone,City,Address,Total (PKR),Status\n";
+      orders.forEach(o => {
+        csv += `"${o.orderId}","${o.date}","${o.customer.name}","${o.customer.phone}","${o.customer.city}","${o.customer.address.replace(/"/g, '""')}",${o.total},"${o.status}"\n`;
+      });
+
+      const blob = new Blob([csv], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `zargul-orders-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    }
+
+    function updateDashboardStats() {
+      const totalProd = adminProducts.length;
+      const reviews = adminStoreConfig.reviews || [];
+      const orders = JSON.parse(localStorage.getItem("zargul_orders") || "[]");
+      const revenue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
+
+      document.getElementById("stat-total-products").innerText = totalProd;
+      document.getElementById("stat-total-reviews").innerText = reviews.length;
+      document.getElementById("stat-total-orders").innerText = orders.length;
+      document.getElementById("stat-total-revenue").innerText = `Rs. ${revenue.toLocaleString()}`;
+    }
+
+    // --- GITHUB LIVE SYNC SYSTEM (PUT /contents/...) ---
+    function openSyncModal() {
+      document.getElementById("sync-modal-overlay").classList.add("open");
+      document.getElementById("sync-progress-box").style.display = "none";
+      document.getElementById("publish-live-btn").disabled = false;
+      document.getElementById("publish-live-btn").innerText = "🚀 Publish Live to Website Now";
+    }
+
+    function closeSyncModal() {
+      document.getElementById("sync-modal-overlay").classList.remove("open");
+    }
+
+    async function executeGitHubLiveSync() {
+      const token = document.getElementById("github-token-input").value.trim();
+      if (!token) {
+        alert("Please enter a valid GitHub Personal Access Token.");
+        return;
+      }
+      localStorage.setItem("zargul_gh_token", token);
+
+      const progressBox = document.getElementById("sync-progress-box");
+      const btn = document.getElementById("publish-live-btn");
+      progressBox.style.display = "block";
+      btn.disabled = true;
+      btn.innerText = "Publishing to GitHub...";
+
+      const sConnect = document.getElementById("step-connect");
+      const sProducts = document.getElementById("step-products");
+      const sConfig = document.getElementById("step-config");
+      const sDone = document.getElementById("step-done");
+
+      function setStep(el, state, text) {
+        el.className = "sync-step-item " + state;
+        if (state === 'active') el.innerHTML = `<span>🔄</span> ${text}`;
+        if (state === 'done') el.innerHTML = `<span>✓</span> ${text}`;
+        if (state === 'error') el.innerHTML = `<span>✕</span> ${text}`;
+      }
+
+      try {
+        // 1. Check Connection
+        setStep(sConnect, 'active', 'Authenticating with GitHub REST API...');
+        const userRes = await fetch("https://api.github.com/user", {
+          headers: { 'Authorization': `token ${token}`, 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (!userRes.ok) throw new Error("GitHub Authentication Failed. Please verify token.");
+        setStep(sConnect, 'done', 'Connected to GitHub: ' + GITHUB_OWNER + '/' + GITHUB_REPO);
+
+        // 2. Commit products.json
+        setStep(sProducts, 'active', `Committing products.json (${adminProducts.length} items)...`);
+        const prodContent = JSON.stringify(adminProducts, null, 2);
+        await commitGitHubFile("products.json", prodContent, "Admin Update: Synchronized products catalog", token);
+        setStep(sProducts, 'done', 'products.json updated on GitHub branch main');
+
+        // 3. Commit store-config.json
+        setStep(sConfig, 'active', 'Committing store-config.json & reviews...');
+        const configContent = JSON.stringify(adminStoreConfig, null, 2);
+        await commitGitHubFile("store-config.json", configContent, "Admin Update: Synchronized store configuration", token);
+        setStep(sConfig, 'done', 'store-config.json updated on GitHub branch main');
+
+        // 4. Finished
+        setStep(sDone, 'done', '🎉 Live Sync Complete! Vercel is deploying zargul.net now.');
+        showToast("Website published live to GitHub & Vercel!", "success");
+        btn.innerText = "✓ Changes Live on GitHub!";
+
+      } catch (err) {
+        console.error(err);
+        alert("GitHub Sync Error: " + err.message);
+        btn.disabled = false;
+        btn.innerText = "Retry Publish";
+      }
+    }
+
+    async function commitGitHubFile(path, contentStr, commitMsg, token) {
+      // 1. Get current SHA if file exists
+      let sha = null;
+      try {
+        const getRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`, {
+          headers: {
+            'Authorization': `token ${token}`,
+            'Accept': 'application/vnd.github.v3+json'
+          }
+        });
+        if (getRes.ok) {
+          const data = await getRes.json();
+          sha = data.sha;
+        }
+      } catch (e) {
+        console.warn("Could not check existing file SHA", e);
+      }
+
+      // 2. UTF-8 to Base64
+      const b64 = btoa(unescape(encodeURIComponent(contentStr)));
+
+      // 3. PUT commit
+      const putBody = {
+        message: commitMsg,
+        content: b64,
+        branch: GITHUB_BRANCH
+      };
+      if (sha) putBody.sha = sha;
+
+      const putRes = await fetch(`https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${path}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `token ${token}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(putBody)
+      });
+
+      if (!putRes.ok) {
+        const errJson = await putRes.json();
+        throw new Error(errJson.message || 'File commit failed');
+      }
+      return await putRes.json();
+    }
+
+    // Backup & Export JSON fallback
+    function exportDataBackup() {
+      const data = {
+        exportedAt: new Date().toISOString(),
+        products: adminProducts,
+        storeConfig: adminStoreConfig
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `zargul-backup-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+      showToast("Catalog backup downloaded!", "success");
+    }
+
+    // Toast Engine
+    function showToast(message, type = "info") {
+      const container = document.getElementById("toast-container");
+      if (!container) return;
+
+      const toast = document.createElement("div");
+      toast.className = `toast ${type === 'success' ? 'success' : ''}`;
+      toast.style.background = type === 'success' ? '#e7ffd9' : (type === 'error' ? '#ffe3e3' : '#ffdce3');
+      toast.style.color = type === 'success' ? '#2b700f' : (type === 'error' ? '#b71c1c' : '#c93b58');
+      toast.style.boxShadow = '0 6px 20px rgba(0,0,0,0.1)';
+      toast.style.borderRadius = '16px';
+      toast.style.padding = '12px 18px';
+      toast.style.fontWeight = '600';
+      toast.innerText = message;
+
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(10px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>

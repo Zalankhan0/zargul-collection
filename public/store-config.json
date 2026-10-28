@@ -1,0 +1,44 @@
+{
+  "announcement": {
+    "enabled": true,
+    "text": "✨ Flat 20% OFF on Luxury Watches & Eau de Parfums • Free Cash on Delivery Nationwide • Royal Combo Rs. 1,000 OFF"
+  },
+  "whatsappNumber": "923485245955",
+  "deliveryFee": 0,
+  "freeDeliveryThreshold": 0,
+  "comboDeal": {
+    "enabled": true,
+    "discountAmount": 1000
+  },
+  "adminPin": "2026",
+  "reviews": [
+    { "name": "Bilal Ahmed", "city": "Lahore", "rating": 5, "text": "Hawajes Eau de Parfum has an insane projection! Spray kiya subah office ke liye aur shaam tak khushbu bilkul fresh rahi. Superb quality!", "product": "Hawajes Eau de Parfum For Him" },
+    { "name": "Usman Tariq", "city": "Islamabad", "rating": 5, "text": "Ordered the Rolex Submariner. Watch ka weight aur finish dekh kar dil khush ho gaya. Pure executive feel, looks 100% genuine.", "product": "Rolex Submariner Edition I" },
+    { "name": "Hamza Ali", "city": "Karachi", "rating": 5, "text": "Joyous S-PRO is such an invigorating morning scent. Citrus aur woody notes ka balance bohot aala hai. Delivery within 48 hours to DHA.", "product": "Joyous S-PRO 8 AM Eau de Parfum" },
+    { "name": "Ayesha Khan", "city": "Lahore", "rating": 5, "text": "Murooj Caliph Luxury EDP is heavenly! It has that rich amber-floral richness jo kapron par 2 din rehti hai. My husband also loved it.", "product": "Murooj Caliph Luxury Eau de Parfum" },
+    { "name": "Zainab Malik", "city": "Rawalpindi", "rating": 5, "text": "Got the Cartier Santos Classic Watch as an anniversary gift. Dial finishing aur clay-styled box packaging outstanding thi!", "product": "Cartier Santos Classic Watch" },
+    { "name": "Saad Qureshi", "city": "Faisalabad", "rating": 5, "text": "Bugatti Chronograph Sport is next-level. Everyone at my office noticed it right away. Best purchase in Rs. 8,000.", "product": "Bugatti Chronograph Sport" },
+    { "name": "Farhan Sheikh", "city": "Peshawar", "rating": 5, "text": "Ordered Hawajes and Joyous perfumes together with the 20% discount. Peshawar me safe bubble-wrapped delivery mili TCS se.", "product": "Hawajes Eau de Parfum For Him" },
+    { "name": "Hira Mansoor", "city": "Multan", "rating": 5, "text": "Murooj perfume bottle feels so heavy and artistic on my vanity table. Scent profile is easily comparable to 30K international brands.", "product": "Murooj Caliph Luxury Eau de Parfum" },
+    { "name": "Daniyal Raza", "city": "Sialkot", "rating": 5, "text": "Rolex Datejust IV in two-tone looks extremely sophisticated. Crown adjustment and bezel precision are top tier.", "product": "Rolex Datejust Edition IV" },
+    { "name": "Nimra Tariq", "city": "Karachi", "rating": 5, "text": "WhatsApp checkout process was so effortless. Order details share kiye aur representative ne 5 minute me confirmation bhej di.", "product": "Rolex Submariner Edition I" },
+    { "name": "Shahzaib Khan", "city": "Islamabad", "rating": 5, "text": "Hublot Classic Fusion has that sleek matte dark bezel jo har formal suit ke sath match hoti hai. 10/10 recommendation!", "product": "Hublot Classic Fusion" },
+    { "name": "Mehwish Bukhari", "city": "Lahore", "rating": 5, "text": "Gifted Hawajes to my fiancé. He was amazed by the woody sillage and sleek blue bottle design.", "product": "Hawajes Eau de Parfum For Him" },
+    { "name": "Arham Siddiqui", "city": "Gujranwala", "rating": 5, "text": "BestWin Chronograph for Rs. 4,500 is unbelievable value for money. Subdials work smoothly aur chain heavy hai.", "product": "BestWin Luxury Chronograph" },
+    { "name": "Sana Javed", "city": "Faisalabad", "rating": 5, "text": "Joyous S-Pro is so pleasant and uplifting. Not overpowering, just clean luxury throughout the day.", "product": "Joyous S-PRO 8 AM Eau de Parfum" },
+    { "name": "Mohsin Naqvi", "city": "Karachi", "rating": 5, "text": "Kademan Executive Watch is sturdy and water-resistant. Daily bike ride pe pehanta hoon, absolutely no scratches.", "product": "Kademan Executive Watch" },
+    { "name": "Maryam Farooq", "city": "Rawalpindi", "rating": 5, "text": "Unboxing experience was so aesthetic. The claymorphic cards and personalized note feel like a proper luxury brand.", "product": "Rolex Oyster Perpetual III" },
+    { "name": "Talha Aslam", "city": "Multan", "rating": 5, "text": "Murooj Caliph EDP is royal! Projection is so strong that everyone in the car asked what perfume I was wearing.", "product": "Murooj Caliph Luxury Eau de Parfum" },
+    { "name": "Rabia Basheer", "city": "Islamabad", "rating": 5, "text": "Rolex Diamond Bezel edition shines gracefully without being flashy. Highly recommended for special occasions.", "product": "Rolex Diamond Bezel V" },
+    { "name": "Ahsan Mahmood", "city": "Peshawar", "rating": 5, "text": "Hawajes perfume delivers unbelievable longevity in KPK winter. Clothes smell incredible even after washing.", "product": "Hawajes Eau de Parfum For Him" },
+    { "name": "Zoya Rehman", "city": "Lahore", "rating": 5, "text": "Joyous S-Pro 8 AM is now my brother's signature scent. Fresh, modern and very charismatic.", "product": "Joyous S-PRO 8 AM Eau de Parfum" },
+    { "name": "Waqas Akram", "city": "Hyderabad", "rating": 5, "text": "Puccess Way Dual Time is a lifesaver for scheduling meetings with my overseas clients. Beautiful build.", "product": "Puccess Way Dual Time" },
+    { "name": "Fatima Noor", "city": "Sargodha", "rating": 5, "text": "Ordered both Murooj perfume and Rolex Oyster watch. Dono items premium clay packaging me safely deliver huay.", "product": "Royal Gift Combo" },
+    { "name": "Omair Hassan", "city": "Abbottabad", "rating": 5, "text": "Universe Point Steel Edition has solid stainless steel weight. Doesn't feel cheap or hollow like local market copies.", "product": "Universe Point Steel Edition" },
+    { "name": "Mahnoor Shah", "city": "Karachi", "rating": 5, "text": "Hawajes EDP is genuine EDP concentration. 6 sprays lasted through my 10-hour university shift.", "product": "Hawajes Eau de Parfum For Him" },
+    { "name": "Rehan Butt", "city": "Lahore", "rating": 5, "text": "Rolex Oyster Perpetual III has that minimalist clean dial jo jeans aur formal dono pe zabardast lagta hai.", "product": "Rolex Oyster Perpetual III" },
+    { "name": "Anum Zehra", "city": "Islamabad", "rating": 5, "text": "Murooj perfume + Cartier watch combo order. Packing secure thi aur WhatsApp support bohot cooperative tha.", "product": "Royal Gift Combo" },
+    { "name": "Zeeshan Haider", "city": "Quetta", "rating": 5, "text": "Quetta me 3 din me parcel receive hua. Safe transit and exact watch picture jaisi thi.", "product": "Watch1 Royal Chrono" },
+    { "name": "Alishba Nadeem", "city": "Lahore", "rating": 5, "text": "Zargul Collection has set the new standard for luxury accessories in Pakistan. Will definitely buy again!", "product": "Hawajes Eau de Parfum For Him" }
+  ]
+}
