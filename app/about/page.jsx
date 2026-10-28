@@ -113,6 +113,61 @@ export default function AboutPage() {
         </div>
       </div>
 
+      {/* CO-FOUNDERS & LEADERSHIP */}
+      <section style={{ maxWidth: "860px", margin: "20px auto 60px", textAlign: "center" }}>
+        <div style={{ marginBottom: "36px" }}>
+          <span className="hero-tag">✦ Leadership &amp; Vision</span>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "2.2rem", fontWeight: "700", margin: "12px 0 8px" }}>
+            Meet the Co-Founders
+          </h2>
+          <p style={{ fontSize: "0.95rem", color: "var(--color-text-muted)", maxWidth: "680px", margin: "0 auto", lineHeight: "1.6" }}>
+            Curating exclusive luxury watches, premium French perfumes, Swati woolen shawls, and handcrafted accessories with a commitment to unmatched quality.
+          </p>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
+          {/* Zalan Khan */}
+          <div className="clay-card white" style={{ padding: "30px 24px", textAlign: "center", borderRadius: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ width: "130px", height: "130px", borderRadius: "50%", overflow: "hidden", marginBottom: "16px", boxShadow: "0 8px 20px rgba(0,0,0,0.12)", border: "3px solid #fff" }}>
+              <img
+                src="/assets/founders/zalan_khan.jpg"
+                alt="Zalan Khan"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </div>
+            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", fontWeight: "700", margin: "0 0 4px" }}>
+              Zalan Khan
+            </h3>
+            <span style={{ fontSize: "0.88rem", color: "var(--color-accent-dark)", fontWeight: "600", letterSpacing: "0.5px" }}>
+              Co-Founder &amp; Owner
+            </span>
+            <span style={{ fontSize: "0.8rem", color: "var(--color-text-muted)", marginTop: "4px" }}>
+              Zargul Collection
+            </span>
+          </div>
+
+          {/* Zohaib Khan */}
+          <div className="clay-card white" style={{ padding: "30px 24px", textAlign: "center", borderRadius: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <div style={{ width: "130px", height: "130px", borderRadius: "50%", overflow: "hidden", marginBottom: "16px", boxShadow: "0 8px 20px rgba(0,0,0,0.12)", border: "3px solid #fff" }}>
+              <img
+                src="/assets/founders/zohaib_khan.jpg"
+                alt="Zohaib Khan"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </div>
+            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", fontWeight: "700", margin: "0 0 4px" }}>
+              Zohaib Khan
+            </h3>
+            <span style={{ fontSize: "0.88rem", color: "var(--color-accent-dark)", fontWeight: "600", letterSpacing: "0.5px" }}>
+              Co-Founder &amp; Owner
+            </span>
+            <span style={{ fontSize: "0.8rem", color: "var(--color-text-muted)", marginTop: "4px" }}>
+              Zargul Collection
+            </span>
+          </div>
+        </div>
+      </section>
+
       {/* CTA */}
       <div style={{ textAlign: "center" }}>
         <Link href="/categories" className="clay-btn accent">
