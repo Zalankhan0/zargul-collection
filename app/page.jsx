@@ -22,14 +22,14 @@ export default function HomePage() {
     .slice(0, 12);
 
   const categories = [
-    { title: "Watches", count: "Luxury Editions", image: "/assets/watch.png", href: "/categories?category=watches", bg: "white" },
-    { title: "Perfumes", count: "French & Oriental", image: "/assets/perfume.png", href: "/categories?category=perfumes", bg: "pink" },
+    { title: "Watches", count: "Luxury Editions", image: "/assets/watches/Bugati_8000.jpg", href: "/categories?category=watches", bg: "white" },
+    { title: "Perfumes", count: "French & Oriental", image: "/assets/perfumes/Murooj_4000.jpg", href: "/categories?category=perfumes", bg: "pink" },
     { title: "Bags", count: "Handcrafted Luxury", image: "/assets/bags/Pearl_Handbag_5500.jpg", href: "/categories?category=bags", bg: "lavender" },
-    { title: "Swati Shawls", count: "Pure Woolen", image: "/assets/hero.png", href: "/categories?category=shawls", bg: "white" },
+    { title: "Swati Shawls", count: "Pure Woolen", image: "/assets/shawl.jpg", href: "/categories?category=shawls", bg: "white" },
     { title: "Coats", count: "Prince Coats & Vests", image: "/assets/wascot.png", href: "/categories?category=coats", bg: "lavender" },
     { title: "Shoes", count: "Leather & Chappal", image: "/assets/shoes.png", href: "/categories?category=shoes", bg: "pink" },
-    { title: "Gift Sets", count: "Royal Combos", image: "/assets/watches/Bugati_8000.jpg", href: "/categories?category=gifts", bg: "white" },
-    { title: "Special Deals", count: "Limited Time", image: "/assets/perfumes/Warrant_4275.jpg", href: "/categories?category=sale", bg: "pink" }
+    { title: "Gift Sets", count: "Royal Combos", image: "/assets/gift_set_combo.jpg", href: "/categories?category=gifts", bg: "white" },
+    { title: "Special Deals", count: "Limited Time", image: "/assets/special_deals_combo.jpg", href: "/categories?category=sale", bg: "pink" }
   ];
 
   return (
