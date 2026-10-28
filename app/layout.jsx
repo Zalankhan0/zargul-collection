@@ -85,10 +85,10 @@ export default function RootLayout({ children }) {
               </svg>
             </a>
           </div>
-
-          {/* Vercel Web Analytics */}
-          <Analytics />
         </StoreProvider>
+
+        {/* Vercel Web Analytics */}
+        <Analytics />
       </body>
     </html>
   );
