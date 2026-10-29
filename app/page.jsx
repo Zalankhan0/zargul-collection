@@ -8,11 +8,7 @@ import ReviewsMarquee from "@/components/ReviewsMarquee";
 
 export default function HomePage() {
   const { products, storeConfig } = useStore();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => { setMounted(true); }, []);
-  if (!mounted) return (
-    <div style={{ minHeight: "100vh", background: "#faf9f6" }} />
-  );
+  const [founderModal, setFounderModal] = useState(null);
 
   // Top Featured Products - prioritize newest luxury arrivals
   const featuredProducts = products
@@ -248,7 +244,11 @@ export default function HomePage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px" }}>
           {/* Zalan Khan */}
           <div className="clay-card white" style={{ padding: "28px 20px", textAlign: "center", borderRadius: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{ width: "120px", height: "120px", borderRadius: "50%", overflow: "hidden", marginBottom: "14px", boxShadow: "0 8px 20px rgba(0,0,0,0.12)", border: "3px solid #fff" }}>
+            <div
+              onClick={() => setFounderModal({ src: "/assets/founders/zalan_khan.jpg", name: "Zalan Khan — Co-Founder & Owner" })}
+              title="Click to view full photo"
+              style={{ width: "120px", height: "120px", borderRadius: "50%", overflow: "hidden", marginBottom: "14px", boxShadow: "0 8px 20px rgba(0,0,0,0.12)", border: "3px solid #fff", cursor: "pointer", transition: "transform 0.2s ease" }}
+            >
               <img
                 src="/assets/founders/zalan_khan.jpg"
                 alt="Zalan Khan"
@@ -268,7 +268,11 @@ export default function HomePage() {
 
           {/* Zohaib Khan */}
           <div className="clay-card white" style={{ padding: "28px 20px", textAlign: "center", borderRadius: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{ width: "120px", height: "120px", borderRadius: "50%", overflow: "hidden", marginBottom: "14px", boxShadow: "0 8px 20px rgba(0,0,0,0.12)", border: "3px solid #fff" }}>
+            <div
+              onClick={() => setFounderModal({ src: "/assets/founders/zohaib_khan.jpg", name: "Zohaib Khan — Co-Founder & Owner" })}
+              title="Click to view full photo"
+              style={{ width: "120px", height: "120px", borderRadius: "50%", overflow: "hidden", marginBottom: "14px", boxShadow: "0 8px 20px rgba(0,0,0,0.12)", border: "3px solid #fff", cursor: "pointer", transition: "transform 0.2s ease" }}
+            >
               <img
                 src="/assets/founders/zohaib_khan.jpg"
                 alt="Zohaib Khan"
@@ -287,6 +291,70 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* FOUNDER FULL PHOTO MODAL */}
+      {founderModal && (
+        <div
+          onClick={() => setFounderModal(null)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 9999,
+            backgroundColor: "rgba(0, 0, 0, 0.85)",
+            backdropFilter: "blur(6px)",
+            WebkitBackdropFilter: "blur(6px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "20px",
+            cursor: "zoom-out"
+          }}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "relative",
+              maxWidth: "420px",
+              width: "100%",
+              textAlign: "center"
+            }}
+          >
+            <img
+              src={founderModal.src}
+              alt={founderModal.name}
+              style={{
+                width: "100%",
+                maxHeight: "75vh",
+                objectFit: "contain",
+                borderRadius: "20px",
+                border: "3px solid rgba(255, 255, 255, 0.9)",
+                boxShadow: "0 20px 50px rgba(0,0,0,0.6)"
+              }}
+            />
+            <div style={{ marginTop: "14px", color: "#ffffff" }}>
+              <p style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: "700", margin: "0 0 4px" }}>
+                {founderModal.name}
+              </p>
+              <button
+                onClick={() => setFounderModal(null)}
+                style={{
+                  marginTop: "8px",
+                  background: "rgba(255, 255, 255, 0.2)",
+                  border: "1px solid rgba(255, 255, 255, 0.4)",
+                  color: "#ffffff",
+                  padding: "6px 20px",
+                  borderRadius: "20px",
+                  cursor: "pointer",
+                  fontSize: "0.85rem",
+                  fontFamily: "var(--font-body)"
+                }}
+              >
+                ✕ Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* CRAFTSMANSHIP & BENEFITS */}
       <section style={{ padding: "60px 5%", maxWidth: "1400px", margin: "0 auto" }}>
