@@ -1,11 +1,52 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 
 export default function AboutPage() {
+  const [lightbox, setLightbox] = useState(null); // { src, name }
+
   return (
     <div style={{ maxWidth: "1200px", margin: "40px auto 80px", padding: "0 5%" }}>
+
+      {/* LIGHTBOX MODAL */}
+      {lightbox && (
+        <div
+          onClick={() => setLightbox(null)}
+          style={{
+            position: "fixed", inset: 0, zIndex: 9999,
+            background: "rgba(0,0,0,0.82)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: "20px",
+            cursor: "zoom-out"
+          }}
+        >
+          <div style={{ textAlign: "center" }} onClick={e => e.stopPropagation()}>
+            <img
+              src={lightbox.src}
+              alt={lightbox.name}
+              style={{
+                maxWidth: "min(360px, 90vw)",
+                maxHeight: "70vh",
+                borderRadius: "20px",
+                objectFit: "cover",
+                boxShadow: "0 24px 60px rgba(0,0,0,0.5)",
+                border: "4px solid #fff"
+              }}
+            />
+            <p style={{ color: "#fff", fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: "700", marginTop: "14px" }}>{lightbox.name}</p>
+            <button
+              onClick={() => setLightbox(null)}
+              style={{
+                marginTop: "12px", background: "rgba(255,255,255,0.15)",
+                border: "1px solid rgba(255,255,255,0.4)", color: "#fff",
+                padding: "8px 22px", borderRadius: "30px", cursor: "pointer",
+                fontSize: "0.85rem", fontFamily: "var(--font-body)"
+              }}
+            >✕ Close</button>
+          </div>
+        </div>
+      )}
 
       {/* Header */}
       <div style={{ textAlign: "center", maxWidth: "700px", margin: "0 auto 50px" }}>
@@ -128,11 +169,14 @@ export default function AboutPage() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}>
           {/* Zalan Khan */}
           <div className="clay-card white" style={{ padding: "30px 24px", textAlign: "center", borderRadius: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{ width: "130px", height: "130px", borderRadius: "50%", overflow: "hidden", marginBottom: "16px", boxShadow: "0 8px 20px rgba(0,0,0,0.12)", border: "3px solid #fff" }}>
+            <div
+              onClick={() => setLightbox({ src: "/assets/founders/zalan_khan.jpg", name: "Zalan Khan — Co-Founder & Owner" })}
+              style={{ width: "130px", height: "130px", borderRadius: "50%", overflow: "hidden", marginBottom: "16px", boxShadow: "0 8px 20px rgba(0,0,0,0.12)", border: "3px solid #fff", cursor: "zoom-in" }}
+            >
               <img
                 src="/assets/founders/zalan_khan.jpg"
                 alt="Zalan Khan"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }}
               />
             </div>
             <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", fontWeight: "700", margin: "0 0 4px" }}>
@@ -148,11 +192,14 @@ export default function AboutPage() {
 
           {/* Zohaib Khan */}
           <div className="clay-card white" style={{ padding: "30px 24px", textAlign: "center", borderRadius: "20px", display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <div style={{ width: "130px", height: "130px", borderRadius: "50%", overflow: "hidden", marginBottom: "16px", boxShadow: "0 8px 20px rgba(0,0,0,0.12)", border: "3px solid #fff" }}>
+            <div
+              onClick={() => setLightbox({ src: "/assets/founders/zohaib_khan.jpg", name: "Zohaib Khan — Co-Founder & Owner" })}
+              style={{ width: "130px", height: "130px", borderRadius: "50%", overflow: "hidden", marginBottom: "16px", boxShadow: "0 8px 20px rgba(0,0,0,0.12)", border: "3px solid #fff", cursor: "zoom-in" }}
+            >
               <img
                 src="/assets/founders/zohaib_khan.jpg"
                 alt="Zohaib Khan"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center center" }}
               />
             </div>
             <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", fontWeight: "700", margin: "0 0 4px" }}>
