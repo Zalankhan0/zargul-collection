@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
+import { INITIAL_PRODUCTS } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
 
@@ -10,14 +11,15 @@ export default function HomePage() {
   const { products, storeConfig } = useStore();
   const [founderModal, setFounderModal] = useState(null);
 
-  // Top Featured Products - prioritize newest luxury arrivals
-  const featuredProducts = products
-    .filter((p) => p.featured !== false)
+  // Top Featured Products - prioritize newest luxury arrivals with zero crash guarantee
+  const safeProducts = Array.isArray(products) && products.length > 0 ? products : INITIAL_PRODUCTS;
+  const featuredProducts = safeProducts
+    .filter((p) => p && p.featured !== false)
     .sort((a, b) => {
-      if (a.id === 201) return -1;
-      if (b.id === 201) return 1;
-      if (a.id === 104) return -1;
-      if (b.id === 104) return 1;
+      if (a?.id === 201) return -1;
+      if (b?.id === 201) return 1;
+      if (a?.id === 104) return -1;
+      if (b?.id === 104) return 1;
       return 0;
     })
     .slice(0, 12);
