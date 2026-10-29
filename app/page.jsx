@@ -6,6 +6,7 @@ import { useStore } from "@/context/StoreContext";
 import { INITIAL_PRODUCTS } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
+import WelcomeSplash from "@/components/WelcomeSplash";
 
 export default function HomePage() {
   const { products, storeConfig } = useStore();
@@ -37,6 +38,9 @@ export default function HomePage() {
 
   return (
     <>
+      {/* 3-4 SECOND ELEGANT WELCOME SPLASH */}
+      <WelcomeSplash />
+
       {/* HERO SECTION */}
       <section className="hero-section">
         <div className="hero-content">
@@ -77,37 +81,40 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* QUICK CATEGORY SHELVES */}
-      <section style={{ padding: "20px 5% 40px", maxWidth: "1400px", margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "18px" }}>
+      {/* COMPACT CATEGORIES GRID (2-3 COLS MOBILE, 4 COLS DESKTOP) */}
+      <section style={{ padding: "10px 5% 36px", maxWidth: "1400px", margin: "0 auto" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+          <div>
+            <span className="hero-tag" style={{ fontSize: "0.72rem", padding: "4px 12px" }}>✦ Curated Departments</span>
+            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.35rem", fontWeight: "700", margin: "4px 0 0", color: "var(--color-text-dark)" }}>
+              Explore Collections
+            </h3>
+          </div>
+          <Link href="/categories" style={{ fontSize: "0.82rem", fontWeight: "600", color: "var(--color-accent-dark)", textDecoration: "none" }}>
+            See All →
+          </Link>
+        </div>
+
+        <div className="categories-compact-grid">
           {categories.map((cat) => (
             <Link
               key={cat.title}
               href={cat.href}
-              className={`clay-card ${cat.bg} category-shelf-card`}
-              style={{
-                padding: "16px 20px",
-                display: "flex",
-                alignItems: "center",
-                gap: "16px",
-                textDecoration: "none",
-                position: "relative",
-                overflow: "hidden"
-              }}
+              className={`clay-card ${cat.bg} category-box-card`}
             >
               <div
                 style={{
-                  width: "68px",
-                  height: "68px",
+                  width: "64px",
+                  height: "64px",
                   borderRadius: "16px",
                   background: "#ffffff",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  flexShrink: 0,
+                  marginBottom: "10px",
                   overflow: "hidden",
-                  boxShadow: "0 4px 14px rgba(0,0,0,0.06)",
-                  border: "1px solid rgba(0,0,0,0.05)"
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
+                  border: "1px solid rgba(0,0,0,0.06)"
                 }}
               >
                 <img
@@ -118,7 +125,7 @@ export default function HomePage() {
                     height: "100%",
                     objectFit: "contain",
                     padding: "4px",
-                    transition: "transform 0.3s ease"
+                    transition: "transform 0.25s ease"
                   }}
                   className="cat-thumb-img"
                   loading="lazy"
@@ -128,26 +135,29 @@ export default function HomePage() {
                   }}
                 />
               </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <h4
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontWeight: "700",
-                    fontSize: "1.02rem",
-                    color: "var(--color-text-dark)",
-                    margin: "0 0 2px",
-                    whiteSpace: "nowrap",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis"
-                  }}
-                >
-                  {cat.title}
-                </h4>
-                <span style={{ fontSize: "0.78rem", color: "var(--color-text-muted)", display: "block" }}>
-                  {cat.count}
-                </span>
-              </div>
-              <span style={{ color: "var(--color-accent)", fontSize: "1.1rem", fontWeight: "700" }}>→</span>
+
+              <h4
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: "700",
+                  fontSize: "0.95rem",
+                  color: "var(--color-text-dark)",
+                  margin: "0 0 2px",
+                  lineHeight: "1.25"
+                }}
+              >
+                {cat.title}
+              </h4>
+              <span
+                style={{
+                  fontSize: "0.72rem",
+                  color: "var(--color-text-muted)",
+                  display: "block",
+                  lineHeight: "1.2"
+                }}
+              >
+                {cat.count}
+              </span>
             </Link>
           ))}
         </div>
