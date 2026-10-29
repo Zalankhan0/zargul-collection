@@ -172,6 +172,72 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
+
+          {/* Mobile Drawer Social Links */}
+          <div style={{ marginTop: "auto", paddingTop: "20px", borderTop: "1px solid rgba(0,0,0,0.08)" }}>
+            <span style={{ fontSize: "0.75rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "1px", color: "var(--color-accent-dark)", display: "block", marginBottom: "12px" }}>
+              ✦ Official Social Media
+            </span>
+            <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+              <a
+                href="https://www.tiktok.com/@zargul_collection?_r=1&_t=ZS-9AxiBTpa08K"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="clay-icon-btn"
+                title="TikTok"
+                aria-label="TikTok"
+                style={{ width: "38px", height: "38px", color: "#000000", background: "#ffffff" }}
+              >
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64c.298-.002.595.042.88.13V9.4a6.33 6.33 0 0 0-1-.08A6.34 6.34 0 0 0 3 15.66a6.34 6.34 0 0 0 10.86 4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-.04-.52z"/>
+                </svg>
+              </a>
+
+              <a
+                href="https://www.instagram.com/zargul_collection?xtok=MXhjY2FkajdqaXcw"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="clay-icon-btn"
+                title="Instagram"
+                aria-label="Instagram"
+                style={{ width: "38px", height: "38px", color: "#E1306C", background: "#ffffff" }}
+              >
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+              </a>
+
+              <a
+                href="https://www.snapchat.com/add/zargulcolection?share_id=-gJbaMcSTcU&locale=en-GB"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="clay-icon-btn"
+                title="Snapchat"
+                aria-label="Snapchat"
+                style={{ width: "38px", height: "38px", color: "#000000", background: "#FFFC00" }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.001 2c-3.57 0-6.19 2.45-6.19 5.86 0 .84.22 1.94.49 2.76.12.37.1.53-.1.68-.45.33-1.39.81-1.78 1.34-.34.46-.22.95.34 1.14.77.26 1.77.29 2.38.16.29-.06.45.08.53.31.25.75.95 2.14 2.06 2.65.48.22.86.08 1.25-.13.37-.2.78-.42 1.02-.42.23 0 .64.22 1.02.42.39.21.77.35 1.25.13 1.11-.51 1.81-1.9 2.06-2.65.08-.23.24-.37.53-.31.61.13 1.61.1 2.38-.16.56-.19.68-.68.34-1.14-.39-.53-1.33-1.01-1.78-1.34-.2-.15-.22-.31-.1-.68.27-.82.49-1.92.49-2.76C18.19 4.45 15.57 2 12.001 2z"/>
+                </svg>
+              </a>
+
+              <a
+                href="https://www.facebook.com/share/1AD55fVfT7/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="clay-icon-btn"
+                title="Facebook"
+                aria-label="Facebook"
+                style={{ width: "38px", height: "38px", color: "#1877F2", background: "#ffffff" }}
+              >
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
       </header>
 
