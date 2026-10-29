@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
 import ProductCard from "@/components/ProductCard";
@@ -8,6 +8,11 @@ import ReviewsMarquee from "@/components/ReviewsMarquee";
 
 export default function HomePage() {
   const { products, storeConfig } = useStore();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+  if (!mounted) return (
+    <div style={{ minHeight: "100vh", background: "#faf9f6" }} />
+  );
 
   // Top Featured Products - prioritize newest luxury arrivals
   const featuredProducts = products
