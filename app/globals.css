@@ -125,6 +125,54 @@ img {
   transform: scale(1.12);
 }
 
+/* Modern Compact Categories Grid */
+.categories-compact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 992px) {
+  .categories-compact-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .categories-compact-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+.category-box-card {
+  padding: 16px 10px 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.category-box-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.category-box-card:hover .cat-thumb-img {
+  transform: scale(1.08);
+}
+
+.category-box-card:active {
+  transform: scale(0.97);
+}
+
 /* Executive Tactile Buttons */
 .clay-btn {
   padding: 12px 24px;
