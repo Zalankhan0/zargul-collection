@@ -69,40 +69,48 @@ export default function ProductCard({ product }) {
         </div>
 
         {isSoldOut ? (
-          <button
-            disabled
-            className="clay-btn secondary"
-            style={{
-              padding: "8px 16px",
-              fontSize: "0.75rem",
-              background: "#e2dbdf",
-              color: "#8c8288",
-              cursor: "not-allowed",
-              boxShadow: "none"
-            }}
-          >
+          <span style={{ fontSize: "0.68rem", fontWeight: "700", color: "#8c8288", padding: "4px 8px", background: "#f0edf1", borderRadius: "8px" }}>
             Sold Out
-          </button>
+          </span>
         ) : (
-          <div style={{ display: "flex", gap: "8px" }}>
+          <div className="product-card-actions" style={{ display: "flex", gap: "5px", width: "100%", marginTop: "6px" }}>
             <Link
               href={`/product/${product.id}`}
-              className="clay-btn secondary"
-              style={{ padding: "8px 14px", fontSize: "0.75rem" }}
+              className="clay-btn secondary card-btn-details"
+              style={{
+                flex: 1,
+                padding: "6px 8px",
+                fontSize: "0.72rem",
+                fontWeight: "600",
+                textAlign: "center",
+                textDecoration: "none",
+                borderRadius: "10px",
+                whiteSpace: "nowrap"
+              }}
             >
               Details
             </Link>
             <button
+              type="button"
               onClick={() => addToCart(product)}
-              className="clay-icon-btn"
-              style={{ width: "38px", height: "38px" }}
-              aria-label={`Add ${product.title} to Bag`}
-              title="Add to Shopping Bag"
+              className="clay-btn accent card-btn-buy"
+              style={{
+                flex: 1,
+                padding: "6px 8px",
+                fontSize: "0.72rem",
+                fontWeight: "700",
+                textAlign: "center",
+                borderRadius: "10px",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "3px"
+              }}
+              title={`Buy ${product.title}`}
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="12" y1="5" x2="12" y2="19"></line>
-                <line x1="5" y1="12" x2="19" y2="12"></line>
-              </svg>
+              <span>+</span> Buy
             </button>
           </div>
         )}
