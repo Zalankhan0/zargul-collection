@@ -1281,8 +1281,20 @@ img {
   z-index: 2001;
   display: flex;
   flex-direction: column;
-  padding: 28px;
-  border-radius: 28px;
+  padding: 24px;
+  border-radius: 24px;
+}
+
+@media (max-width: 600px) {
+  .cart-drawer-slider {
+    top: 8px !important;
+    right: 8px !important;
+    width: calc(100vw - 16px) !important;
+    max-width: calc(100vw - 16px) !important;
+    height: calc(100vh - 16px) !important;
+    padding: 16px 14px !important;
+    border-radius: 20px !important;
+  }
 }
 
 .cart-items-list {
@@ -1310,35 +1322,59 @@ img {
   object-fit: contain;
 }
 
-/* Toast */
+/* Toast Notification - Subtle, Non-blocking Floating Luxury Pill */
 .global-toast {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 9999;
-  padding: 14px 22px;
-  border-radius: 18px;
-  font-size: 0.88rem;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10005;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.8rem;
   font-weight: 600;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-  animation: slideInUp 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+  pointer-events: none;
+  animation: toastFadeDown 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+  max-width: 90vw;
 }
 
-@keyframes slideInUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+@keyframes toastFadeDown {
+  from {
+    transform: translate(-50%, -16px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
 }
 
 .global-toast.success {
-  background: #e7ffd9;
-  color: #2b700f;
-  border: 2px solid #ffffff;
+  background: #141316;
+  color: #fdfaf3;
+  border: 1px solid rgba(197, 160, 89, 0.45);
+}
+
+.global-toast.success .toast-icon {
+  color: #4ade80;
+  font-weight: 800;
+  font-size: 0.85rem;
 }
 
 .global-toast.error {
-  background: #ffe3e3;
-  color: #b71c1c;
-  border: 2px solid #ffffff;
+  background: #141316;
+  color: #fee2e2;
+  border: 1px solid #ef4444;
+}
+
+.global-toast.error .toast-icon {
+  color: #ef4444;
+  font-weight: 800;
 }
 
 /* ================================================================
