@@ -45,8 +45,8 @@ export default function HomePage() {
           <h1 className="hero-title" style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}>
             Curated Elegance &amp; <br /><span style={{ color: "var(--color-accent)" }}>Luxury Collections</span>
           </h1>
-          <p className="hero-desc">
-            Executive watches, Swati woolen shawls, French Eau de Parfums, and luxury accessories. Delivered free with Cash on Delivery across Pakistan.
+          <p className="hero-desc" style={{ marginBottom: "14px", fontSize: "0.92rem", lineHeight: 1.35 }}>
+            Luxury timepieces, French perfumes &amp; Swati shawls with free nationwide COD.
           </p>
 
           <div className="hero-actions">
@@ -205,17 +205,14 @@ export default function HomePage() {
       </section>
 
       {/* FEATURED CREATIONS GRID */}
-      <section className="products-section">
-        <div className="section-header-row">
+      <section className="products-section" style={{ padding: "8px 5% 18px" }}>
+        <div className="section-header-row" style={{ marginBottom: "12px" }}>
           <div>
-            <span className="hero-tag">✦ Master Selection</span>
-            <h2 className="section-title">Iconic Creations</h2>
-            <p className="section-subtitle">
-              Every creation is verified for pristine weight, tactile precision, and authentic presentation.
-            </p>
+            <span className="hero-tag" style={{ fontSize: "0.68rem", padding: "2px 8px" }}>✦ Master Selection</span>
+            <h2 className="section-title" style={{ fontSize: "1.35rem", margin: "2px 0 0" }}>Iconic Creations</h2>
           </div>
 
-          <Link href="/categories" className="clay-btn secondary" style={{ fontSize: "0.82rem", padding: "10px 20px" }}>
+          <Link href="/categories" className="clay-btn secondary" style={{ fontSize: "0.76rem", padding: "6px 14px", borderRadius: "12px" }}>
             View All ({products.length}) →
           </Link>
         </div>
@@ -226,89 +223,6 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-
-      {/* ROYAL COMBO BUILDER BANNER - COMPACT SLIM CARD WITH DIRECT BUY NOW */}
-      {storeConfig.comboDeal?.enabled !== false && (
-        <section style={{ padding: "10px 5% 28px", maxWidth: "1400px", margin: "0 auto" }}>
-          <div
-            className="clay-card pink"
-            style={{
-              padding: "12px 18px",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              flexWrap: "wrap",
-              gap: "12px",
-              borderRadius: "18px",
-              background: "linear-gradient(135deg, #fff7fa 0%, #faedf3 100%)",
-              border: "1.5px solid rgba(240, 142, 167, 0.4)",
-              boxShadow: "0 4px 14px rgba(240, 142, 167, 0.12)"
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", maxWidth: "680px" }}>
-              <div
-                style={{
-                  width: "42px",
-                  height: "42px",
-                  borderRadius: "12px",
-                  background: "#ffffff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "1.4rem",
-                  flexShrink: 0,
-                  boxShadow: "0 4px 10px rgba(240, 142, 167, 0.25)"
-                }}
-              >
-                👑
-              </div>
-              <div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
-                  <span style={{ fontSize: "0.68rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "var(--color-accent-dark)", background: "rgba(240, 142, 167, 0.25)", padding: "2px 6px", borderRadius: "8px" }}>
-                    Special Deal
-                  </span>
-                  <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", fontWeight: "800", margin: 0, color: "var(--color-text-dark)" }}>
-                    {storeConfig.comboDeal?.title || "Royal Gift Combo Offer"}
-                  </h4>
-                </div>
-                <p style={{ fontSize: "0.8rem", color: "var(--color-text-muted)", margin: "2px 0 0", lineHeight: 1.3 }}>
-                  {storeConfig.comboDeal?.desc || "Buy Any Luxury Watch + Any Fragrance Together & get Instant Rs. 1,000 OFF + Free Gift Box!"}
-                </p>
-              </div>
-            </div>
-
-            <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
-              <Link
-                href="/gift-builder"
-                className="clay-btn secondary"
-                style={{ padding: "7px 14px", fontSize: "0.76rem", borderRadius: "12px", fontWeight: "700" }}
-              >
-                Details
-              </Link>
-              <a
-                href={`https://wa.me/${storeConfig.whatsappNumber || "923485245955"}?text=${encodeURIComponent("Assalam-o-Alaikum Zargul Collection! I want to order the Royal Gift Combo Offer (Watch + Perfume Combo with Rs. 1,000 Discount + Free Gift Box). Please confirm my order.")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="clay-btn accent"
-                style={{
-                  padding: "7px 16px",
-                  fontSize: "0.78rem",
-                  borderRadius: "12px",
-                  fontWeight: "800",
-                  whiteSpace: "nowrap",
-                  background: "#141316",
-                  color: "#ffffff",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "4px"
-                }}
-              >
-                BUY NOW →
-              </a>
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* STRICTLY 1-LINE AUTO-SCROLLING REVIEWS MARQUEE */}
       <ReviewsMarquee />
@@ -440,37 +354,76 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* CRAFTSMANSHIP & BENEFITS */}
-      <section style={{ padding: "60px 5%", maxWidth: "1400px", margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px" }}>
-          <div className="clay-card white" style={{ padding: "32px", textAlign: "center" }}>
-            <span style={{ fontSize: "2.4rem", display: "block", marginBottom: "14px" }}>🇵🇰</span>
-            <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: "700", marginBottom: "8px" }}>
-              Cash on Delivery (COD)
-            </h4>
-            <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
-              Inspect your parcel at your doorstep anywhere in Pakistan before making payment.
-            </p>
+      {/* CRAFTSMANSHIP & BENEFITS - COMPACT 1-LINE HORIZONTAL ROW */}
+      <section style={{ padding: "14px 5% 28px", maxWidth: "1400px", margin: "0 auto" }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gap: "10px"
+          }}
+        >
+          <div
+            className="clay-card white"
+            style={{
+              padding: "10px 14px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              borderRadius: "14px"
+            }}
+          >
+            <span style={{ fontSize: "1.5rem", flexShrink: 0 }}>🇵🇰</span>
+            <div>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "0.85rem", fontWeight: "800", margin: 0, color: "var(--color-text-dark)" }}>
+                Cash on Delivery (COD)
+              </h4>
+              <p style={{ fontSize: "0.72rem", color: "var(--color-text-muted)", margin: "1px 0 0", lineHeight: 1.25 }}>
+                Doorstep parcel inspection across Pakistan.
+              </p>
+            </div>
           </div>
 
-          <div className="clay-card white" style={{ padding: "32px", textAlign: "center" }}>
-            <span style={{ fontSize: "2.4rem", display: "block", marginBottom: "14px" }}>🛡️</span>
-            <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: "700", marginBottom: "8px" }}>
-              7 Days Return & Exchange
-            </h4>
-            <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
-              Complete peace of mind with our no-questions-asked doorstep return or exchange policy.
-            </p>
+          <div
+            className="clay-card white"
+            style={{
+              padding: "10px 14px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              borderRadius: "14px"
+            }}
+          >
+            <span style={{ fontSize: "1.5rem", flexShrink: 0 }}>🛡️</span>
+            <div>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "0.85rem", fontWeight: "800", margin: 0, color: "var(--color-text-dark)" }}>
+                7 Days Return &amp; Exchange
+              </h4>
+              <p style={{ fontSize: "0.72rem", color: "var(--color-text-muted)", margin: "1px 0 0", lineHeight: 1.25 }}>
+                No-questions-asked doorstep exchange.
+              </p>
+            </div>
           </div>
 
-          <div className="clay-card white" style={{ padding: "32px", textAlign: "center" }}>
-            <span style={{ fontSize: "2.4rem", display: "block", marginBottom: "14px" }}>🎁</span>
-            <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.1rem", fontWeight: "700", marginBottom: "8px" }}>
-              Royal Velvet Gift Box
-            </h4>
-            <p style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>
-              Every timepiece and perfume arrives in our signature velvet-lined tactile clay presentation box.
-            </p>
+          <div
+            className="clay-card white"
+            style={{
+              padding: "10px 14px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+              borderRadius: "14px"
+            }}
+          >
+            <span style={{ fontSize: "1.5rem", flexShrink: 0 }}>🎁</span>
+            <div>
+              <h4 style={{ fontFamily: "var(--font-display)", fontSize: "0.85rem", fontWeight: "800", margin: 0, color: "var(--color-text-dark)" }}>
+                Royal Velvet Gift Box
+              </h4>
+              <p style={{ fontSize: "0.72rem", color: "var(--color-text-muted)", margin: "1px 0 0", lineHeight: 1.25 }}>
+                Velvet-lined luxury presentation box.
+              </p>
+            </div>
           </div>
         </div>
       </section>
