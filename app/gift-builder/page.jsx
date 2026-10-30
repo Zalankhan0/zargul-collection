@@ -98,8 +98,8 @@ export default function GiftBuilderPage() {
       msg += `💌 *Card Message:* "${customNote.trim()}"\n`;
     }
 
-    msg += `\n📦 *Packaging:* Royal Velvet Gift Box (FREE)\n`;
-    msg += `🚚 *Shipping:* FREE Cash on Delivery (COD) Nationwide\n`;
+    msg += `\n📦 *Packaging:* Royal Velvet Presentation Box\n`;
+    msg += `🚚 *Shipping:* Cash on Delivery (COD) Nationwide\n`;
     msg += `💰 *TOTAL AMOUNT:* Rs. ${grandTotal.toLocaleString()}\n\n`;
     msg += `Please confirm my order!`;
 
@@ -575,14 +575,6 @@ export default function GiftBuilderPage() {
             <div style={{ display: "flex", justifyContent: "space-between", color: "var(--color-text-muted)" }}>
               <span>Selected Items ({totalItemCount}):</span>
               <span style={{ fontWeight: "700", color: "var(--color-text-dark)" }}>Rs. {grandTotal.toLocaleString()}</span>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", color: "var(--color-text-muted)" }}>
-              <span>Royal Velvet Box:</span>
-              <span style={{ fontWeight: "700", color: "#2b700f" }}>FREE Included</span>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", color: "var(--color-text-muted)" }}>
-              <span>Nationwide Shipping:</span>
-              <span style={{ fontWeight: "700", color: "#2b700f" }}>FREE (COD)</span>
             </div>
 
             {/* TOTAL AMOUNT */}
