@@ -157,68 +157,49 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* BESPOKE CUSTOM GIFT BOX BUILDER PROMO BANNER */}
-        <div style={{ marginTop: "24px" }}>
+        {/* COMPACT 1-LINE CUSTOM GIFT BOX BUILDER (2 CATEGORIES WIDTH) */}
+        <div style={{ marginTop: "12px", display: "flex", justifyContent: "flex-start" }}>
           <Link
             href="/gift-builder"
             className="clay-card pink"
             style={{
+              width: "100%",
+              maxWidth: "520px",
               display: "flex",
-              flexWrap: "wrap",
               alignItems: "center",
               justifyContent: "space-between",
-              padding: "24px 30px",
+              padding: "8px 16px",
               textDecoration: "none",
-              borderRadius: "24px",
-              gap: "18px",
+              borderRadius: "16px",
+              gap: "10px",
               background: "linear-gradient(135deg, #fff7fa 0%, #faedf3 100%)",
-              border: "2px solid rgba(240, 142, 167, 0.4)",
-              boxShadow: "0 8px 24px rgba(240, 142, 167, 0.15)"
+              border: "1.5px solid rgba(240, 142, 167, 0.4)",
+              boxShadow: "0 4px 12px rgba(240, 142, 167, 0.12)"
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "18px", maxWidth: "680px" }}>
-              <div
-                style={{
-                  width: "64px",
-                  height: "64px",
-                  borderRadius: "18px",
-                  background: "#ffffff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "2.2rem",
-                  boxShadow: "0 6px 18px rgba(240,142,167,0.25)",
-                  flexShrink: 0
-                }}
-              >
-                🎁
-              </div>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <span style={{ fontSize: "1.3rem", lineHeight: 1 }}>🎁</span>
               <div>
-                <span style={{ fontSize: "0.74rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "var(--color-accent-dark)" }}>
-                  ✦ Bespoke Luxury Gifting
-                </span>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", fontWeight: "800", color: "var(--color-text-dark)", margin: "3px 0" }}>
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "0.88rem", fontWeight: "800", color: "var(--color-text-dark)", display: "inline-block" }}>
                   Custom Gift Box Builder
-                </h3>
-                <p style={{ margin: 0, fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.4 }}>
-                  Curate your personalized royal gift box with executive watches, French perfumes, and exclusive gourmet chocolates with a handwritten calligraphy card.
-                </p>
+                </span>
+                <span style={{ fontSize: "0.72rem", color: "var(--color-accent-dark)", fontWeight: "600", marginLeft: "8px" }}>
+                  ✦ Create Your Combo
+                </span>
               </div>
             </div>
-            <div
+            <span
               className="clay-btn accent"
               style={{
-                padding: "12px 22px",
-                borderRadius: "16px",
-                fontSize: "0.88rem",
+                padding: "5px 12px",
+                borderRadius: "10px",
+                fontSize: "0.74rem",
                 fontWeight: "700",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px"
+                whiteSpace: "nowrap"
               }}
             >
-              Build Your Gift Box →
-            </div>
+              Build Box →
+            </span>
           </Link>
         </div>
       </section>
@@ -243,71 +224,6 @@ export default function HomePage() {
           {featuredProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
-        </div>
-
-        {/* BESPOKE CUSTOM GIFT BOX BUILDER PROMO BANNER */}
-        <div style={{ marginTop: "24px" }}>
-          <Link
-            href="/gift-builder"
-            className="clay-card pink"
-            style={{
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "24px 30px",
-              textDecoration: "none",
-              borderRadius: "24px",
-              gap: "18px",
-              background: "linear-gradient(135deg, #fff7fa 0%, #faedf3 100%)",
-              border: "2px solid rgba(240, 142, 167, 0.4)",
-              boxShadow: "0 8px 24px rgba(240, 142, 167, 0.15)"
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "18px", maxWidth: "680px" }}>
-              <div
-                style={{
-                  width: "64px",
-                  height: "64px",
-                  borderRadius: "18px",
-                  background: "#ffffff",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  fontSize: "2.2rem",
-                  boxShadow: "0 6px 18px rgba(240,142,167,0.25)",
-                  flexShrink: 0
-                }}
-              >
-                🎁
-              </div>
-              <div>
-                <span style={{ fontSize: "0.74rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "var(--color-accent-dark)" }}>
-                  ✦ Bespoke Luxury Gifting
-                </span>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", fontWeight: "800", color: "var(--color-text-dark)", margin: "3px 0" }}>
-                  Custom Gift Box Builder
-                </h3>
-                <p style={{ margin: 0, fontSize: "0.85rem", color: "var(--color-text-muted)", lineHeight: 1.4 }}>
-                  Curate your personalized royal gift box with executive watches, French perfumes, and exclusive gourmet chocolates with a handwritten calligraphy card.
-                </p>
-              </div>
-            </div>
-            <div
-              className="clay-btn accent"
-              style={{
-                padding: "12px 22px",
-                borderRadius: "16px",
-                fontSize: "0.88rem",
-                fontWeight: "700",
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px"
-              }}
-            >
-              Build Your Gift Box →
-            </div>
-          </Link>
         </div>
       </section>
 
