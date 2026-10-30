@@ -167,7 +167,7 @@ export function StoreProvider({ children }) {
     setToastMessage({ text: msg, type });
     setTimeout(() => {
       setToastMessage(null);
-    }, 3500);
+    }, 2200);
   };
 
   // Cart Functions
