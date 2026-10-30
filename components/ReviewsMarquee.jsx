@@ -8,16 +8,16 @@ export default function ReviewsMarquee() {
   const safeReviews = Array.isArray(reviews) ? reviews : [];
 
   return (
-    <section className="reviews-section-single-line">
-      <div className="section-header-center">
-        <span className="hero-tag">✦ Client Trust & Heritage</span>
-        <h2 className="section-title">Verified Customer Experiences</h2>
-        <p className="section-subtitle">
-          Over 15,000+ satisfied clients across Karachi, Lahore, Islamabad, Peshawar, and beyond.
+    <section className="reviews-section-single-line" style={{ padding: "24px 0 16px" }}>
+      <div className="section-header-center" style={{ marginBottom: "12px", textAlign: "center" }}>
+        <span className="hero-tag" style={{ fontSize: "0.68rem", padding: "2px 8px" }}>✦ Client Trust & Heritage</span>
+        <h2 className="section-title" style={{ fontSize: "1.2rem", margin: "3px 0 2px" }}>Verified Customer Experiences</h2>
+        <p className="section-subtitle" style={{ fontSize: "0.75rem", margin: "0 auto", color: "var(--color-text-muted)" }}>
+          Over 15,000+ satisfied clients across Pakistan.
         </p>
       </div>
 
-      {/* STRICTLY 1-LINE HORIZONTAL TRACK (NO STACKING) */}
+      {/* STRICTLY 1-LINE HORIZONTAL TRACK (COMPACT & SLENDER) */}
       <div className="single-line-marquee-wrap">
         <div className="single-line-marquee-track">
           {safeReviews.map((r, index) => (
@@ -37,7 +37,7 @@ export default function ReviewsMarquee() {
                 </div>
                 <p className="review-comment-text">{r.text}</p>
               </div>
-              <span className="review-product-tag">Verified Purchase • {r.product || "Collection"}</span>
+              <span className="review-product-tag">Verified • {r.product || "Collection"}</span>
             </div>
           ))}
         </div>
@@ -61,7 +61,7 @@ export default function ReviewsMarquee() {
                 </div>
                 <p className="review-comment-text">{r.text}</p>
               </div>
-              <span className="review-product-tag">Verified Purchase • {r.product || "Collection"}</span>
+              <span className="review-product-tag">Verified • {r.product || "Collection"}</span>
             </div>
           ))}
         </div>
