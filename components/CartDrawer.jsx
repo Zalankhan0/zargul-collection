@@ -22,7 +22,7 @@ export default function CartDrawer() {
     showToast
   } = useStore();
 
-  const [checkoutStep, setCheckoutStep] = useState("cart"); // strictly "cart" on open | "cod" on checkout
+  const [checkoutStep, setCheckoutStep] = useState("cart"); // "cart" on open | "cod" on form view
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -46,7 +46,53 @@ export default function CartDrawer() {
     setIsCartOpen(false);
   };
 
-  // OPTION A: Cash on Delivery Form Submit -> saves order & sends full invoice to WhatsApp
+  // Direct WhatsApp Checkout from Cart with user-adjusted quantities
+  const handleDirectWhatsAppCheckout = () => {
+    if (cart.length === 0) return;
+
+    const orderId = `#ZRG-${Math.floor(1000 + Math.random() * 9000)}`;
+
+    let msg = `🛍️ *ORDER VIA WHATSAPP (ZARGUL COLLECTION)*\n`;
+    msg += `*Order Ref:* ${orderId}\n`;
+    msg += `*Date:* ${new Date().toLocaleDateString("en-GB")}\n\n`;
+
+    msg += `📦 *SELECTED ITEMS:*\n`;
+    cart.forEach((item, idx) => {
+      const itemPrice = (item.product.price + (item.extraPrice || 0)) * item.quantity;
+      const variantStr = item.variant ? ` (${item.variant})` : "";
+      msg += `${idx + 1}. *${item.product.title}*${variantStr} x${item.quantity} — Rs. ${itemPrice.toLocaleString()}\n`;
+    });
+
+    msg += `\n💰 *ORDER SUMMARY:*\n`;
+    msg += `• Subtotal: Rs. ${cartSubtotal.toLocaleString()}\n`;
+    if (comboDiscount > 0) {
+      msg += `• 👑 Royal Combo Discount: -Rs. ${comboDiscount.toLocaleString()}\n`;
+    }
+    if (multiWatchDiscount > 0) {
+      msg += `• ⌚ Multi-Watch Deal: -Rs. ${multiWatchDiscount.toLocaleString()} (${multiWatchTierLabel})\n`;
+    }
+    msg += `• Delivery: Cash on Delivery (Standard Charges)\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+    msg += `🔥 *TOTAL PAYABLE:* Rs. ${cartTotal.toLocaleString()} + Delivery Charges (COD)\n`;
+    msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+    msg += `Assalam o Alaikum! I would like to confirm my order for these items. Please share dispatch details and delivery timeline. ✨`;
+
+    showToast(`Opening WhatsApp with your bag details...`);
+
+    clearCart();
+    setCheckoutStep("cart");
+    setIsCartOpen(false);
+
+    const waNumber = (storeConfig.whatsappNumber || "923485245955").replace(/[^0-9]/g, "");
+    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
+    try {
+      window.location.href = waUrl;
+    } catch {
+      window.open(waUrl, "_blank");
+    }
+  };
+
+  // COD Form Submit
   const handleCODSubmit = (e) => {
     e.preventDefault();
     if (cart.length === 0) return;
@@ -54,7 +100,6 @@ export default function CartDrawer() {
     const orderId = `#ZRG-${Math.floor(1000 + Math.random() * 9000)}`;
     const finalCity = formData.city === "Other" ? (formData.customCity?.trim() || "Other City") : formData.city;
 
-    // Save order in localStorage for Admin Orders tab
     try {
       const existingOrders = JSON.parse(localStorage.getItem("zargul_orders") || "[]");
       existingOrders.unshift({
@@ -74,7 +119,6 @@ export default function CartDrawer() {
       console.warn("Could not save order", err);
     }
 
-    // Build WhatsApp Invoice message
     let msg = `🛍️ *NEW CASH ON DELIVERY (COD) ORDER*\n`;
     msg += `*Order ID:* ${orderId}\n`;
     msg += `*Date:* ${new Date().toLocaleDateString("en-GB")}\n\n`;
@@ -97,64 +141,18 @@ export default function CartDrawer() {
     msg += `\n💰 *PRICE BREAKDOWN:*\n`;
     msg += `• Subtotal: Rs. ${cartSubtotal.toLocaleString()}\n`;
     if (comboDiscount > 0) {
-      msg += `• 👑 Royal Combo Discount: -Rs. ${comboDiscount.toLocaleString()} (Applied)\n`;
-    }
-    if (multiWatchDiscount > 0) {
-      msg += `• ⌚ Multi-Watch Deal: -Rs. ${multiWatchDiscount.toLocaleString()} (${multiWatchTierLabel})\n`;
-    }
-    msg += `• Delivery Fee: ${deliveryFee === 0 ? "FREE Nationwide 🇵🇰" : `Rs. ${deliveryFee.toLocaleString()}`}\n`;
-    msg += `━━━━━━━━━━━━━━━━━━━━\n`;
-    msg += `🔥 *TOTAL PAYABLE:* Rs. ${cartTotal.toLocaleString()} (Cash on Delivery)\n`;
-    msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-    msg += `Please confirm my order dispatch! ✨`;
-
-    showToast(`Order ${orderId} placed! Redirecting to WhatsApp...`);
-
-    // Reset and clear
-    clearCart();
-    setCheckoutStep("cart");
-    setIsCartOpen(false);
-
-    // Open WhatsApp
-    const waNumber = (storeConfig.whatsappNumber || "923485245955").replace(/[^0-9]/g, "");
-    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
-    setTimeout(() => {
-      window.open(waUrl, "_blank");
-    }, 400);
-  };
-
-  // OPTION B: Direct 1-Click WhatsApp Order (No Form Required)
-  const handleDirectWhatsAppCheckout = () => {
-    if (cart.length === 0) return;
-
-    const orderId = `#ZRG-${Math.floor(1000 + Math.random() * 9000)}`;
-
-    let msg = `🛍️ *DIRECT ORDER (WHATSAPP CONCIERGE)*\n`;
-    msg += `*Order Ref:* ${orderId}\n`;
-    msg += `*Date:* ${new Date().toLocaleDateString("en-GB")}\n\n`;
-
-    msg += `📦 *SELECTED ITEMS:*\n`;
-    cart.forEach((item, idx) => {
-      const itemPrice = (item.product.price + (item.extraPrice || 0)) * item.quantity;
-      const variantStr = item.variant ? ` (${item.variant})` : "";
-      msg += `${idx + 1}. *${item.product.title}*${variantStr} x${item.quantity} — Rs. ${itemPrice.toLocaleString()}\n`;
-    });
-
-    msg += `\n💰 *ORDER SUMMARY:*\n`;
-    msg += `• Subtotal: Rs. ${cartSubtotal.toLocaleString()}\n`;
-    if (comboDiscount > 0) {
       msg += `• 👑 Royal Combo Discount: -Rs. ${comboDiscount.toLocaleString()}\n`;
     }
     if (multiWatchDiscount > 0) {
       msg += `• ⌚ Multi-Watch Deal: -Rs. ${multiWatchDiscount.toLocaleString()} (${multiWatchTierLabel})\n`;
     }
-    msg += `• Delivery: ${deliveryFee === 0 ? "FREE Nationwide 🇵🇰" : `Rs. ${deliveryFee.toLocaleString()}`}\n`;
+    msg += `• Delivery: Cash on Delivery (Standard Charges)\n`;
     msg += `━━━━━━━━━━━━━━━━━━━━\n`;
-    msg += `🔥 *TOTAL PAYABLE:* Rs. ${cartTotal.toLocaleString()}\n`;
+    msg += `🔥 *TOTAL PAYABLE:* Rs. ${cartTotal.toLocaleString()} + Delivery Charges (COD)\n`;
     msg += `━━━━━━━━━━━━━━━━━━━━\n\n`;
-    msg += `Assalam o Alaikum! I want to confirm my order for these items. Please share dispatch details and delivery timeline. ✨`;
+    msg += `Please confirm my order dispatch! ✨`;
 
-    showToast(`Opening WhatsApp with your order details...`);
+    showToast(`Order ${orderId} placed! Redirecting to WhatsApp...`);
 
     clearCart();
     setCheckoutStep("cart");
@@ -162,9 +160,11 @@ export default function CartDrawer() {
 
     const waNumber = (storeConfig.whatsappNumber || "923485245955").replace(/[^0-9]/g, "");
     const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
-    setTimeout(() => {
+    try {
+      window.location.href = waUrl;
+    } catch {
       window.open(waUrl, "_blank");
-    }, 400);
+    }
   };
 
   return (
@@ -172,7 +172,7 @@ export default function CartDrawer() {
       {/* Backdrop */}
       <div className="cart-overlay" onClick={handleClose} />
 
-      {/* Drawer */}
+      {/* Mini Bag Drawer */}
       <div className="cart-drawer-slider clay-card white">
         
         {/* Header */}
@@ -258,15 +258,15 @@ export default function CartDrawer() {
                             type="button"
                             className="clay-icon-btn"
                             style={{
-                              width: "26px",
-                              height: "26px",
-                              fontSize: "0.9rem",
-                              fontWeight: "700",
+                              width: "28px",
+                              height: "28px",
+                              fontSize: "1rem",
+                              fontWeight: "750",
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              borderRadius: "7px",
-                              border: "1px solid rgba(0,0,0,0.1)",
+                              borderRadius: "8px",
+                              border: "1px solid rgba(0,0,0,0.12)",
                               background: "#f6f4f5",
                               cursor: "pointer"
                             }}
@@ -275,22 +275,22 @@ export default function CartDrawer() {
                           >
                             -
                           </button>
-                          <span style={{ fontSize: "0.85rem", fontWeight: "750", minWidth: "16px", textAlign: "center" }}>
+                          <span style={{ fontSize: "0.88rem", fontWeight: "800", minWidth: "18px", textAlign: "center" }}>
                             {item.quantity}
                           </span>
                           <button
                             type="button"
                             className="clay-icon-btn"
                             style={{
-                              width: "26px",
-                              height: "26px",
-                              fontSize: "0.9rem",
-                              fontWeight: "700",
+                              width: "28px",
+                              height: "28px",
+                              fontSize: "1rem",
+                              fontWeight: "750",
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              borderRadius: "7px",
-                              border: "1px solid rgba(0,0,0,0.1)",
+                              borderRadius: "8px",
+                              border: "1px solid rgba(0,0,0,0.12)",
                               background: "#f6f4f5",
                               cursor: "pointer"
                             }}
@@ -310,8 +310,8 @@ export default function CartDrawer() {
                           border: "none",
                           color: "#9e9aa0",
                           cursor: "pointer",
-                          fontSize: "0.95rem",
-                          padding: "4px"
+                          fontSize: "1rem",
+                          padding: "6px"
                         }}
                         title="Remove item"
                       >
@@ -338,13 +338,7 @@ export default function CartDrawer() {
               </div>
             )}
 
-            {totalWatches === 1 && (
-              <div style={{ padding: "6px 10px", background: "#f8f9fe", border: "1px dashed #c0b0cc", borderRadius: "10px", fontSize: "0.74rem", fontWeight: "600", color: "var(--color-text-muted)", marginBottom: "8px" }}>
-                💡 Add 1 more watch to save Rs. 400, or 2 more to save Rs. 1,000!
-              </div>
-            )}
-
-            {/* Summary & Dual Action Options */}
+            {/* Summary & Actions */}
             {cart.length > 0 && (
               <div style={{ paddingTop: "10px", borderTop: "1.5px solid rgba(0,0,0,0.06)", marginTop: "auto" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px", fontSize: "0.85rem" }}>
@@ -368,7 +362,7 @@ export default function CartDrawer() {
 
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "10px", fontSize: "0.85rem" }}>
                   <span style={{ color: "var(--color-text-muted)" }}>Delivery</span>
-                  <span style={{ color: "#16a34a", fontWeight: "700" }}>{deliveryFee === 0 ? "FREE Nationwide 🇵🇰" : `Rs. ${deliveryFee.toLocaleString()}`}</span>
+                  <span style={{ color: "var(--color-text-dark)", fontWeight: "600" }}>Cash on Delivery (Standard Charges)</span>
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "12px", fontSize: "1.15rem", fontWeight: "800", fontFamily: "var(--font-display)" }}>
@@ -376,63 +370,63 @@ export default function CartDrawer() {
                   <span style={{ color: "var(--color-accent-dark)" }}>Rs. {cartTotal.toLocaleString()}</span>
                 </div>
 
-                {/* DUAL ORDER OPTIONS */}
+                {/* ACTION BUTTONS */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                  {/* OPTION A: FILL DELIVERY DETAILS FORM */}
-                  <button
-                    type="button"
-                    disabled={cart.length === 0}
-                    onClick={() => setCheckoutStep("cod")}
-                    className="clay-btn accent"
-                    style={{
-                      width: "100%",
-                      padding: "10px 12px",
-                      fontSize: "0.86rem",
-                      fontWeight: "750",
-                      borderRadius: "12px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "6px",
-                      cursor: "pointer",
-                      background: "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)",
-                      color: "#ffffff",
-                      border: "none",
-                      boxShadow: "0 4px 14px rgba(197, 160, 89, 0.35)"
-                    }}
-                  >
-                    <span>📝</span> Option 1: Fill Delivery Details Form
-                  </button>
-
-                  {/* OPTION B: DIRECT 1-CLICK WHATSAPP ORDER (NO FORM) */}
+                  {/* MAIN ACTION: ORDER VIA WHATSAPP */}
                   <button
                     type="button"
                     disabled={cart.length === 0}
                     onClick={handleDirectWhatsAppCheckout}
                     style={{
                       width: "100%",
-                      padding: "10px 12px",
-                      fontSize: "0.86rem",
+                      padding: "12px",
+                      fontSize: "0.92rem",
                       fontWeight: "750",
-                      borderRadius: "12px",
+                      borderRadius: "14px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: "7px",
+                      gap: "8px",
                       cursor: "pointer",
                       background: "#25d366",
                       color: "#ffffff",
                       border: "none",
-                      boxShadow: "0 4px 14px rgba(37, 211, 102, 0.35)"
+                      boxShadow: "0 4px 16px rgba(37, 211, 102, 0.35)",
+                      transition: "transform 0.15s ease"
                     }}
                   >
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12.031 2c-5.514 0-9.99 4.478-9.99 9.99 0 1.996.586 3.856 1.597 5.433L2.053 22l4.743-1.222c1.517.931 3.29 1.464 5.235 1.464 5.514 0 9.99-4.478 9.99-9.99 0-5.512-4.476-9.99-9.99-9.99zm5.626 14.18c-.237.666-1.183 1.221-1.74 1.285-.506.059-1.157.085-1.871-.144-1.265-.405-2.228-.962-3.136-1.766-.81-.718-1.51-1.579-1.921-2.453-.306-.65-.411-1.28-.411-1.89 0-1.139.544-1.685.986-2.124.168-.166.368-.242.544-.242.176 0 .346.008.497.017.159.01.36.033.529.418.176.402.604 1.472.656 1.58.05.109.084.235.008.386-.075.151-.118.243-.235.378-.118.134-.244.302-.353.403-.118.109-.244.227-.101.47.143.243.638 1.05 1.378 1.706.958.85 1.764 1.118 2.016 1.243.252.126.395.101.546-.067.151-.168.647-.756.823-1.017.176-.26.353-.218.596-.126.244.092 1.546.73 1.815.865.269.135.445.202.513.319.067.118.067.68-.17 1.347z"/>
                     </svg>
-                    Option 2: Direct Order via WhatsApp
+                    Order via WhatsApp
                   </button>
 
-                  {/* Secondary Button: Continue Shopping */}
+                  {/* SECONDARY OPTION: COD FORM */}
+                  <button
+                    type="button"
+                    disabled={cart.length === 0}
+                    onClick={() => setCheckoutStep("cod")}
+                    className="clay-btn secondary"
+                    style={{
+                      width: "100%",
+                      padding: "9px 12px",
+                      fontSize: "0.82rem",
+                      fontWeight: "700",
+                      borderRadius: "12px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: "6px",
+                      cursor: "pointer",
+                      background: "#fdfaf3",
+                      border: "1px solid rgba(197, 160, 89, 0.4)",
+                      color: "var(--color-text-dark)"
+                    }}
+                  >
+                    <span>📝</span> Fill Delivery Form (COD)
+                  </button>
+
+                  {/* CONTINUE SHOPPING */}
                   <button
                     type="button"
                     onClick={handleClose}
@@ -457,7 +451,7 @@ export default function CartDrawer() {
             )}
           </>
         ) : (
-          /* OPTION A: COD Checkout Form Step (Only opens when customer chooses Option 1) */
+          /* COD Form Step */
           <form onSubmit={handleCODSubmit} style={{ flexGrow: 1, display: "flex", flexDirection: "column", overflowY: "auto" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" }}>
               <button
@@ -497,7 +491,7 @@ export default function CartDrawer() {
 
             <div style={{ padding: "10px 12px", background: "var(--pastel-green)", borderRadius: "12px", fontSize: "0.78rem", color: "#1e6c06", marginBottom: "14px", display: "flex", alignItems: "center", gap: "8px" }}>
               <span>🛡️</span>
-              <span><strong>Option 1: Cash on Delivery</strong> • Fill details below to place order!</span>
+              <span><strong>Cash on Delivery (COD)</strong> • Fill details below to place order!</span>
             </div>
 
             <div className="floating-group" style={{ marginBottom: "12px" }}>
