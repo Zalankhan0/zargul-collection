@@ -779,11 +779,11 @@ img {
 
 .product-footer-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 6px;
   margin-top: auto;
-  padding-top: 12px;
-  border-top: 2px solid rgba(0,0,0,0.04);
+  padding-top: 8px;
+  border-top: 1px solid rgba(0,0,0,0.06);
 }
 
 .product-price-group {
@@ -808,17 +808,17 @@ img {
    5. CUSTOMER REVIEWS (STRICTLY 1-LINE INFINITE SMOOTH MARQUEE)
    ================================================================ */
 .reviews-section-single-line {
-  padding: 70px 0;
+  padding: 24px 0 16px;
   overflow: hidden;
   position: relative;
-  background: linear-gradient(180deg, transparent, rgba(252, 235, 237, 0.4), transparent);
+  background: linear-gradient(180deg, transparent, rgba(252, 235, 237, 0.3), transparent);
 }
 
 .reviews-section-single-line .section-header-center {
   text-align: center;
   max-width: 600px;
-  margin: 0 auto 36px;
-  padding: 0 20px;
+  margin: 0 auto 12px;
+  padding: 0 16px;
 }
 
 .single-line-marquee-wrap {
@@ -834,7 +834,7 @@ img {
   content: "";
   position: absolute;
   top: 0;
-  width: 120px;
+  width: 60px;
   height: 100%;
   z-index: 2;
   pointer-events: none;
@@ -852,10 +852,10 @@ img {
 
 .single-line-marquee-track {
   display: flex;
-  gap: 24px;
+  gap: 14px;
   flex-shrink: 0;
-  padding-left: 20px;
-  animation: reviewsScrollLeft 65s linear infinite;
+  padding-left: 14px;
+  animation: reviewsScrollLeft 55s linear infinite;
 }
 
 .single-line-marquee-wrap:hover .single-line-marquee-track {
@@ -872,12 +872,12 @@ img {
 }
 
 .review-card-item {
-  width: 360px;
-  padding: 24px;
-  border-radius: 24px;
+  width: 250px;
+  padding: 12px 14px;
+  border-radius: 14px;
   background-color: var(--clay-white-bg);
-  border: 3px solid var(--clay-white-border);
-  box-shadow: 4px 8px 20px rgba(185, 170, 180, 0.12);
+  border: 1px solid var(--clay-white-border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -888,18 +888,18 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 6px;
 }
 
 .review-user-info {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .review-avatar-circle {
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: var(--pastel-pink);
   color: var(--color-accent-dark);
@@ -907,34 +907,39 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 0.75rem;
 }
 
 .review-name {
   font-family: var(--font-display);
-  font-size: 0.92rem;
+  font-size: 0.8rem;
   font-weight: 700;
+  line-height: 1.2;
 }
 
 .review-city {
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: var(--color-text-muted);
 }
 
 .review-stars {
   color: #ffb400;
-  font-size: 0.9rem;
+  font-size: 0.75rem;
 }
 
 .review-comment-text {
-  font-size: 0.88rem;
+  font-size: 0.75rem;
   color: var(--color-text-dark);
-  line-height: 1.5;
-  margin-bottom: 12px;
+  line-height: 1.35;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .review-product-tag {
-  font-size: 0.75rem;
+  font-size: 0.65rem;
   color: var(--color-accent);
   font-weight: 600;
   margin-top: auto;
@@ -1411,9 +1416,10 @@ img {
     font-size: 0.62rem !important;
   }
   .card-btn-details, .card-btn-buy {
-    padding: 5px 4px !important;
-    font-size: 0.68rem !important;
+    padding: 6px 4px !important;
+    font-size: 0.72rem !important;
     border-radius: 8px !important;
+    font-weight: 700 !important;
   }
 }
 
