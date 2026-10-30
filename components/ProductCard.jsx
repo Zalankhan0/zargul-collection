@@ -56,63 +56,82 @@ export default function ProductCard({ product }) {
       </h3>
 
       {/* Price & Action Footer */}
-      <div className="product-footer-row">
-        <div className="product-price-group">
-          {originalPriceNum > priceNum && (
-            <span className="product-original-price">
-              Rs. {originalPriceNum.toLocaleString()}
+      <div className="product-footer-row" style={{ display: "flex", flexDirection: "column", gap: "6px", width: "100%", marginTop: "auto", paddingTop: "8px" }}>
+        {/* Price & Details Link Row */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", width: "100%" }}>
+          <div className="product-price-group">
+            {originalPriceNum > priceNum && (
+              <span className="product-original-price">
+                Rs. {originalPriceNum.toLocaleString()}
+              </span>
+            )}
+            <span className="product-current-price">
+              Rs. {priceNum.toLocaleString()}
             </span>
-          )}
-          <span className="product-current-price">
-            Rs. {priceNum.toLocaleString()}
-          </span>
+          </div>
+
+          <Link
+            href={`/product/${product.id}`}
+            style={{
+              fontSize: "0.68rem",
+              color: "var(--color-accent-dark)",
+              fontWeight: "600",
+              textDecoration: "none",
+              whiteSpace: "nowrap"
+            }}
+          >
+            Details →
+          </Link>
         </div>
 
+        {/* Direct Action Button */}
         {isSoldOut ? (
-          <span style={{ fontSize: "0.68rem", fontWeight: "700", color: "#8c8288", padding: "4px 8px", background: "#f0edf1", borderRadius: "8px" }}>
+          <div
+            style={{
+              width: "100%",
+              textAlign: "center",
+              fontSize: "0.72rem",
+              fontWeight: "700",
+              color: "#8c8288",
+              padding: "6px 8px",
+              background: "#f0edf1",
+              borderRadius: "10px"
+            }}
+          >
             Sold Out
-          </span>
-        ) : (
-          <div className="product-card-actions" style={{ display: "flex", gap: "5px", width: "100%", marginTop: "6px" }}>
-            <Link
-              href={`/product/${product.id}`}
-              className="clay-btn secondary card-btn-details"
-              style={{
-                flex: 1,
-                padding: "6px 8px",
-                fontSize: "0.72rem",
-                fontWeight: "600",
-                textAlign: "center",
-                textDecoration: "none",
-                borderRadius: "10px",
-                whiteSpace: "nowrap"
-              }}
-            >
-              Details
-            </Link>
-            <button
-              type="button"
-              onClick={() => addToCart(product)}
-              className="clay-btn accent card-btn-buy"
-              style={{
-                flex: 1,
-                padding: "6px 8px",
-                fontSize: "0.72rem",
-                fontWeight: "700",
-                textAlign: "center",
-                borderRadius: "10px",
-                cursor: "pointer",
-                whiteSpace: "nowrap",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "3px"
-              }}
-              title={`Buy ${product.title}`}
-            >
-              <span>+</span> Buy
-            </button>
           </div>
+        ) : (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              addToCart(product);
+            }}
+            className="clay-btn accent card-btn-buy"
+            style={{
+              width: "100%",
+              padding: "7px 6px",
+              fontSize: "0.75rem",
+              fontWeight: "700",
+              textAlign: "center",
+              borderRadius: "10px",
+              cursor: "pointer",
+              whiteSpace: "nowrap",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "4px",
+              background: "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)",
+              color: "#ffffff",
+              border: "none",
+              boxShadow: "0 2px 8px rgba(197, 160, 89, 0.28)",
+              transition: "transform 0.15s ease"
+            }}
+            title={`Buy ${product.title} Now`}
+          >
+            <span>⚡</span> BUY NOW
+          </button>
         )}
       </div>
     </div>
