@@ -6,7 +6,6 @@ import { useStore } from "@/context/StoreContext";
 import { INITIAL_PRODUCTS } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
-import WelcomeSplash from "@/components/WelcomeSplash";
 
 export default function HomePage() {
   const { products, storeConfig } = useStore();
@@ -38,9 +37,6 @@ export default function HomePage() {
 
   return (
     <>
-      {/* 3-4 SECOND ELEGANT WELCOME SPLASH */}
-      <WelcomeSplash />
-
       {/* HERO SECTION */}
       <section className="hero-section">
         <div className="hero-content">
