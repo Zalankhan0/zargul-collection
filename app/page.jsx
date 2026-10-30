@@ -227,54 +227,85 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ROYAL COMBO BUILDER BANNER */}
+      {/* ROYAL COMBO BUILDER BANNER - COMPACT SLIM CARD WITH DIRECT BUY NOW */}
       {storeConfig.comboDeal?.enabled !== false && (
-        <section style={{ padding: "20px 5% 50px", maxWidth: "1400px", margin: "0 auto" }}>
+        <section style={{ padding: "10px 5% 28px", maxWidth: "1400px", margin: "0 auto" }}>
           <div
             className="clay-card pink"
             style={{
-              padding: "40px",
+              padding: "12px 18px",
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               flexWrap: "wrap",
-              gap: "24px"
+              gap: "12px",
+              borderRadius: "18px",
+              background: "linear-gradient(135deg, #fff7fa 0%, #faedf3 100%)",
+              border: "1.5px solid rgba(240, 142, 167, 0.4)",
+              boxShadow: "0 4px 14px rgba(240, 142, 167, 0.12)"
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "20px", maxWidth: "700px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", maxWidth: "680px" }}>
               <div
                 style={{
-                  width: "70px",
-                  height: "70px",
-                  borderRadius: "50%",
+                  width: "42px",
+                  height: "42px",
+                  borderRadius: "12px",
                   background: "#ffffff",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: "2.2rem",
+                  fontSize: "1.4rem",
                   flexShrink: 0,
-                  boxShadow: "4px 6px 14px rgba(240, 142, 167, 0.3)"
+                  boxShadow: "0 4px 10px rgba(240, 142, 167, 0.25)"
                 }}
               >
                 👑
               </div>
               <div>
-                <span style={{ fontSize: "0.75rem", fontWeight: "700", textTransform: "uppercase", letterSpacing: "1px", color: "var(--color-accent-dark)" }}>
-                  Signature Gift Deal
-                </span>
-                <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: "700", margin: "4px 0" }}>
-                  {storeConfig.comboDeal?.title || "Royal Gift Combo Offer"}
-                </h3>
-                <p style={{ fontSize: "0.92rem", color: "var(--color-text-muted)" }}>
-                  {storeConfig.comboDeal?.desc ||
-                    "Buy Any Luxury Watch + Any Fragrance Together & get Instant Rs. 1,000 OFF + Free Gift Box!"}
+                <div style={{ display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap" }}>
+                  <span style={{ fontSize: "0.68rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "1px", color: "var(--color-accent-dark)", background: "rgba(240, 142, 167, 0.25)", padding: "2px 6px", borderRadius: "8px" }}>
+                    Special Deal
+                  </span>
+                  <h4 style={{ fontFamily: "var(--font-display)", fontSize: "1.05rem", fontWeight: "800", margin: 0, color: "var(--color-text-dark)" }}>
+                    {storeConfig.comboDeal?.title || "Royal Gift Combo Offer"}
+                  </h4>
+                </div>
+                <p style={{ fontSize: "0.8rem", color: "var(--color-text-muted)", margin: "2px 0 0", lineHeight: 1.3 }}>
+                  {storeConfig.comboDeal?.desc || "Buy Any Luxury Watch + Any Fragrance Together & get Instant Rs. 1,000 OFF + Free Gift Box!"}
                 </p>
               </div>
             </div>
 
-            <Link href="/categories" className="clay-btn accent">
-              Build Your Combo →
-            </Link>
+            <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+              <Link
+                href="/gift-builder"
+                className="clay-btn secondary"
+                style={{ padding: "7px 14px", fontSize: "0.76rem", borderRadius: "12px", fontWeight: "700" }}
+              >
+                Details
+              </Link>
+              <a
+                href={`https://wa.me/${storeConfig.whatsappNumber || "923485245955"}?text=${encodeURIComponent("Assalam-o-Alaikum Zargul Collection! I want to order the Royal Gift Combo Offer (Watch + Perfume Combo with Rs. 1,000 Discount + Free Gift Box). Please confirm my order.")}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="clay-btn accent"
+                style={{
+                  padding: "7px 16px",
+                  fontSize: "0.78rem",
+                  borderRadius: "12px",
+                  fontWeight: "800",
+                  whiteSpace: "nowrap",
+                  background: "#141316",
+                  color: "#ffffff",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "4px"
+                }}
+              >
+                BUY NOW →
+              </a>
+            </div>
           </div>
         </section>
       )}
