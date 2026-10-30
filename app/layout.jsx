@@ -1,6 +1,6 @@
 import "./globals.css";
 import { StoreProvider } from "@/context/StoreContext";
-import TopOfferBar from "@/components/TopOfferBar";
+import WelcomeSplash from "@/components/WelcomeSplash";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
@@ -79,10 +79,10 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body style={{ backgroundColor: "#faf9f6", colorScheme: "light", color: "#141316", minHeight: "100vh", margin: 0, padding: 0 }} suppressHydrationWarning>
-        <StoreProvider>
-          {/* 1-Line Animated Top Offer Marquee */}
-          <TopOfferBar />
+        {/* Animated Sharp Welcome Splash Screen */}
+        <WelcomeSplash />
 
+        <StoreProvider>
           {/* Sticky Navigation Bar */}
           <Navbar />
 
