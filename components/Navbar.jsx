@@ -70,7 +70,9 @@ export default function Navbar() {
 
           {/* Brand Logo & Title */}
           <Link href="/" className="brand-link">
-            <img src="/assets/logo.jpg" alt="Zargul Collection Logo" className="brand-logo" />
+            <div className="brand-logo-circle">
+              <img src="/assets/logo.jpg" alt="Zargul Collection Logo" className="brand-logo" />
+            </div>
             <div className="brand-title-group">
               <h1>ZARGUL</h1>
               <span>Collection</span>
