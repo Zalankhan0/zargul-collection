@@ -462,13 +462,13 @@ img {
    3. HERO SECTION
    ================================================================ */
 .hero-section {
-  padding: 50px 5% 40px;
+  padding: 20px 5% 12px;
   max-width: 1400px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
-  gap: 40px;
+  gap: 24px;
 }
 
 .hero-content {
@@ -644,7 +644,7 @@ img {
    4. PRODUCT CARDS & GRID
    ================================================================ */
 .products-section {
-  padding: 60px 5%;
+  padding: 14px 5% 20px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -653,9 +653,9 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 36px;
+  margin-bottom: 14px;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
 }
 
 .section-title {
