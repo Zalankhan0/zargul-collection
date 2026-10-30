@@ -4,6 +4,8 @@
    ================================================================ */
 
 :root {
+  color-scheme: light !important;
+  supported-color-schemes: light !important;
   /* Brand Color Palette: Obsidian Black, Champagne Gold & Warm Alabaster */
   --bg-app: #faf9f6;
   --bg-app-rgb: 250, 249, 246;
@@ -48,11 +50,12 @@ html {
   scroll-behavior: smooth;
   font-size: 16px;
   background-color: #faf9f6 !important;
-  color-scheme: light;
+  color-scheme: light !important;
 }
 
 body {
   background-color: #faf9f6 !important;
+  color-scheme: light !important;
   font-family: var(--font-body);
   color: var(--color-text-dark);
   line-height: 1.6;
