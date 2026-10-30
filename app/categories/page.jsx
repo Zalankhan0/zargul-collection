@@ -36,7 +36,6 @@ function CategoriesContent() {
     { id: "shawls", label: "Swati Shawls" },
     { id: "coats", label: "Coats" },
     { id: "shoes", label: "Shoes" },
-    { id: "gifts", label: "Gift Sets" },
     { id: "sale", label: "🔥 20% OFF Sale" },
   ];
 
