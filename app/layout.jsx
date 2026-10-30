@@ -25,10 +25,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" style={{ backgroundColor: "#faf9f6", colorScheme: "light" }} suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#faf9f6" />
-        <meta name="color-scheme" content="light only" />
+        <meta name="color-scheme" content="light" />
         <meta name="supported-color-schemes" content="light" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
-      <body style={{ backgroundColor: "#faf9f6", color: "#141316", minHeight: "100vh", margin: 0, padding: 0 }} suppressHydrationWarning>
+      <body style={{ backgroundColor: "#faf9f6", colorScheme: "light", color: "#141316", minHeight: "100vh", margin: 0, padding: 0 }} suppressHydrationWarning>
         <StoreProvider>
           {/* 1-Line Animated Top Offer Marquee */}
           <TopOfferBar />
