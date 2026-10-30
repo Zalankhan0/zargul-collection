@@ -340,13 +340,26 @@ img {
   gap: 12px;
 }
 
-.brand-logo {
-  width: 48px;
-  height: 48px;
+.brand-logo-circle {
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
-  object-fit: cover;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border: 2px solid #ffffff;
   box-shadow: 4px 6px 14px rgba(185, 170, 180, 0.25);
+  background: #f5edf8;
+  flex-shrink: 0;
+}
+
+.brand-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.68);
+  display: block;
 }
 
 .brand-title-group h1 {
@@ -1340,23 +1353,74 @@ img {
 /* ================================================================
    10. RESPONSIVE FIXES
    ================================================================ */
-@media (max-width: 600px) {
+/* Gift Builder Ultra-Compact Grid: 6 per row on desktop, 4 on tablet, 3 on mobile */
+.gift-builder-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+}
+
+@media (max-width: 1100px) {
+  .gift-builder-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+}
+
+@media (max-width: 650px) {
+  .gift-builder-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+}
+
+@media (max-width: 768px) {
   .hero-title {
-    font-size: 1.9rem;
+    font-size: 1.8rem;
   }
   .section-title {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
   }
   .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 16px;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
   }
   .product-card {
-    padding: 14px;
+    padding: 8px !important;
+    border-radius: 14px !important;
   }
-  .clay-btn {
-    padding: 11px 20px;
-    font-size: 0.82rem;
+  .product-card .product-title {
+    font-size: 0.72rem !important;
+    line-height: 1.25 !important;
+    margin: 2px 0 4px !important;
+    min-height: 28px !important;
+  }
+  .product-card .product-current-price {
+    font-size: 0.8rem !important;
+  }
+  .product-card .product-original-price {
+    font-size: 0.62rem !important;
+  }
+  .product-badge {
+    top: 6px !important;
+    left: 6px !important;
+    padding: 2px 5px !important;
+    font-size: 0.58rem !important;
+    border-radius: 6px !important;
+  }
+  .product-meta-row {
+    margin-bottom: 2px !important;
+  }
+  .product-category-name {
+    font-size: 0.58rem !important;
+  }
+  .product-rating-box {
+    font-size: 0.62rem !important;
+  }
+  .card-btn-details, .card-btn-buy {
+    padding: 5px 4px !important;
+    font-size: 0.68rem !important;
+    border-radius: 8px !important;
   }
 }
 
