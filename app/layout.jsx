@@ -16,14 +16,50 @@ export const viewport = {
 };
 
 export const metadata = {
+  metadataBase: new URL("https://www.zargul.net"),
   title: "Zargul Collection ✦ Executive Timepieces & Haute Parfumerie",
   description: "Curated luxury timepieces, Eau de Parfums, and handcrafted accessories with our signature 3D Soft Claymorphism aesthetic. Cash on Delivery across Pakistan.",
   icons: {
-    icon: "/assets/logo.jpg"
+    icon: "/favicon.ico",
+    apple: "/assets/logo.jpg",
+  },
+  openGraph: {
+    title: "Zargul Collection ✦ Executive Timepieces & Haute Parfumerie",
+    description: "Curated luxury timepieces, Eau de Parfums, Swati shawls and luxury accessories. Cash on Delivery across Pakistan.",
+    url: "https://www.zargul.net",
+    siteName: "Zargul Collection",
+    images: [
+      {
+        url: "/assets/logo.jpg",
+        width: 1024,
+        height: 1024,
+        alt: "Zargul Collection Official Logo"
+      }
+    ],
+    locale: "en_PK",
+    type: "website"
   }
 };
 
 export default function RootLayout({ children }) {
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Zargul Collection",
+    "url": "https://www.zargul.net",
+    "logo": "https://www.zargul.net/assets/logo.jpg",
+    "image": "https://www.zargul.net/assets/logo.jpg",
+    "description": "Executive watches, French Eau de Parfums, Swati woolen shawls and luxury accessories in Pakistan.",
+    "telephone": "+923485245955",
+    "priceRange": "PKR 2,000 - 15,000",
+    "sameAs": [
+      "https://www.tiktok.com/@zargul_collection",
+      "https://www.instagram.com/zargul_collection",
+      "https://www.snapchat.com/add/zargulcolection",
+      "https://www.facebook.com/share/1AD55fVfT7/"
+    ]
+  };
+
   return (
     <html lang="en" style={{ backgroundColor: "#faf9f6", colorScheme: "light" }} suppressHydrationWarning>
       <head>
@@ -32,9 +68,15 @@ export default function RootLayout({ children }) {
         <meta name="supported-color-schemes" content="light" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/assets/logo.jpg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        />
       </head>
       <body style={{ backgroundColor: "#faf9f6", colorScheme: "light", color: "#141316", minHeight: "100vh", margin: 0, padding: 0 }} suppressHydrationWarning>
         <StoreProvider>
