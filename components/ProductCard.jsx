@@ -36,7 +36,11 @@ export default function ProductCard({ product }) {
     showToast(`Opening WhatsApp for "${product.title}"...`);
 
     const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
-    window.open(waUrl, "_blank");
+    try {
+      window.location.href = waUrl;
+    } catch {
+      window.open(waUrl, "_blank");
+    }
   };
 
   return (
