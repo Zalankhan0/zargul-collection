@@ -10,7 +10,8 @@ export default function Toast() {
 
   return (
     <div className={`global-toast ${toastMessage.type || "success"}`}>
-      <span>✦ {toastMessage.text}</span>
+      <span className="toast-icon">✓</span>
+      <span className="toast-text">{toastMessage.text}</span>
     </div>
   );
 }
