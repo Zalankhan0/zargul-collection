@@ -168,19 +168,6 @@ export default function GiftBuilderPage() {
         <p style={{ fontSize: "0.82rem", color: "var(--color-text-muted)", margin: 0 }}>
           Apni pasand ke items box mein <strong>+</strong> karke add karein. Har click par total price live update hoti rahegi.
         </p>
-
-        {/* COMPACT TRUST PILLS */}
-        <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap", gap: "6px", marginTop: "8px" }}>
-          <span style={{ fontSize: "0.72rem", background: "#ffffff", padding: "3px 8px", borderRadius: "12px", border: "1px solid rgba(0,0,0,0.06)", fontWeight: "600", color: "#2b700f" }}>
-            ✓ Free Velvet Box
-          </span>
-          <span style={{ fontSize: "0.72rem", background: "#ffffff", padding: "3px 8px", borderRadius: "12px", border: "1px solid rgba(0,0,0,0.06)", fontWeight: "600", color: "#2b700f" }}>
-            ✓ Free Delivery
-          </span>
-          <span style={{ fontSize: "0.72rem", background: "#ffffff", padding: "3px 8px", borderRadius: "12px", border: "1px solid rgba(0,0,0,0.06)", fontWeight: "600", color: "#5c3c67" }}>
-            ✓ Cash on Delivery
-          </span>
-        </div>
       </div>
 
       {/* CATEGORY FILTER TABS */}
@@ -215,7 +202,7 @@ export default function GiftBuilderPage() {
         ))}
       </div>
 
-      {/* ULTRA-COMPACT GRID (6 ITEMS ON DESKTOP, 4 ON TABLET, 3 ON MOBILE) */}
+      {/* ULTRA-COMPACT GRID: 5 ITEMS PER LINE (5 IN A ROW) */}
       <div className="gift-builder-grid">
         {filteredProducts.map((product) => {
           const qty = getItemQty(product.id);
@@ -226,13 +213,13 @@ export default function GiftBuilderPage() {
               key={product.id}
               className="clay-card white"
               style={{
-                padding: "6px",
-                borderRadius: "12px",
+                padding: "5px",
+                borderRadius: "10px",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                border: isSelected ? "2px solid var(--color-accent)" : "1px solid rgba(0,0,0,0.06)",
-                boxShadow: isSelected ? "0 4px 14px rgba(240, 142, 167, 0.3)" : "none",
+                border: isSelected ? "1.5px solid var(--color-accent)" : "1px solid rgba(0,0,0,0.06)",
+                boxShadow: isSelected ? "0 4px 12px rgba(240, 142, 167, 0.25)" : "none",
                 background: isSelected ? "#fff7fa" : "#ffffff",
                 transition: "all 0.15s ease"
               }}
@@ -243,13 +230,13 @@ export default function GiftBuilderPage() {
                   style={{
                     width: "100%",
                     aspectRatio: "1",
-                    borderRadius: "8px",
+                    borderRadius: "6px",
                     background: "#ffffff",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     overflow: "hidden",
-                    marginBottom: "4px",
+                    marginBottom: "3px",
                     border: "1px solid rgba(0,0,0,0.04)"
                   }}
                 >
@@ -267,7 +254,7 @@ export default function GiftBuilderPage() {
                 {/* Category Label */}
                 <span
                   style={{
-                    fontSize: "0.58rem",
+                    fontSize: "0.52rem",
                     fontWeight: "700",
                     color: "var(--color-accent-dark)",
                     textTransform: "uppercase",
@@ -281,16 +268,16 @@ export default function GiftBuilderPage() {
                 {/* Truncated Title */}
                 <h3
                   style={{
-                    fontSize: "0.7rem",
+                    fontSize: "0.64rem",
                     fontWeight: "700",
                     color: "var(--color-text-dark)",
-                    margin: "2px 0 3px",
+                    margin: "2px 0",
                     lineHeight: 1.2,
                     display: "-webkit-box",
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: "vertical",
                     overflow: "hidden",
-                    minHeight: "26px"
+                    minHeight: "22px"
                   }}
                   title={product.title}
                 >
@@ -299,15 +286,15 @@ export default function GiftBuilderPage() {
               </div>
 
               {/* Compact Price & Plus Button */}
-              <div style={{ marginTop: "auto", paddingTop: "4px", borderTop: "1px solid rgba(0,0,0,0.05)" }}>
+              <div style={{ marginTop: "auto", paddingTop: "3px", borderTop: "1px solid rgba(0,0,0,0.05)" }}>
                 <span
                   style={{
                     fontFamily: "var(--font-display)",
                     fontWeight: "800",
-                    fontSize: "0.78rem",
+                    fontSize: "0.72rem",
                     color: "var(--color-text-dark)",
                     display: "block",
-                    marginBottom: "4px",
+                    marginBottom: "3px",
                     textAlign: "center"
                   }}
                 >
@@ -321,37 +308,37 @@ export default function GiftBuilderPage() {
                     className="clay-btn accent"
                     style={{
                       width: "100%",
-                      padding: "4px 0",
-                      borderRadius: "8px",
-                      fontSize: "0.7rem",
+                      padding: "3px 0",
+                      borderRadius: "6px",
+                      fontSize: "0.66rem",
                       fontWeight: "800",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: "3px",
+                      gap: "2px",
                       cursor: "pointer"
                     }}
                   >
                     <span>+</span> Add
                   </button>
                 ) : (
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#ffffff", borderRadius: "8px", padding: "1px 3px", border: "1px solid var(--color-accent)" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", background: "#ffffff", borderRadius: "6px", padding: "1px 2px", border: "1px solid var(--color-accent)" }}>
                     <button
                       type="button"
                       onClick={() => handleDecrementItem(product.id)}
                       className="clay-icon-btn"
-                      style={{ width: "20px", height: "20px", fontSize: "0.75rem", fontWeight: "800", cursor: "pointer", border: "none", background: "transparent" }}
+                      style={{ width: "18px", height: "18px", fontSize: "0.7rem", fontWeight: "800", cursor: "pointer", border: "none", background: "transparent" }}
                     >
                       –
                     </button>
-                    <span style={{ fontWeight: "800", fontSize: "0.74rem", minWidth: "12px", textAlign: "center", color: "var(--color-accent-dark)" }}>
+                    <span style={{ fontWeight: "800", fontSize: "0.7rem", minWidth: "10px", textAlign: "center", color: "var(--color-accent-dark)" }}>
                       {qty}
                     </span>
                     <button
                       type="button"
                       onClick={() => handleAddItem(product)}
                       className="clay-icon-btn"
-                      style={{ width: "20px", height: "20px", fontSize: "0.75rem", fontWeight: "800", background: "var(--pastel-pink)", cursor: "pointer", border: "none" }}
+                      style={{ width: "18px", height: "18px", fontSize: "0.7rem", fontWeight: "800", background: "var(--pastel-pink)", cursor: "pointer", border: "none" }}
                     >
                       +
                     </button>
