@@ -1353,24 +1353,17 @@ img {
 /* ================================================================
    10. RESPONSIVE FIXES
    ================================================================ */
-/* Gift Builder Ultra-Compact Grid: 6 per row on desktop, 4 on tablet, 3 on mobile */
+/* Gift Builder Ultra-Compact Grid: 5 items per line (5 in a row) across all screens */
 .gift-builder-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 10px;
+  grid-template-columns: repeat(5, 1fr) !important;
+  gap: 8px;
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 768px) {
   .gift-builder-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-  }
-}
-
-@media (max-width: 650px) {
-  .gift-builder-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
+    grid-template-columns: repeat(5, 1fr) !important;
+    gap: 4px !important;
   }
 }
 
