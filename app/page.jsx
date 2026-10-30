@@ -46,7 +46,7 @@ export default function HomePage() {
             Curated Elegance &amp; <br /><span style={{ color: "var(--color-accent)" }}>Luxury Collections</span>
           </h1>
           <p className="hero-desc" style={{ marginBottom: "14px", fontSize: "0.92rem", lineHeight: 1.35 }}>
-            Luxury timepieces, French perfumes &amp; Swati shawls with free nationwide COD.
+            Luxury timepieces, French perfumes &amp; Swati shawls with nationwide COD.
           </p>
 
           <div className="hero-actions">
