@@ -23,7 +23,7 @@ export default function Navbar() {
     { label: "Swati Shawls", href: "/categories?category=shawls" },
     { label: "Coats", href: "/categories?category=coats" },
     { label: "Shoes", href: "/categories?category=shoes" },
-    { label: "Gifts", href: "/categories?category=gifts" },
+    { label: "Gift Box Builder 🎁", href: "/gift-builder" },
     { label: "Contact", href: "/contact" }
   ];
 
