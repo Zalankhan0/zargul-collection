@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
 
 export default function ProductCard({ product }) {
-  const { storeConfig, showToast } = useStore();
+  const { addToCart } = useStore();
   if (!product) return null;
 
   const isSoldOut = product.inStock === false;
@@ -17,30 +17,11 @@ export default function ProductCard({ product }) {
       ? Math.round(((originalPriceNum - priceNum) / originalPriceNum) * 100)
       : null;
 
-  // Direct 1-Click WhatsApp Order (No long popups or confusing menus)
-  const handleDirectBuy = (e) => {
+  // Opens the Shopping Cart / Mini Bag Drawer with +/- quantity controls
+  const handleBuyNow = (e) => {
     e.preventDefault();
     e.stopPropagation();
-
-    const orderId = `#ZRG-${Math.floor(1000 + Math.random() * 9000)}`;
-    const waNumber = (storeConfig?.whatsappNumber || "923485245955").replace(/[^0-9]/g, "");
-
-    let msg = `🛍️ *DIRECT 1-CLICK ORDER (ZARGUL COLLECTION)*\n`;
-    msg += `*Order Ref:* ${orderId}\n\n`;
-    msg += `• *Product:* ${product.title}\n`;
-    if (product.category) msg += `• *Category:* ${product.category}\n`;
-    msg += `• *Price:* Rs. ${priceNum.toLocaleString()}\n`;
-    msg += `• *Delivery:* Free Cash on Delivery Nationwide 🇵🇰\n\n`;
-    msg += `Assalam o Alaikum! Mujhe yeh product order karna hai. Kindly dispatch confirmation share karein. ✨`;
-
-    showToast(`Opening WhatsApp for "${product.title}"...`);
-
-    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`;
-    try {
-      window.location.href = waUrl;
-    } catch {
-      window.open(waUrl, "_blank");
-    }
+    addToCart(product);
   };
 
   return (
@@ -110,7 +91,7 @@ export default function ProductCard({ product }) {
           </Link>
         </div>
 
-        {/* Direct Action Button: Instant 1-Click WhatsApp Order */}
+        {/* Action Button: Opens Cart Drawer for Quantity Adjustment & WhatsApp Order */}
         {isSoldOut ? (
           <div
             style={{
@@ -129,7 +110,7 @@ export default function ProductCard({ product }) {
         ) : (
           <button
             type="button"
-            onClick={handleDirectBuy}
+            onClick={handleBuyNow}
             className="clay-btn accent card-btn-buy"
             style={{
               width: "100%",
@@ -150,7 +131,7 @@ export default function ProductCard({ product }) {
               boxShadow: "0 2px 8px rgba(197, 160, 89, 0.28)",
               transition: "transform 0.15s ease"
             }}
-            title={`Order ${product.title} directly via WhatsApp`}
+            title={`Add ${product.title} to bag and adjust quantity`}
           >
             <span>⚡</span> BUY NOW
           </button>
