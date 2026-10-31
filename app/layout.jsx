@@ -9,7 +9,7 @@ import { Analytics } from "@vercel/analytics/next";
 
 export const viewport = {
   themeColor: "#fbf8f5",
-  colorScheme: "light",
+  colorScheme: "only light",
   width: "device-width",
   initialScale: 1,
 };
@@ -60,10 +60,10 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" style={{ backgroundColor: "#fbf8f5", colorScheme: "light" }} suppressHydrationWarning>
+    <html lang="en" style={{ backgroundColor: "#fbf8f5", colorScheme: "only light" }} suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#fbf8f5" />
-        <meta name="color-scheme" content="light" />
+        <meta name="color-scheme" content="only light" />
         <meta name="supported-color-schemes" content="light" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -77,7 +77,20 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </head>
-      <body style={{ backgroundColor: "#fbf8f5", colorScheme: "light", color: "#2a2026", minHeight: "100vh", margin: 0, padding: 0 }} suppressHydrationWarning>
+      <body
+        style={{
+          backgroundColor: "#fbf8f5",
+          backgroundImage: "radial-gradient(circle at 15% 10%, rgba(240, 142, 167, 0.22) 0%, transparent 40%), radial-gradient(circle at 85% 20%, rgba(247, 214, 224, 0.3) 0%, transparent 45%), radial-gradient(circle at 50% 55%, rgba(254, 238, 242, 0.45) 0%, transparent 55%), radial-gradient(circle at 10% 85%, rgba(245, 230, 240, 0.25) 0%, transparent 45%), radial-gradient(circle at 90% 90%, rgba(240, 142, 167, 0.2) 0%, transparent 40%), linear-gradient(180deg, #fdfaf7 0%, #fcf4f7 35%, #faedf3 70%, #fbf8f5 100%)",
+          backgroundAttachment: "fixed",
+          backgroundRepeat: "no-repeat",
+          colorScheme: "only light",
+          color: "#2a2026",
+          minHeight: "100vh",
+          margin: 0,
+          padding: 0
+        }}
+        suppressHydrationWarning
+      >
         <StoreProvider>
           {/* Sticky Navigation Bar */}
           <Navbar />
