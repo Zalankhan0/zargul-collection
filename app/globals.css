@@ -6,28 +6,28 @@
 :root {
   color-scheme: light !important;
   supported-color-schemes: light !important;
-  /* Brand Color Palette: Obsidian Black, Champagne Gold & Warm Alabaster */
-  --bg-app: #faf9f6;
-  --bg-app-rgb: 250, 249, 246;
+  /* Brand Color Palette: Royal Warm Alabaster & Soft Pink Glow */
+  --bg-app: #fbf8f5;
+  --bg-app-rgb: 251, 248, 245;
   
   --clay-white-bg: #ffffff;
-  --clay-white-border: rgba(0, 0, 0, 0.08);
-  --clay-white-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
-  --clay-white-shadow-hover: 0 8px 28px rgba(0, 0, 0, 0.08);
+  --clay-white-border: rgba(255, 255, 255, 0.95);
+  --clay-white-shadow: 0 4px 18px rgba(185, 170, 180, 0.12), 0 1px 3px rgba(0, 0, 0, 0.03);
+  --clay-white-shadow-hover: 0 8px 28px rgba(220, 180, 195, 0.22);
 
-  --pastel-pink: #fdfaf3; /* Warm ivory/gold tone */
-  --pastel-pink-shadow: 0 4px 16px rgba(197, 160, 89, 0.12);
+  --pastel-pink: #fdf2f4; /* Warm luxury rose blush */
+  --pastel-pink-shadow: 0 4px 16px rgba(240, 142, 167, 0.18);
 
-  --pastel-lavender: #f6f5f2;
-  --pastel-blue: #f2f4f7;
-  --pastel-green: #eef7f0;
+  --pastel-lavender: #f7f3fd;
+  --pastel-blue: #f2f5fb;
+  --pastel-green: #eef8f1;
 
-  --color-accent: #c5a059; /* Warm Champagne Gold */
-  --color-accent-dark: #a8833e;
-  --brand-purple: #141316; /* Deep Obsidian Black */
+  --color-accent: #e8829c; /* Signature Soft Rose Pink */
+  --color-accent-dark: #c25b75;
+  --brand-purple: #5c3c67; /* Royal Plum Purple */
 
-  --color-text-dark: #141316;
-  --color-text-muted: #6b666d;
+  --color-text-dark: #2a2026; /* Deep warm charcoal/plum */
+  --color-text-muted: #73646c;
   --color-gold: #c5a059;
 
   /* Typography: Highly legible, modern, crystal-clear luxury sans */
@@ -49,12 +49,21 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  background-color: #faf9f6 !important;
+  background-color: #fbf8f5 !important;
   color-scheme: light !important;
 }
 
 body {
-  background-color: #faf9f6 !important;
+  background-color: #fbf8f5 !important;
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(240, 142, 167, 0.18) 0%, transparent 35%),
+    radial-gradient(circle at 85% 20%, rgba(247, 214, 224, 0.24) 0%, transparent 40%),
+    radial-gradient(circle at 50% 55%, rgba(254, 238, 242, 0.35) 0%, transparent 50%),
+    radial-gradient(circle at 10% 85%, rgba(245, 230, 240, 0.2) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(240, 142, 167, 0.16) 0%, transparent 35%),
+    linear-gradient(180deg, #fdfaf7 0%, #fcf5f7 35%, #faf0f4 70%, #fbf8f5 100%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   color-scheme: light !important;
   font-family: var(--font-body);
   color: var(--color-text-dark);
@@ -68,7 +77,7 @@ body {
 
 main {
   flex: 1 0 auto;
-  background-color: #faf9f6;
+  background-color: transparent !important;
 }
 
 a {
@@ -196,16 +205,16 @@ img {
 }
 
 .clay-btn.accent {
-  background-color: #141316;
-  color: #f7eed8;
-  border: 1px solid rgba(197, 160, 89, 0.5);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  background: linear-gradient(135deg, #2a2026 0%, #4a3443 100%);
+  color: #ffffff;
+  border: 1px solid rgba(197, 160, 89, 0.4);
+  box-shadow: 0 4px 14px rgba(74, 52, 67, 0.2);
 }
 
 .clay-btn.accent:hover {
-  background-color: var(--color-accent);
+  background: linear-gradient(135deg, #c5a059 0%, #a8833e 100%);
   color: #ffffff;
-  border-color: var(--color-accent);
+  border-color: #c5a059;
   transform: translateY(-2px);
   box-shadow: 0 8px 22px rgba(197, 160, 89, 0.35);
 }
@@ -318,10 +327,11 @@ img {
   position: sticky;
   top: 0;
   z-index: 900;
-  background-color: rgba(251, 249, 245, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+  background-color: rgba(253, 248, 250, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(240, 142, 167, 0.15);
+  box-shadow: 0 4px 20px rgba(240, 142, 167, 0.08);
   padding: 12px 5%;
   transition: var(--transition-smooth);
 }
@@ -349,16 +359,16 @@ img {
   align-items: center;
   justify-content: center;
   border: 2px solid #ffffff;
-  box-shadow: 4px 6px 14px rgba(185, 170, 180, 0.25);
-  background: #f5edf8;
+  box-shadow: 0 4px 14px rgba(185, 170, 180, 0.25);
+  background: #fdf2f4;
   flex-shrink: 0;
 }
 
 .brand-logo {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transform: scale(1.68);
+  object-fit: contain;
+  transform: scale(1.05);
   display: block;
 }
 
