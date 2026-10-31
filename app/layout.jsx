@@ -8,7 +8,7 @@ import Toast from "@/components/Toast";
 import { Analytics } from "@vercel/analytics/next";
 
 export const viewport = {
-  themeColor: "#faf9f6",
+  themeColor: "#fbf8f5",
   colorScheme: "light",
   width: "device-width",
   initialScale: 1,
@@ -60,9 +60,9 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" style={{ backgroundColor: "#faf9f6", colorScheme: "light" }} suppressHydrationWarning>
+    <html lang="en" style={{ backgroundColor: "#fbf8f5", colorScheme: "light" }} suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#faf9f6" />
+        <meta name="theme-color" content="#fbf8f5" />
         <meta name="color-scheme" content="light" />
         <meta name="supported-color-schemes" content="light" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -77,7 +77,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </head>
-      <body style={{ backgroundColor: "#faf9f6", colorScheme: "light", color: "#141316", minHeight: "100vh", margin: 0, padding: 0 }} suppressHydrationWarning>
+      <body style={{ backgroundColor: "#fbf8f5", colorScheme: "light", color: "#2a2026", minHeight: "100vh", margin: 0, padding: 0 }} suppressHydrationWarning>
         <StoreProvider>
           {/* Sticky Navigation Bar */}
           <Navbar />
