@@ -15,7 +15,20 @@ export default function ProductDetailPage() {
 
   // Dynamic Variants based on Category
   const getVariantsForProduct = (prod) => {
-    if (prod.category === "Shoes" || prod.category === "Footwear") {
+    if (
+      prod.category === "Peshawari Chappals" ||
+      prod.category === "Peshawari Chappal" ||
+      prod.title?.toLowerCase().includes("chappal")
+    ) {
+      return [
+        { name: "Size 7 (EU 40)", extra: 0 },
+        { name: "Size 8 (EU 41)", extra: 0 },
+        { name: "Size 9 (EU 42) - Standard", extra: 0 },
+        { name: "Size 10 (EU 43)", extra: 0 },
+        { name: "Size 11 (EU 44)", extra: 0 },
+        { name: "Size 12 (EU 45)", extra: 0 }
+      ];
+    } else if (prod.category === "Shoes" || prod.category === "Footwear") {
       return [
         { name: "Size EU 39", extra: 0 },
         { name: "Size EU 40", extra: 0 },
