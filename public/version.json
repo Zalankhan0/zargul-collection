@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-01T21:25:00Z",
-  "version": "2.18.0",
-  "action": "compact-homepage-hero-removal-and-font-optimization"
+  "updated_at": "2026-11-01T21:35:00Z",
+  "version": "2.19.0",
+  "action": "fix-broken-images-blank-boxes-and-stabilize-card-layout"
 }
