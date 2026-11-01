@@ -30,12 +30,13 @@ function CategoriesContent() {
 
   const categories = [
     { id: "all", label: "All Collections" },
+    { id: "chappals", label: "Peshawari Chappals" },
+    { id: "shoes", label: "Footwear" },
+    { id: "coats", label: "Coats" },
+    { id: "shawls", label: "Swati Shawls" },
     { id: "watches", label: "Watches" },
     { id: "perfumes", label: "Perfumes" },
     { id: "bags", label: "Bags" },
-    { id: "shawls", label: "Swati Shawls" },
-    { id: "coats", label: "Coats" },
-    { id: "shoes", label: "Footwear" },
     { id: "sale", label: "🔥 20% OFF Sale" },
   ];
 
@@ -73,6 +74,19 @@ function CategoriesContent() {
     } else if (activeCategory === "shawls") {
       filtered = filtered.filter(
         (p) => p.category?.toLowerCase() === "shawls" || p.title?.toLowerCase().includes("shawl") || p.title?.toLowerCase().includes("chador")
+      );
+    } else if (
+      activeCategory === "chappals" ||
+      activeCategory === "chappal" ||
+      activeCategory === "peshawari" ||
+      activeCategory === "peshawarichappal"
+    ) {
+      filtered = filtered.filter(
+        (p) =>
+          p.category?.toLowerCase().includes("chappal") ||
+          p.category?.toLowerCase().includes("peshawari") ||
+          p.title?.toLowerCase().includes("chappal") ||
+          p.title?.toLowerCase().includes("zalmi")
       );
     } else if (activeCategory === "shoes" || activeCategory === "footwear") {
       filtered = filtered.filter(
