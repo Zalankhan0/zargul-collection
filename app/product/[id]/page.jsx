@@ -24,7 +24,7 @@ export default function ProductDetailPage() {
         { name: "Size EU 43", extra: 0 },
         { name: "Size EU 44", extra: 0 }
       ];
-    } else if (prod.category === "Wascot") {
+    } else if (prod.category === "Wascot" || prod.category === "Coats") {
       return [
         { name: "Small (S)", extra: 0 },
         { name: "Medium (M)", extra: 0 },
@@ -197,8 +197,8 @@ export default function ProductDetailPage() {
             <span className="variant-label-title">
               {product.category === "Shoes"
                 ? "Select Footwear Size (EU):"
-                : product.category === "Wascot"
-                ? "Select Coat / Wascot Size:"
+                : product.category === "Wascot" || product.category === "Coats"
+                ? "Select Prince Coat / Waistcoat Size:"
                 : "Select Presentation Packaging:"}
             </span>
 
