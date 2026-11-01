@@ -28,14 +28,22 @@ export default function ProductDetailPage() {
         { name: "Size 11 (EU 44)", extra: 0 },
         { name: "Size 12 (EU 45)", extra: 0 }
       ];
-    } else if (prod.category === "Shoes" || prod.category === "Footwear") {
+    } else if (
+      prod.category === "Shoes" ||
+      prod.category === "Footwear" ||
+      prod.category === "Loafers" ||
+      prod.title?.toLowerCase().includes("loafer") ||
+      prod.title?.toLowerCase().includes("shoe") ||
+      prod.title?.toLowerCase().includes("boot")
+    ) {
       return [
         { name: "Size EU 39", extra: 0 },
         { name: "Size EU 40", extra: 0 },
         { name: "Size EU 41", extra: 0 },
         { name: "Size EU 42 (Standard)", extra: 0 },
         { name: "Size EU 43", extra: 0 },
-        { name: "Size EU 44", extra: 0 }
+        { name: "Size EU 44", extra: 0 },
+        { name: "Size EU 45", extra: 0 }
       ];
     } else if (prod.category === "Wascot" || prod.category === "Coats") {
       return [
