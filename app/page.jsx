@@ -10,33 +10,46 @@ import ReviewsMarquee from "@/components/ReviewsMarquee";
 export default function HomePage() {
   const { products, storeConfig } = useStore();
   const [founderModal, setFounderModal] = useState(null);
+  const [activeCategory, setActiveCategory] = useState("all");
 
-  // All Available Products - prioritized by newest luxury arrivals with zero crash guarantee
+  // All Available Products - complete inventory across all categories
   const safeProducts = Array.isArray(products) && products.length > 0 ? products : INITIAL_PRODUCTS;
-  const allDisplayProducts = [...safeProducts].sort((a, b) => {
-    // 1. Newest Loro Piana Suede Loafers (701-706)
-    if (a?.id >= 701 && a?.id <= 706 && !(b?.id >= 701 && b?.id <= 706)) return -1;
-    if (b?.id >= 701 && b?.id <= 706 && !(a?.id >= 701 && a?.id <= 706)) return 1;
-    // 2. Peshawari Chappals (601-610)
-    if (a?.id >= 601 && a?.id <= 610 && !(b?.id >= 601 && b?.id <= 610)) return -1;
-    if (b?.id >= 601 && b?.id <= 610 && !(a?.id >= 601 && a?.id <= 610)) return 1;
-    // 3. Footwear / Boots & Shoes (501-503)
-    if (a?.id >= 501 && a?.id <= 503 && !(b?.id >= 501 && b?.id <= 503)) return -1;
-    if (b?.id >= 501 && b?.id <= 503 && !(a?.id >= 501 && a?.id <= 503)) return 1;
-    // 4. Prince Coats & Waistcoats (401-407)
-    if (a?.id >= 401 && a?.id <= 407 && !(b?.id >= 401 && b?.id <= 407)) return -1;
-    if (b?.id >= 401 && b?.id <= 407 && !(a?.id >= 401 && a?.id <= 407)) return 1;
-    // 5. Swati Woolen Shawls (301-305)
-    if (a?.id >= 301 && a?.id <= 305 && !(b?.id >= 301 && b?.id <= 305)) return -1;
-    if (b?.id >= 301 && b?.id <= 305 && !(a?.id >= 301 && a?.id <= 305)) return 1;
-    // 6. Eau de Parfums (101-104)
-    if (a?.id >= 101 && a?.id <= 104 && !(b?.id >= 101 && b?.id <= 104)) return -1;
-    if (b?.id >= 101 && b?.id <= 104 && !(a?.id >= 101 && a?.id <= 104)) return 1;
-    // 7. Luxury Bags (201)
-    if (a?.id >= 201 && a?.id <= 205 && !(b?.id >= 201 && b?.id <= 205)) return -1;
-    if (b?.id >= 201 && b?.id <= 205 && !(a?.id >= 201 && a?.id <= 205)) return 1;
-    return (a?.id || 0) - (b?.id || 0);
-  });
+
+  // Curated showcase: Front-loads star items from EVERY department so visitors immediately see full catalog
+  const heroFrontIds = [103, 11, 401, 701, 301, 601, 501, 1, 101, 402, 201, 602, 302, 702, 502, 12];
+  const heroSet = new Set(heroFrontIds);
+
+  const heroItems = [];
+  for (const hId of heroFrontIds) {
+    const item = safeProducts.find((p) => p.id === hId);
+    if (item) heroItems.push(item);
+  }
+  const remainingItems = safeProducts.filter((p) => !heroSet.has(p.id));
+  const allCuratedProducts = [...heroItems, ...remainingItems];
+
+  const filterTabs = [
+    { key: "all", label: "All Items", icon: "✦", count: safeProducts.length },
+    { key: "watches", label: "Watches", icon: "⌚", count: safeProducts.filter((p) => p.category === "Watches").length },
+    { key: "chappals", label: "Peshawari Chappals", icon: "👡", count: safeProducts.filter((p) => p.category === "Peshawari Chappals").length },
+    { key: "footwear", label: "Footwear & Loafers", icon: "👞", count: safeProducts.filter((p) => p.category === "Footwear").length },
+    { key: "coats", label: "Prince Coats & Waistcoats", icon: "🧥", count: safeProducts.filter((p) => p.category === "Coats").length },
+    { key: "shawls", label: "Swati Shawls", icon: "🧣", count: safeProducts.filter((p) => p.category === "Shawls").length },
+    { key: "perfumes", label: "Perfumes", icon: "🌸", count: safeProducts.filter((p) => p.category === "Perfumes" || p.category === "Fragrances").length },
+    { key: "bags", label: "Bags", icon: "👜", count: safeProducts.filter((p) => p.category === "Bags").length }
+  ];
+
+  const displayedProducts = activeCategory === "all"
+    ? allCuratedProducts
+    : safeProducts.filter((p) => {
+        if (activeCategory === "watches") return p.category === "Watches";
+        if (activeCategory === "chappals") return p.category === "Peshawari Chappals";
+        if (activeCategory === "footwear") return p.category === "Footwear";
+        if (activeCategory === "coats") return p.category === "Coats";
+        if (activeCategory === "shawls") return p.category === "Shawls";
+        if (activeCategory === "perfumes") return p.category === "Perfumes" || p.category === "Fragrances";
+        if (activeCategory === "bags") return p.category === "Bags";
+        return true;
+      });
 
   const categories = [
     { title: "Footwear & Loafers", count: "9 Luxury Pairs", image: "/assets/loafers/sand_beige_suede_loafer_4999.jpg", href: "/categories?category=shoes", bg: "pink" },
@@ -220,16 +233,81 @@ export default function HomePage() {
       </section>
 
       {/* COMPLETE LUXURY SHOWCASE GRID (ALL PRODUCTS) */}
-      <section className="products-section" style={{ padding: "8px 5% 24px" }}>
-        <div className="section-header-row" style={{ marginBottom: "14px" }}>
+      <section className="products-section" style={{ padding: "8px 5% 28px" }}>
+        <div className="section-header-row" style={{ marginBottom: "12px", display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: "8px" }}>
           <div>
-            <span className="hero-tag" style={{ fontSize: "0.68rem", padding: "2px 8px" }}>✦ All Collections &amp; Arrivals</span>
+            <span className="hero-tag" style={{ fontSize: "0.68rem", padding: "2px 8px" }}>✦ All Collections &amp; Inventory</span>
             <h2 className="section-title" style={{ fontSize: "1.35rem", margin: "2px 0 0" }}>Iconic Creations</h2>
           </div>
+          <span style={{ fontSize: "0.8rem", color: "var(--color-accent-dark)", fontWeight: "700" }}>
+            Showing {displayedProducts.length} of {safeProducts.length} Items
+          </span>
         </div>
 
+        {/* INTERACTIVE CATEGORY FILTER TABS (TOUCH-FRIENDLY & INSTANT) */}
+        <div
+          style={{
+            display: "flex",
+            gap: "8px",
+            overflowX: "auto",
+            paddingBottom: "12px",
+            marginBottom: "16px",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            WebkitOverflowScrolling: "touch"
+          }}
+        >
+          {filterTabs.map((tab) => {
+            const isActive = activeCategory === tab.key;
+            return (
+              <button
+                key={tab.key}
+                type="button"
+                onClick={() => setActiveCategory(tab.key)}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  padding: "7px 14px",
+                  borderRadius: "20px",
+                  fontSize: "0.78rem",
+                  fontWeight: isActive ? "800" : "600",
+                  whiteSpace: "nowrap",
+                  cursor: "pointer",
+                  border: isActive ? "none" : "1px solid rgba(0,0,0,0.08)",
+                  background: isActive
+                    ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)"
+                    : "#ffffff",
+                  color: isActive ? "#ffffff" : "var(--color-text-dark)",
+                  boxShadow: isActive
+                    ? "0 4px 12px rgba(197, 160, 89, 0.35)"
+                    : "0 2px 6px rgba(0,0,0,0.03)",
+                  transition: "all 0.2s ease",
+                  flexShrink: 0
+                }}
+              >
+                <span>{tab.icon}</span>
+                <span>{tab.label}</span>
+                <span
+                  style={{
+                    fontSize: "0.68rem",
+                    padding: "2px 6px",
+                    borderRadius: "10px",
+                    background: isActive ? "rgba(255,255,255,0.25)" : "rgba(0,0,0,0.05)",
+                    color: isActive ? "#ffffff" : "var(--color-text-muted)",
+                    fontWeight: "750"
+                  }}
+                >
+                  {tab.count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* PRODUCTS GRID */}
         <div className="products-grid">
-          {allDisplayProducts.map((product) => (
+          {displayedProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
