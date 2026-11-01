@@ -95,6 +95,13 @@ export async function GET() {
         const decoded = Buffer.from(fileData.content, "base64").toString("utf8");
         const parsed = JSON.parse(decoded);
         if (parsed && Array.isArray(parsed.products) && parsed.products.length > 0) {
+          // Guaranteed Full Inventory: Ensure every product from INITIAL_PRODUCTS is included
+          const existingIds = new Set(parsed.products.map((p) => p.id));
+          for (const initP of INITIAL_PRODUCTS) {
+            if (!existingIds.has(initP.id)) {
+              parsed.products.push(initP);
+            }
+          }
           liveMemoryStore = parsed;
           return NextResponse.json(parsed, {
             headers: {
