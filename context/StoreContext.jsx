@@ -5,6 +5,53 @@ import { INITIAL_PRODUCTS, INITIAL_REVIEWS, INITIAL_STORE_CONFIG } from "@/lib/d
 
 const StoreContext = createContext(null);
 
+// Resilient Storage Helpers: Never throw errors even in iOS Safari Private Mode or restricted WebViews
+const safeStorage = {
+  getItem: (key) => {
+    try {
+      if (typeof window === "undefined") return null;
+      return window.localStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  },
+  setItem: (key, val) => {
+    try {
+      if (typeof window === "undefined") return;
+      window.localStorage.setItem(key, val);
+    } catch {}
+  },
+  removeItem: (key) => {
+    try {
+      if (typeof window === "undefined") return;
+      window.localStorage.removeItem(key);
+    } catch {}
+  }
+};
+
+const safeSession = {
+  getItem: (key) => {
+    try {
+      if (typeof window === "undefined") return null;
+      return window.sessionStorage.getItem(key);
+    } catch {
+      return null;
+    }
+  },
+  setItem: (key, val) => {
+    try {
+      if (typeof window === "undefined") return;
+      window.sessionStorage.setItem(key, val);
+    } catch {}
+  },
+  removeItem: (key) => {
+    try {
+      if (typeof window === "undefined") return;
+      window.sessionStorage.removeItem(key);
+    } catch {}
+  }
+};
+
 export function StoreProvider({ children }) {
   const [products, setProducts] = useState(INITIAL_PRODUCTS);
   const [reviews, setReviews] = useState(INITIAL_REVIEWS);
@@ -15,32 +62,39 @@ export function StoreProvider({ children }) {
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
 
-  // Initialize from localStorage on client
+  // Initialize from safe storage on client
   useEffect(() => {
     try {
-      // 1. Products
-      const localProducts = localStorage.getItem("zargul_products");
+      // 1. Products - Always ensure all 62 INITIAL_PRODUCTS are present
+      const localProducts = safeStorage.getItem("zargul_products");
       if (localProducts) {
         try {
           const parsed = JSON.parse(localProducts);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            const existingIds = new Set(parsed.map((p) => p.id));
-            const newFromInitial = INITIAL_PRODUCTS.filter((p) => !existingIds.has(p.id));
-            const updated = parsed.map((p) => {
-              const fresh = INITIAL_PRODUCTS.find((ip) => ip.id === p.id);
-              return fresh ? { ...p, ...fresh } : p;
-            });
-            const merged = [...updated, ...newFromInitial];
+            const existingMap = new Map();
+            // Start with all 62 products from INITIAL_PRODUCTS
+            for (const initP of INITIAL_PRODUCTS) {
+              existingMap.set(initP.id, initP);
+            }
+            // Overlay any admin changes
+            for (const p of parsed) {
+              if (existingMap.has(p.id)) {
+                existingMap.set(p.id, { ...existingMap.get(p.id), ...p });
+              } else {
+                existingMap.set(p.id, p);
+              }
+            }
+            const merged = Array.from(existingMap.values());
             setProducts(merged);
-            localStorage.setItem("zargul_products", JSON.stringify(merged));
+            safeStorage.setItem("zargul_products", JSON.stringify(merged));
           }
         } catch {
-          localStorage.removeItem("zargul_products");
+          safeStorage.removeItem("zargul_products");
         }
       }
 
       // 2. Store Config
-      const localConfig = localStorage.getItem("zargul_store_config");
+      const localConfig = safeStorage.getItem("zargul_store_config");
       if (localConfig) {
         try {
           const parsed = JSON.parse(localConfig);
@@ -48,12 +102,12 @@ export function StoreProvider({ children }) {
             setStoreConfig((prev) => ({ ...prev, ...parsed }));
           }
         } catch {
-          localStorage.removeItem("zargul_store_config");
+          safeStorage.removeItem("zargul_store_config");
         }
       }
 
       // 3. Reviews
-      const localReviews = localStorage.getItem("zargul_reviews");
+      const localReviews = safeStorage.getItem("zargul_reviews");
       if (localReviews) {
         try {
           const parsed = JSON.parse(localReviews);
@@ -61,12 +115,12 @@ export function StoreProvider({ children }) {
             setReviews(parsed);
           }
         } catch {
-          localStorage.removeItem("zargul_reviews");
+          safeStorage.removeItem("zargul_reviews");
         }
       }
 
       // 4. Cart
-      const localCart = localStorage.getItem("zargul_cart");
+      const localCart = safeStorage.getItem("zargul_cart");
       if (localCart) {
         try {
           const parsed = JSON.parse(localCart);
@@ -75,66 +129,50 @@ export function StoreProvider({ children }) {
             setCart(validItems);
           }
         } catch {
-          localStorage.removeItem("zargul_cart");
+          safeStorage.removeItem("zargul_cart");
         }
       }
 
       // 5. Admin Session
-      const sessionAuth = sessionStorage.getItem("zargul_admin_auth");
+      const sessionAuth = safeSession.getItem("zargul_admin_auth");
       if (sessionAuth === "true") {
         setIsAdminAuthenticated(true);
       }
 
-      // 6. Live Global Sync: Single fast fetch without CPU-draining 4-second polling loops
+      // 6. Live Global Sync: Fast single fetch with guaranteed all-category merge
       const fetchLiveData = () => {
         fetch(`/api/store-data?t=${Date.now()}`)
           .then((res) => (res.ok ? res.json() : null))
           .then((live) => {
             if (!live) return;
-            let isAdmin = false;
-            try {
-              isAdmin = typeof window !== "undefined" && sessionStorage.getItem("zargul_admin_auth") === "true";
-            } catch {}
+            const isAdmin = safeSession.getItem("zargul_admin_auth") === "true";
 
             if (!isAdmin) {
               if (Array.isArray(live.products) && live.products.length > 0) {
                 const existingMap = new Map();
-                for (const p of live.products) {
-                  existingMap.set(p.id, p);
+                for (const initP of INITIAL_PRODUCTS) {
+                  existingMap.set(initP.id, initP);
                 }
-                for (const p of INITIAL_PRODUCTS) {
-                  if (!existingMap.has(p.id)) {
+                for (const p of live.products) {
+                  if (existingMap.has(p.id)) {
+                    existingMap.set(p.id, { ...existingMap.get(p.id), ...p });
+                  } else {
                     existingMap.set(p.id, p);
                   }
                 }
                 const mergedProducts = Array.from(existingMap.values());
-                setProducts((prev) => {
-                  if (
-                    prev.length === mergedProducts.length &&
-                    prev[0]?.id === mergedProducts[0]?.id &&
-                    prev[0]?.price === mergedProducts[0]?.price
-                  ) {
-                    return prev;
-                  }
-                  try {
-                    localStorage.setItem("zargul_products", JSON.stringify(mergedProducts));
-                  } catch {}
-                  return mergedProducts;
-                });
+                setProducts(mergedProducts);
+                safeStorage.setItem("zargul_products", JSON.stringify(mergedProducts));
               }
 
               if (live.storeConfig && typeof live.storeConfig === "object") {
                 setStoreConfig((prev) => ({ ...prev, ...live.storeConfig }));
-                try {
-                  localStorage.setItem("zargul_store_config", JSON.stringify(live.storeConfig));
-                } catch {}
+                safeStorage.setItem("zargul_store_config", JSON.stringify(live.storeConfig));
               }
 
               if (Array.isArray(live.reviews) && live.reviews.length > 0) {
                 setReviews(live.reviews);
-                try {
-                  localStorage.setItem("zargul_reviews", JSON.stringify(live.reviews));
-                } catch {}
+                safeStorage.setItem("zargul_reviews", JSON.stringify(live.reviews));
               }
             }
           })
@@ -191,7 +229,7 @@ export function StoreProvider({ children }) {
       } else {
         updated = [...prev, { product, variant, extraPrice, quantity }];
       }
-      localStorage.setItem("zargul_cart", JSON.stringify(updated));
+      safeStorage.setItem("zargul_cart", JSON.stringify(updated));
       return updated;
     });
     showToast(`Added "${product.title}" to your Bag!`);
@@ -207,7 +245,7 @@ export function StoreProvider({ children }) {
           updated.splice(index, 1);
         }
       }
-      localStorage.setItem("zargul_cart", JSON.stringify(updated));
+      safeStorage.setItem("zargul_cart", JSON.stringify(updated));
       return updated;
     });
   };
@@ -215,30 +253,30 @@ export function StoreProvider({ children }) {
   const removeFromCart = (index) => {
     setCart((prev) => {
       const updated = prev.filter((_, idx) => idx !== index);
-      localStorage.setItem("zargul_cart", JSON.stringify(updated));
+      safeStorage.setItem("zargul_cart", JSON.stringify(updated));
       return updated;
     });
   };
 
   const clearCart = () => {
     setCart([]);
-    localStorage.removeItem("zargul_cart");
+    safeStorage.removeItem("zargul_cart");
   };
 
   // Admin Data Modifiers
   const updateProducts = (newProducts) => {
     setProducts(newProducts);
-    localStorage.setItem("zargul_products", JSON.stringify(newProducts));
+    safeStorage.setItem("zargul_products", JSON.stringify(newProducts));
   };
 
   const updateStoreConfig = (newConfig) => {
     setStoreConfig(newConfig);
-    localStorage.setItem("zargul_store_config", JSON.stringify(newConfig));
+    safeStorage.setItem("zargul_store_config", JSON.stringify(newConfig));
   };
 
   const updateReviews = (newReviews) => {
     setReviews(newReviews);
-    localStorage.setItem("zargul_reviews", JSON.stringify(newReviews));
+    safeStorage.setItem("zargul_reviews", JSON.stringify(newReviews));
   };
 
   // Compute Cart Calculations
