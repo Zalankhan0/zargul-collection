@@ -35,7 +35,7 @@ function CategoriesContent() {
     { id: "bags", label: "Bags" },
     { id: "shawls", label: "Swati Shawls" },
     { id: "coats", label: "Coats" },
-    { id: "shoes", label: "Shoes" },
+    { id: "shoes", label: "Footwear" },
     { id: "sale", label: "🔥 20% OFF Sale" },
   ];
 
@@ -73,6 +73,14 @@ function CategoriesContent() {
     } else if (activeCategory === "shawls") {
       filtered = filtered.filter(
         (p) => p.category?.toLowerCase() === "shawls" || p.title?.toLowerCase().includes("shawl") || p.title?.toLowerCase().includes("chador")
+      );
+    } else if (activeCategory === "shoes" || activeCategory === "footwear") {
+      filtered = filtered.filter(
+        (p) =>
+          p.category?.toLowerCase() === "shoes" ||
+          p.category?.toLowerCase() === "footwear" ||
+          p.title?.toLowerCase().includes("boot") ||
+          p.title?.toLowerCase().includes("shoe")
       );
     } else if (activeCategory === "gifts") {
       filtered = filtered.filter(
