@@ -1,4 +1,5 @@
 "use client";
+// Zargul Collection - v2.19.0: Stable Card Layout & Instant Image Fix
 
 import React from "react";
 import Link from "next/link";
