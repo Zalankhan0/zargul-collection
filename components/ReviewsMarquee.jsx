@@ -32,7 +32,7 @@ export default function ReviewsMarquee() {
                     </div>
                   </div>
                   <div className="review-stars">
-                    {"★".repeat(Math.min(5, Math.max(1, Math.round(Number(r.rating) || 5))))}
+                    {"★".repeat(typeof r?.rating === "number" && !isNaN(r.rating) ? Math.min(5, Math.max(1, Math.round(r.rating))) : 5)}
                   </div>
                 </div>
                 <p className="review-comment-text">{r.text}</p>
@@ -56,7 +56,7 @@ export default function ReviewsMarquee() {
                     </div>
                   </div>
                   <div className="review-stars">
-                    {"★".repeat(Math.min(5, Math.max(1, Math.round(Number(r.rating) || 5))))}
+                    {"★".repeat(typeof r?.rating === "number" && !isNaN(r.rating) ? Math.min(5, Math.max(1, Math.round(r.rating))) : 5)}
                   </div>
                 </div>
                 <p className="review-comment-text">{r.text}</p>
