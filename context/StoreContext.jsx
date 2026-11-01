@@ -24,7 +24,15 @@ export function StoreProvider({ children }) {
         try {
           const parsed = JSON.parse(localProducts);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            setProducts(parsed);
+            const existingIds = new Set(parsed.map((p) => p.id));
+            const newFromInitial = INITIAL_PRODUCTS.filter((p) => !existingIds.has(p.id));
+            const updated = parsed.map((p) => {
+              const fresh = INITIAL_PRODUCTS.find((ip) => ip.id === p.id);
+              return fresh ? { ...p, ...fresh } : p;
+            });
+            const merged = [...updated, ...newFromInitial];
+            setProducts(merged);
+            localStorage.setItem("zargul_products", JSON.stringify(merged));
           }
         } catch {
           localStorage.removeItem("zargul_products");
