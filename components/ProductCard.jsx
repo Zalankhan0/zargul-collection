@@ -63,18 +63,18 @@ export default function ProductCard({ product }) {
       </h3>
 
       {/* Price & Action Footer */}
-      <div className="product-footer-row" style={{ display: "flex", flexDirection: "column", gap: "6px", width: "100%", marginTop: "auto", paddingTop: "8px" }}>
+      <div className="product-footer-row" style={{ display: "flex", flexDirection: "column", gap: "6px", width: "100%", marginTop: "auto", paddingTop: "6px" }}>
         {/* Price & Details Link Row */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", width: "100%" }}>
-          <div className="product-price-group">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", width: "100%", minHeight: "20px" }}>
+          <div className="product-price-group" style={{ display: "flex", alignItems: "baseline", gap: "5px", flexWrap: "wrap" }}>
+            <span className="product-current-price">
+              Rs. {priceNum.toLocaleString()}
+            </span>
             {originalPriceNum > priceNum && (
               <span className="product-original-price">
                 Rs. {originalPriceNum.toLocaleString()}
               </span>
             )}
-            <span className="product-current-price">
-              Rs. {priceNum.toLocaleString()}
-            </span>
           </div>
 
           <Link
