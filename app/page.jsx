@@ -16,6 +16,10 @@ export default function HomePage() {
   const featuredProducts = safeProducts
     .filter((p) => p && p.featured !== false)
     .sort((a, b) => {
+      if (a?.id === 601) return -1;
+      if (b?.id === 601) return 1;
+      if (a?.id === 602) return -1;
+      if (b?.id === 602) return 1;
       if (a?.id === 501) return -1;
       if (b?.id === 501) return 1;
       if (a?.id === 401) return -1;
@@ -34,15 +38,16 @@ export default function HomePage() {
       if (b?.id === 104) return 1;
       return 0;
     })
-    .slice(0, 16);
+    .slice(0, 18);
 
   const categories = [
+    { title: "Peshawari Chappals", count: "5 Royal Designs", image: "/assets/chappal/royal_maroon_glossy_chappal_4500.jpg", href: "/categories?category=chappals", bg: "white" },
+    { title: "Footwear", count: "3 Luxury Pairs", image: "/assets/shoes/black_chelsea_boots_5999.jpg", href: "/categories?category=shoes", bg: "pink" },
+    { title: "Prince Coats", count: "7 Royal Editions", image: "/assets/coats/midnight_black_prince_coat_4000.jpg", href: "/categories?category=coats", bg: "lavender" },
+    { title: "Swati Shawls", count: "5 Luxury Colors", image: "/assets/shawls/slate_grey_shawl_3000.jpg", href: "/categories?category=shawls", bg: "white" },
     { title: "Watches", count: "Luxury Editions", image: "/assets/watches/Bugati_8000.jpg", href: "/categories?category=watches", bg: "white" },
     { title: "Perfumes", count: "French & Oriental", image: "/assets/perfumes/Murooj_4000.jpg", href: "/categories?category=perfumes", bg: "pink" },
     { title: "Bags", count: "Handcrafted Luxury", image: "/assets/bags/Pearl_Handbag_5500.jpg", href: "/categories?category=bags", bg: "lavender" },
-    { title: "Swati Shawls", count: "5 Luxury Colors", image: "/assets/shawls/slate_grey_shawl_3000.jpg", href: "/categories?category=shawls", bg: "white" },
-    { title: "Prince Coats", count: "7 Royal Editions", image: "/assets/coats/midnight_black_prince_coat_4000.jpg", href: "/categories?category=coats", bg: "lavender" },
-    { title: "Footwear", count: "3 Luxury Pairs", image: "/assets/shoes/black_chelsea_boots_5999.jpg", href: "/categories?category=shoes", bg: "pink" },
     { title: "Special Deals", count: "Limited Time", image: "/assets/special_deals_combo.jpg", href: "/categories?category=sale", bg: "pink" }
   ];
 
