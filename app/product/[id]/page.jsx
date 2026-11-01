@@ -144,17 +144,25 @@ export default function ProductDetailPage() {
               <span className="product-badge sale">{discountPercent}% OFF</span>
             ) : null}
 
-            <img
-              src={product.image?.startsWith("/") || product.image?.startsWith("http") ? product.image : `/${product.image}`}
-              alt={product.title}
-              style={{
-                transform: zoomActive ? "scale(1.35)" : "scale(1)",
-                transition: "transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1)"
-              }}
-              onError={(e) => {
-                e.currentTarget.src = "/assets/logo.jpg";
-              }}
-            />
+            <picture style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              {product.image && (product.image.endsWith(".jpg") || product.image.endsWith(".png")) && (
+                <source srcSet={product.image.replace(/\.(jpg|png)$/, ".webp")} type="image/webp" />
+              )}
+              <img
+                src={product.image?.startsWith("/") || product.image?.startsWith("http") ? product.image : `/${product.image}`}
+                alt={product.title}
+                loading="eager"
+                fetchPriority="high"
+                decoding="sync"
+                style={{
+                  transform: zoomActive ? "scale(1.35)" : "scale(1)",
+                  transition: "transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1)"
+                }}
+                onError={(e) => {
+                  e.currentTarget.src = "/assets/logo.jpg";
+                }}
+              />
+            </picture>
           </div>
 
           <div style={{ textAlign: "center", marginTop: "12px", fontSize: "0.8rem", color: "var(--color-text-muted)" }}>
