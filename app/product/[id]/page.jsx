@@ -15,7 +15,7 @@ export default function ProductDetailPage() {
 
   // Dynamic Variants based on Category
   const getVariantsForProduct = (prod) => {
-    if (prod.category === "Shoes") {
+    if (prod.category === "Shoes" || prod.category === "Footwear") {
       return [
         { name: "Size EU 39", extra: 0 },
         { name: "Size EU 40", extra: 0 },
@@ -195,7 +195,7 @@ export default function ProductDetailPage() {
           {/* Dynamic Variant Selector */}
           <div className="variant-selector-group">
             <span className="variant-label-title">
-              {product.category === "Shoes"
+              {product.category === "Shoes" || product.category === "Footwear"
                 ? "Select Footwear Size (EU):"
                 : product.category === "Wascot" || product.category === "Coats"
                 ? "Select Prince Coat / Waistcoat Size:"
