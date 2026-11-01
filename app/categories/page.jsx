@@ -88,13 +88,15 @@ function CategoriesContent() {
           p.title?.toLowerCase().includes("chappal") ||
           p.title?.toLowerCase().includes("zalmi")
       );
-    } else if (activeCategory === "shoes" || activeCategory === "footwear") {
+    } else if (activeCategory === "shoes" || activeCategory === "footwear" || activeCategory === "loafers") {
       filtered = filtered.filter(
         (p) =>
           p.category?.toLowerCase() === "shoes" ||
           p.category?.toLowerCase() === "footwear" ||
+          p.category?.toLowerCase() === "loafers" ||
           p.title?.toLowerCase().includes("boot") ||
-          p.title?.toLowerCase().includes("shoe")
+          p.title?.toLowerCase().includes("shoe") ||
+          p.title?.toLowerCase().includes("loafer")
       );
     } else if (activeCategory === "gifts") {
       filtered = filtered.filter(
