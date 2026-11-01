@@ -81,7 +81,7 @@ export default function RootLayout({ children }) {
         style={{
           backgroundColor: "#fbf8f5",
           backgroundImage: "radial-gradient(circle at 15% 10%, rgba(240, 142, 167, 0.22) 0%, transparent 40%), radial-gradient(circle at 85% 20%, rgba(247, 214, 224, 0.3) 0%, transparent 45%), radial-gradient(circle at 50% 55%, rgba(254, 238, 242, 0.45) 0%, transparent 55%), radial-gradient(circle at 10% 85%, rgba(245, 230, 240, 0.25) 0%, transparent 45%), radial-gradient(circle at 90% 90%, rgba(240, 142, 167, 0.2) 0%, transparent 40%), linear-gradient(180deg, #fdfaf7 0%, #fcf4f7 35%, #faedf3 70%, #fbf8f5 100%)",
-          backgroundAttachment: "fixed",
+          backgroundAttachment: "scroll",
           backgroundRepeat: "no-repeat",
           colorScheme: "only light",
           color: "#2a2026",
