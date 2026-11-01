@@ -16,6 +16,8 @@ export default function HomePage() {
   const featuredProducts = safeProducts
     .filter((p) => p && p.featured !== false)
     .sort((a, b) => {
+      if (a?.id === 606) return -1;
+      if (b?.id === 606) return 1;
       if (a?.id === 601) return -1;
       if (b?.id === 601) return 1;
       if (a?.id === 602) return -1;
@@ -41,7 +43,7 @@ export default function HomePage() {
     .slice(0, 18);
 
   const categories = [
-    { title: "Peshawari Chappals", count: "5 Royal Designs", image: "/assets/chappal/royal_maroon_glossy_chappal_4500.jpg", href: "/categories?category=chappals", bg: "white" },
+    { title: "Peshawari Chappals", count: "10 Royal Designs", image: "/assets/chappal/royal_maroon_glossy_chappal_4500.jpg", href: "/categories?category=chappals", bg: "white" },
     { title: "Footwear", count: "3 Luxury Pairs", image: "/assets/shoes/black_chelsea_boots_5999.jpg", href: "/categories?category=shoes", bg: "pink" },
     { title: "Prince Coats", count: "7 Royal Editions", image: "/assets/coats/midnight_black_prince_coat_4000.jpg", href: "/categories?category=coats", bg: "lavender" },
     { title: "Swati Shawls", count: "5 Luxury Colors", image: "/assets/shawls/slate_grey_shawl_3000.jpg", href: "/categories?category=shawls", bg: "white" },
