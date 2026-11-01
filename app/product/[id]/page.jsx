@@ -41,6 +41,11 @@ export default function ProductDetailPage() {
         { name: "Signature Velvet Dust Bag", extra: 0 },
         { name: "Royal Velvet Gift Box (+Rs. 500)", extra: 500 }
       ];
+    } else if (prod.category === "Shawls") {
+      return [
+        { name: "Standard Luxury Box Packaging", extra: 0 },
+        { name: "Royal Velvet Gift Box Presentation (+Rs. 500)", extra: 500 }
+      ];
     } else {
       // Timepieces / Default
       return [
