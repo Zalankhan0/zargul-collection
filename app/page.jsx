@@ -11,36 +11,29 @@ export default function HomePage() {
   const { products, storeConfig } = useStore();
   const [founderModal, setFounderModal] = useState(null);
 
-  // Top Featured Products - prioritize newest luxury arrivals with zero crash guarantee
+  // All Available Products - prioritized by newest luxury arrivals with zero crash guarantee
   const safeProducts = Array.isArray(products) && products.length > 0 ? products : INITIAL_PRODUCTS;
-  const featuredProducts = safeProducts
-    .filter((p) => p && p.featured !== false)
-    .sort((a, b) => {
-      if (a?.id === 606) return -1;
-      if (b?.id === 606) return 1;
-      if (a?.id === 601) return -1;
-      if (b?.id === 601) return 1;
-      if (a?.id === 602) return -1;
-      if (b?.id === 602) return 1;
-      if (a?.id === 501) return -1;
-      if (b?.id === 501) return 1;
-      if (a?.id === 401) return -1;
-      if (b?.id === 401) return 1;
-      if (a?.id === 301) return -1;
-      if (b?.id === 301) return 1;
-      if (a?.id === 502) return -1;
-      if (b?.id === 502) return 1;
-      if (a?.id === 201) return -1;
-      if (b?.id === 201) return 1;
-      if (a?.id === 402) return -1;
-      if (b?.id === 402) return 1;
-      if (a?.id === 305) return -1;
-      if (b?.id === 305) return 1;
-      if (a?.id === 104) return -1;
-      if (b?.id === 104) return 1;
-      return 0;
-    })
-    .slice(0, 18);
+  const allDisplayProducts = [...safeProducts].sort((a, b) => {
+    // 1. Peshawari Chappals (601-610)
+    if (a?.id >= 601 && a?.id <= 610 && !(b?.id >= 601 && b?.id <= 610)) return -1;
+    if (b?.id >= 601 && b?.id <= 610 && !(a?.id >= 601 && a?.id <= 610)) return 1;
+    // 2. Footwear / Shoes (501-503)
+    if (a?.id >= 501 && a?.id <= 503 && !(b?.id >= 501 && b?.id <= 503)) return -1;
+    if (b?.id >= 501 && b?.id <= 503 && !(a?.id >= 501 && a?.id <= 503)) return 1;
+    // 3. Prince Coats & Waistcoats (401-407)
+    if (a?.id >= 401 && a?.id <= 407 && !(b?.id >= 401 && b?.id <= 407)) return -1;
+    if (b?.id >= 401 && b?.id <= 407 && !(a?.id >= 401 && a?.id <= 407)) return 1;
+    // 4. Swati Woolen Shawls (301-305)
+    if (a?.id >= 301 && a?.id <= 305 && !(b?.id >= 301 && b?.id <= 305)) return -1;
+    if (b?.id >= 301 && b?.id <= 305 && !(a?.id >= 301 && a?.id <= 305)) return 1;
+    // 5. Eau de Parfums (101-104)
+    if (a?.id >= 101 && a?.id <= 104 && !(b?.id >= 101 && b?.id <= 104)) return -1;
+    if (b?.id >= 101 && b?.id <= 104 && !(a?.id >= 101 && a?.id <= 104)) return 1;
+    // 6. Luxury Bags (201)
+    if (a?.id >= 201 && a?.id <= 205 && !(b?.id >= 201 && b?.id <= 205)) return -1;
+    if (b?.id >= 201 && b?.id <= 205 && !(a?.id >= 201 && a?.id <= 205)) return 1;
+    return (a?.id || 0) - (b?.id || 0);
+  });
 
   const categories = [
     { title: "Peshawari Chappals", count: "10 Royal Designs", image: "/assets/chappal/royal_maroon_glossy_chappal_4500.jpg", href: "/categories?category=chappals", bg: "white" },
@@ -223,21 +216,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* FEATURED CREATIONS GRID */}
-      <section className="products-section" style={{ padding: "8px 5% 18px" }}>
-        <div className="section-header-row" style={{ marginBottom: "12px" }}>
+      {/* COMPLETE LUXURY SHOWCASE GRID (ALL PRODUCTS) */}
+      <section className="products-section" style={{ padding: "8px 5% 24px" }}>
+        <div className="section-header-row" style={{ marginBottom: "14px" }}>
           <div>
-            <span className="hero-tag" style={{ fontSize: "0.68rem", padding: "2px 8px" }}>✦ Master Selection</span>
+            <span className="hero-tag" style={{ fontSize: "0.68rem", padding: "2px 8px" }}>✦ All Collections &amp; Arrivals</span>
             <h2 className="section-title" style={{ fontSize: "1.35rem", margin: "2px 0 0" }}>Iconic Creations</h2>
           </div>
-
-          <Link href="/categories" className="clay-btn secondary" style={{ fontSize: "0.76rem", padding: "6px 14px", borderRadius: "12px" }}>
-            View All ({products.length}) →
-          </Link>
         </div>
 
         <div className="products-grid">
-          {featuredProducts.map((product) => (
+          {allDisplayProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
