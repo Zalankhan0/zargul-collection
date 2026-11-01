@@ -62,7 +62,7 @@ body {
     radial-gradient(circle at 10% 85%, rgba(245, 230, 240, 0.25) 0%, transparent 45%),
     radial-gradient(circle at 90% 90%, rgba(240, 142, 167, 0.2) 0%, transparent 40%),
     linear-gradient(180deg, #fdfaf7 0%, #fcf4f7 35%, #faedf3 70%, #fbf8f5 100%) !important;
-  background-attachment: fixed !important;
+  background-attachment: scroll !important;
   background-repeat: no-repeat !important;
   color-scheme: only light !important;
   font-family: var(--font-body);
