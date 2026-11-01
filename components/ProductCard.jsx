@@ -43,21 +43,17 @@ export default function ProductCard({ product, priority = false }) {
         <span className="product-badge sale">{discountPercent}% OFF</span>
       ) : null}
 
-      {/* Image linking to Dedicated Detail Page with WebP <picture> & instant priority rendering */}
+      {/* Image linking to Dedicated Detail Page - Instant Eager Rendering with Fallback */}
       <Link href={`/product/${product.id}`} className="product-image-container">
-        <picture style={{ width: "100%", height: "100%", display: "block" }}>
-          {webpImage && <source srcSet={webpImage} type="image/webp" />}
-          <img
-            src={rawImage}
-            alt={product.title}
-            loading={priority ? "eager" : "lazy"}
-            fetchPriority={priority ? "high" : "auto"}
-            decoding={priority ? "sync" : "async"}
-            onError={(e) => {
-              e.currentTarget.src = "/assets/logo.jpg";
-            }}
-          />
-        </picture>
+        <img
+          src={rawImage}
+          alt={product.title}
+          loading="eager"
+          decoding="async"
+          onError={(e) => {
+            e.currentTarget.src = "/assets/logo.jpg";
+          }}
+        />
       </Link>
 
       {/* Meta Row */}
