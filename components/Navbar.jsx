@@ -57,9 +57,9 @@ export default function Navbar() {
 
   // Live search results (top 5)
   const searchResults = searchQuery.trim().length > 1
-    ? products.filter(p =>
-        p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.category.toLowerCase().includes(searchQuery.toLowerCase())
+    ? (Array.isArray(products) ? products : []).filter(p =>
+        (p?.title || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (p?.category || "").toLowerCase().includes(searchQuery.toLowerCase())
       ).slice(0, 5)
     : [];
 
