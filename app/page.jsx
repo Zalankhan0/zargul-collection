@@ -14,30 +14,33 @@ export default function HomePage() {
   // All Available Products - prioritized by newest luxury arrivals with zero crash guarantee
   const safeProducts = Array.isArray(products) && products.length > 0 ? products : INITIAL_PRODUCTS;
   const allDisplayProducts = [...safeProducts].sort((a, b) => {
-    // 1. Peshawari Chappals (601-610)
+    // 1. Newest Loro Piana Suede Loafers (701-706)
+    if (a?.id >= 701 && a?.id <= 706 && !(b?.id >= 701 && b?.id <= 706)) return -1;
+    if (b?.id >= 701 && b?.id <= 706 && !(a?.id >= 701 && a?.id <= 706)) return 1;
+    // 2. Peshawari Chappals (601-610)
     if (a?.id >= 601 && a?.id <= 610 && !(b?.id >= 601 && b?.id <= 610)) return -1;
     if (b?.id >= 601 && b?.id <= 610 && !(a?.id >= 601 && a?.id <= 610)) return 1;
-    // 2. Footwear / Shoes (501-503)
+    // 3. Footwear / Boots & Shoes (501-503)
     if (a?.id >= 501 && a?.id <= 503 && !(b?.id >= 501 && b?.id <= 503)) return -1;
     if (b?.id >= 501 && b?.id <= 503 && !(a?.id >= 501 && a?.id <= 503)) return 1;
-    // 3. Prince Coats & Waistcoats (401-407)
+    // 4. Prince Coats & Waistcoats (401-407)
     if (a?.id >= 401 && a?.id <= 407 && !(b?.id >= 401 && b?.id <= 407)) return -1;
     if (b?.id >= 401 && b?.id <= 407 && !(a?.id >= 401 && a?.id <= 407)) return 1;
-    // 4. Swati Woolen Shawls (301-305)
+    // 5. Swati Woolen Shawls (301-305)
     if (a?.id >= 301 && a?.id <= 305 && !(b?.id >= 301 && b?.id <= 305)) return -1;
     if (b?.id >= 301 && b?.id <= 305 && !(a?.id >= 301 && a?.id <= 305)) return 1;
-    // 5. Eau de Parfums (101-104)
+    // 6. Eau de Parfums (101-104)
     if (a?.id >= 101 && a?.id <= 104 && !(b?.id >= 101 && b?.id <= 104)) return -1;
     if (b?.id >= 101 && b?.id <= 104 && !(a?.id >= 101 && a?.id <= 104)) return 1;
-    // 6. Luxury Bags (201)
+    // 7. Luxury Bags (201)
     if (a?.id >= 201 && a?.id <= 205 && !(b?.id >= 201 && b?.id <= 205)) return -1;
     if (b?.id >= 201 && b?.id <= 205 && !(a?.id >= 201 && a?.id <= 205)) return 1;
     return (a?.id || 0) - (b?.id || 0);
   });
 
   const categories = [
+    { title: "Footwear & Loafers", count: "9 Luxury Pairs", image: "/assets/loafers/sand_beige_suede_loafer_4999.jpg", href: "/categories?category=shoes", bg: "pink" },
     { title: "Peshawari Chappals", count: "10 Royal Designs", image: "/assets/chappal/royal_maroon_glossy_chappal_4500.jpg", href: "/categories?category=chappals", bg: "white" },
-    { title: "Footwear", count: "3 Luxury Pairs", image: "/assets/shoes/black_chelsea_boots_5999.jpg", href: "/categories?category=shoes", bg: "pink" },
     { title: "Prince Coats", count: "7 Royal Editions", image: "/assets/coats/midnight_black_prince_coat_4000.jpg", href: "/categories?category=coats", bg: "lavender" },
     { title: "Swati Shawls", count: "5 Luxury Colors", image: "/assets/shawls/slate_grey_shawl_3000.jpg", href: "/categories?category=shawls", bg: "white" },
     { title: "Watches", count: "Luxury Editions", image: "/assets/watches/Bugati_8000.jpg", href: "/categories?category=watches", bg: "white" },
