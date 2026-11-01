@@ -16,10 +16,14 @@ export default function HomePage() {
   const featuredProducts = safeProducts
     .filter((p) => p && p.featured !== false)
     .sort((a, b) => {
+      if (a?.id === 401) return -1;
+      if (b?.id === 401) return 1;
       if (a?.id === 301) return -1;
       if (b?.id === 301) return 1;
       if (a?.id === 201) return -1;
       if (b?.id === 201) return 1;
+      if (a?.id === 402) return -1;
+      if (b?.id === 402) return 1;
       if (a?.id === 305) return -1;
       if (b?.id === 305) return 1;
       if (a?.id === 104) return -1;
@@ -33,7 +37,7 @@ export default function HomePage() {
     { title: "Perfumes", count: "French & Oriental", image: "/assets/perfumes/Murooj_4000.jpg", href: "/categories?category=perfumes", bg: "pink" },
     { title: "Bags", count: "Handcrafted Luxury", image: "/assets/bags/Pearl_Handbag_5500.jpg", href: "/categories?category=bags", bg: "lavender" },
     { title: "Swati Shawls", count: "5 Luxury Colors", image: "/assets/shawls/slate_grey_shawl_3000.jpg", href: "/categories?category=shawls", bg: "white" },
-    { title: "Coats", count: "Prince Coats & Vests", image: "/assets/wascot.png", href: "/categories?category=coats", bg: "lavender" },
+    { title: "Prince Coats", count: "4 Royal Editions", image: "/assets/coats/midnight_black_prince_coat_4000.jpg", href: "/categories?category=coats", bg: "lavender" },
     { title: "Shoes", count: "Leather & Chappal", image: "/assets/shoes.png", href: "/categories?category=shoes", bg: "pink" },
     { title: "Special Deals", count: "Limited Time", image: "/assets/special_deals_combo.jpg", href: "/categories?category=sale", bg: "pink" }
   ];
