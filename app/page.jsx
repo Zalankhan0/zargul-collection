@@ -52,14 +52,14 @@ export default function HomePage() {
       });
 
   const categories = [
-    { title: "Footwear & Loafers", count: "9 Luxury Pairs", image: "/assets/loafers/sand_beige_suede_loafer_4999.jpg", href: "/categories?category=shoes", bg: "pink" },
-    { title: "Peshawari Chappals", count: "10 Royal Designs", image: "/assets/chappal/royal_maroon_glossy_chappal_4500.jpg", href: "/categories?category=chappals", bg: "white" },
-    { title: "Prince Coats", count: "7 Royal Editions", image: "/assets/coats/midnight_black_prince_coat_4000.jpg", href: "/categories?category=coats", bg: "lavender" },
-    { title: "Swati Shawls", count: "5 Luxury Colors", image: "/assets/shawls/slate_grey_shawl_3000.jpg", href: "/categories?category=shawls", bg: "white" },
-    { title: "Watches", count: "Luxury Editions", image: "/assets/watches/Bugati_8000.jpg", href: "/categories?category=watches", bg: "white" },
-    { title: "Perfumes", count: "French & Oriental", image: "/assets/perfumes/Murooj_4000.jpg", href: "/categories?category=perfumes", bg: "pink" },
-    { title: "Bags", count: "Handcrafted Luxury", image: "/assets/bags/Pearl_Handbag_5500.jpg", href: "/categories?category=bags", bg: "lavender" },
-    { title: "Special Deals", count: "Limited Time", image: "/assets/special_deals_combo.jpg", href: "/categories?category=sale", bg: "pink" }
+    { title: "Footwear & Loafers", count: "9 Luxury Pairs", image: "/assets/loafers/sand_beige_suede_loafer_4999.webp", href: "/categories?category=shoes", bg: "pink" },
+    { title: "Peshawari Chappals", count: "10 Royal Designs", image: "/assets/chappal/royal_maroon_glossy_chappal_4500.webp", href: "/categories?category=chappals", bg: "white" },
+    { title: "Prince Coats", count: "7 Royal Editions", image: "/assets/coats/midnight_black_prince_coat_4000.webp", href: "/categories?category=coats", bg: "lavender" },
+    { title: "Swati Shawls", count: "5 Luxury Colors", image: "/assets/shawls/slate_grey_shawl_3000.webp", href: "/categories?category=shawls", bg: "white" },
+    { title: "Watches", count: "Luxury Editions", image: "/assets/watches/Bugati_8000.webp", href: "/categories?category=watches", bg: "white" },
+    { title: "Perfumes", count: "French & Oriental", image: "/assets/perfumes/Murooj_4000.webp", href: "/categories?category=perfumes", bg: "pink" },
+    { title: "Bags", count: "Handcrafted Luxury", image: "/assets/bags/Pearl_Handbag_5500.webp", href: "/categories?category=bags", bg: "lavender" },
+    { title: "Special Deals", count: "Limited Time", image: "/assets/special_deals_combo.webp", href: "/categories?category=sale", bg: "pink" }
   ];
 
   return (
@@ -89,10 +89,18 @@ export default function HomePage() {
 
         <div className="hero-visual">
           <div className="hero-video-card">
-            <img
-              src="/assets/perfumes/Murooj_4000.jpg"
-              alt="Murooj Signature Edition"
-              className="hero-video-player"
+            <picture>
+              <source srcSet="/assets/perfumes/Murooj_4000.webp" type="image/webp" />
+              <img
+                src="/assets/perfumes/Murooj_4000.jpg"
+                alt="Murooj Signature Edition"
+                className="hero-video-player"
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                loading="eager"
+                fetchPriority="high"
+                decoding="sync"
+              />
+            </picture>
               style={{ width: "100%", height: "100%", objectFit: "cover" }}
               loading="eager"
             />
@@ -307,8 +315,8 @@ export default function HomePage() {
 
         {/* PRODUCTS GRID */}
         <div className="products-grid">
-          {displayedProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
+          {displayedProducts.map((product, idx) => (
+            <ProductCard key={product.id} product={product} priority={idx < 6} />
           ))}
         </div>
       </section>
