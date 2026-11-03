@@ -187,7 +187,7 @@ const FOOTWEAR_DATA = [
 ];
 
 export default function Footwear3DPopout() {
-  const { addToCart } = useStore();
+  const { addToCart, isVaultUnlocked } = useStore();
   const [selectedShoeIndex, setSelectedShoeIndex] = useState(0);
   const [isPopout, setIsPopout] = useState(true);
   const [tilt, setTilt] = useState({ x: 10, y: -6 });
@@ -240,8 +240,12 @@ export default function Footwear3DPopout() {
     setTimeout(() => setAddedToast(false), 2400);
   };
 
+  const vaultLine = isVaultUnlocked
+    ? `\n🎁 VIP VAULT REWARD: +1 FREE 30ml Luxury Perfume Applied (Secret Code: 7860 Verified)`
+    : "";
+
   const whatsappMessage = encodeURIComponent(
-    `Assalam-o-Alaikum Zargul Collection!\nI want to order:\n• Product: ${activeShoe.title}\n• Category: ${activeShoe.typeLabel}\n• Size: EU ${selectedSize}\n• Price: Rs. ${activeShoe.price.toLocaleString()}\n• Quantity: ${quantity}\nPlease confirm my delivery details.`
+    `Assalam-o-Alaikum Zargul Collection!\nI want to order:\n• Product: ${activeShoe.title}\n• Category: ${activeShoe.typeLabel}\n• Size: EU ${selectedSize}\n• Price: Rs. ${activeShoe.price.toLocaleString()}\n• Quantity: ${quantity}${vaultLine}\nPlease confirm my delivery details.`
   );
 
   return (
