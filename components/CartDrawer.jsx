@@ -19,7 +19,8 @@ export default function CartDrawer() {
     deliveryFee,
     cartTotal,
     storeConfig,
-    showToast
+    showToast,
+    isVaultUnlocked
   } = useStore();
 
   const [checkoutStep, setCheckoutStep] = useState("cart"); // "cart" on open | "cod" on form view
@@ -70,6 +71,9 @@ export default function CartDrawer() {
     }
     if (multiWatchDiscount > 0) {
       msg += `• ⌚ Multi-Watch Deal: -Rs. ${multiWatchDiscount.toLocaleString()} (${multiWatchTierLabel})\n`;
+    }
+    if (isVaultUnlocked) {
+      msg += `• 🎁 VIP VAULT REWARD: +1 FREE 30ml Luxury Perfume Applied (Secret Code: 7860 Verified)\n`;
     }
     msg += `• Delivery: Cash on Delivery (Standard Charges)\n`;
     msg += `━━━━━━━━━━━━━━━━━━━━\n`;
@@ -145,6 +149,9 @@ export default function CartDrawer() {
     }
     if (multiWatchDiscount > 0) {
       msg += `• ⌚ Multi-Watch Deal: -Rs. ${multiWatchDiscount.toLocaleString()} (${multiWatchTierLabel})\n`;
+    }
+    if (isVaultUnlocked) {
+      msg += `• 🎁 VIP VAULT REWARD: +1 FREE 30ml Luxury Perfume Applied (Secret Code: 7860 Verified)\n`;
     }
     msg += `• Delivery: Cash on Delivery (Standard Charges)\n`;
     msg += `━━━━━━━━━━━━━━━━━━━━\n`;
@@ -335,6 +342,13 @@ export default function CartDrawer() {
               <div style={{ padding: "8px 12px", background: "linear-gradient(135deg, #fff0f5, #fde4eb)", border: "1px solid var(--color-accent)", borderRadius: "12px", fontSize: "0.78rem", fontWeight: "700", color: "var(--color-accent-dark)", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
                 <span>⌚</span>
                 <span>{multiWatchTierLabel} Unlocked! (-Rs. {multiWatchDiscount.toLocaleString()})</span>
+              </div>
+            )}
+
+            {isVaultUnlocked && (
+              <div style={{ padding: "8px 12px", background: "linear-gradient(135deg, #fef9c3, #fef08a)", border: "1px solid #ca8a04", borderRadius: "12px", fontSize: "0.78rem", fontWeight: "750", color: "#713f12", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
+                <span>🎁</span>
+                <span>VIP Vault Reward: +1 FREE 30ml Luxury Perfume Included!</span>
               </div>
             )}
 
