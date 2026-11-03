@@ -3,12 +3,11 @@
 import React, { useState } from "react";
 import { useStore } from "@/context/StoreContext";
 import SecretRoyalVault from "./SecretRoyalVault";
-import KhanLookStudio from "./KhanLookStudio";
 import ShahiKhanCombo from "./ShahiKhanCombo";
 
 export default function TikTokVipHub() {
   const { isVaultUnlocked } = useStore();
-  const [activeTab, setActiveTab] = useState(null); // 'matcher' | 'vault' | 'combo' | null
+  const [activeTab, setActiveTab] = useState(null); // 'vault' | 'combo' | null
   const [isVaultModalOpen, setIsVaultModalOpen] = useState(false);
 
   const handleTabClick = (tabKey) => {
@@ -76,75 +75,52 @@ export default function TikTokVipHub() {
               </span>
             </div>
             <div style={{ fontSize: "0.85rem", fontWeight: "800", color: "#ffffff" }}>
-              Exclusive Khan Experience
+              Exclusive Royal Features
             </div>
           </div>
         </div>
 
-        {/* 3 INTERACTIVE TABS / BUTTONS */}
-        <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}>
+        {/* 2 INTERACTIVE TABS / BUTTONS */}
+        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center" }}>
           
-          {/* TAB 1: KHAN LOOK STUDIO */}
-          <button
-            onClick={() => handleTabClick("matcher")}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              padding: "8px 14px",
-              borderRadius: "14px",
-              background: activeTab === "matcher" ? "linear-gradient(135deg, #fef08a 0%, #d4af37 100%)" : "rgba(255,255,255,0.08)",
-              color: activeTab === "matcher" ? "#18181b" : "#ffffff",
-              border: activeTab === "matcher" ? "1px solid #d4af37" : "1px solid rgba(255,255,255,0.15)",
-              fontSize: "0.76rem",
-              fontWeight: "800",
-              cursor: "pointer",
-              transition: "all 0.2s ease"
-            }}
-          >
-            <span>🎨</span>
-            <span>Khan Look Studio</span>
-            <span style={{ fontSize: "0.65rem", opacity: 0.8 }}>{activeTab === "matcher" ? "▲" : "▼"}</span>
-          </button>
-
-          {/* TAB 2: SHAHI TIJORI (SECRET VAULT) */}
+          {/* TAB 1: SHAHI TIJORI (SECRET VAULT) */}
           <button
             onClick={() => handleTabClick("vault")}
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "6px",
-              padding: "8px 14px",
+              gap: "7px",
+              padding: "9px 16px",
               borderRadius: "14px",
               background: isVaultUnlocked
                 ? "linear-gradient(135deg, #10b981 0%, #059669 100%)"
-                : "linear-gradient(135deg, rgba(234, 179, 8, 0.2) 0%, rgba(202, 138, 4, 0.3) 100%)",
+                : "linear-gradient(135deg, rgba(234, 179, 8, 0.25) 0%, rgba(202, 138, 4, 0.35) 100%)",
               color: "#ffffff",
-              border: isVaultUnlocked ? "1px solid #10b981" : "1px solid rgba(234, 179, 8, 0.6)",
-              fontSize: "0.76rem",
+              border: isVaultUnlocked ? "1.5px solid #10b981" : "1.5px solid rgba(234, 179, 8, 0.7)",
+              fontSize: "0.78rem",
               fontWeight: "800",
               cursor: "pointer",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+              boxShadow: "0 2px 10px rgba(0,0,0,0.2)",
               transition: "all 0.2s ease"
             }}
           >
             <span>{isVaultUnlocked ? "🎁" : "🔐"}</span>
-            <span>{isVaultUnlocked ? "Shahi Tijori (Active)" : "Shahi Tijori (Vault)"}</span>
+            <span>{isVaultUnlocked ? "Shahi Tijori (Active)" : "Shahi Tijori (Secret Vault)"}</span>
           </button>
 
-          {/* TAB 3: SHAHI KHAN COMBO */}
+          {/* TAB 2: SHAHI KHAN COMBO */}
           <button
             onClick={() => handleTabClick("combo")}
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "6px",
-              padding: "8px 14px",
+              gap: "7px",
+              padding: "9px 16px",
               borderRadius: "14px",
               background: activeTab === "combo" ? "linear-gradient(135deg, #fef08a 0%, #d4af37 100%)" : "rgba(255,255,255,0.08)",
               color: activeTab === "combo" ? "#18181b" : "#ffffff",
-              border: activeTab === "combo" ? "1px solid #d4af37" : "1px solid rgba(255,255,255,0.15)",
-              fontSize: "0.76rem",
+              border: activeTab === "combo" ? "1.5px solid #d4af37" : "1.5px solid rgba(255,255,255,0.18)",
+              fontSize: "0.78rem",
               fontWeight: "800",
               cursor: "pointer",
               transition: "all 0.2s ease"
@@ -164,7 +140,7 @@ export default function TikTokVipHub() {
               cursor: "pointer",
               background: "linear-gradient(135deg, #fef08a 0%, #facc15 100%)",
               color: "#18181b",
-              padding: "5px 12px",
+              padding: "6px 14px",
               borderRadius: "12px",
               fontSize: "0.72rem",
               fontWeight: "900",
@@ -176,18 +152,12 @@ export default function TikTokVipHub() {
             }}
           >
             <span>🎁</span>
-            <span>FREE 30ml Perfume Unlocked &amp; Active!</span>
+            <span>FREE 30ml Perfume Active!</span>
           </div>
         )}
       </div>
 
-      {/* EXPANDABLE MODULE ACCORDION (SMOOTH & ZERO LAYOUT BREAK) */}
-      {activeTab === "matcher" && (
-        <div style={{ marginTop: "16px", animation: "fadeIn 0.3s ease" }}>
-          <KhanLookStudio />
-        </div>
-      )}
-
+      {/* EXPANDABLE COMBO MACHINE ACCORDION (SMOOTH & ZERO LAYOUT BREAK) */}
       {activeTab === "combo" && (
         <div style={{ marginTop: "16px", animation: "fadeIn 0.3s ease" }}>
           <ShahiKhanCombo />
