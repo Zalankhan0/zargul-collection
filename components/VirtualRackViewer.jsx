@@ -29,7 +29,6 @@ const COATS_DATA = [
       textColor: "#e4e4e7"
     },
     tag: "ROYAL EDITION",
-    badgeType: "sale",
     rating: 5.0,
     reviews: 88,
     features: ["Mandarin Stand Ban Collar", "6 Crested Heritage Buttons", "Tropical Wrinkle-Free Suiting", "Full Satin Silk Interior Lining"]
@@ -57,7 +56,6 @@ const COATS_DATA = [
       textColor: "#fde68a"
     },
     tag: "BESTSELLER",
-    badgeType: "sale",
     rating: 5.0,
     reviews: 76,
     features: ["Aristocratic Mandarin Collar", "Gold-Plated Royal Buttons", "Rich Espresso Thermal Drape", "Full Satin Silk Lining"]
@@ -85,7 +83,6 @@ const COATS_DATA = [
       textColor: "#ffffff"
     },
     tag: "POPULAR",
-    badgeType: "sale",
     rating: 4.9,
     reviews: 104,
     features: ["Matte Poly-Viscose Suiting", "Antique Pewter Finished Buttons", "Clean Welt Side Pockets", "Ultra-Light Bemberg Lining"]
@@ -113,7 +110,6 @@ const COATS_DATA = [
       textColor: "#ffffff"
     },
     tag: "NEW ARRIVAL",
-    badgeType: "sale",
     rating: 4.9,
     reviews: 92,
     features: ["Fine Sand Tropical Suiting", "Natural Artisan Toned Buttons", "Daytime Wedding & Jummah Elegance", "Pure Breathable Lining"]
@@ -143,7 +139,6 @@ const COATS_DATA = [
       textColor: "#e4e4e7"
     },
     tag: "POPULAR",
-    badgeType: "sale",
     rating: 5.0,
     reviews: 68,
     features: ["Traditional Mandarin Ban Collar", "6 Matched Black Buttons", "Dual Waist Welt Pockets", "Smooth Silk-Blend Inner Lining"]
@@ -171,7 +166,6 @@ const COATS_DATA = [
       textColor: "#ffffff"
     },
     tag: "BESTSELLER",
-    badgeType: "sale",
     rating: 4.9,
     reviews: 84,
     features: ["Fine Soft-Finish Suiting Fabric", "Versatile Light Ash Shade", "Structured Stand Collar", "Breathable Comfort Inner Lining"]
@@ -199,7 +193,6 @@ const COATS_DATA = [
       textColor: "#93c5fd"
     },
     tag: "ROYAL EDITION",
-    badgeType: "sale",
     rating: 5.0,
     reviews: 79,
     features: ["Regal Mandarin Ban Collar", "Deep Aristocratic Navy Tone", "6 Button Fastening Front", "Full Satin Silk Inner Lining"]
@@ -209,37 +202,49 @@ const COATS_DATA = [
 export default function VirtualRackViewer() {
   const { addToCart, setIsCartOpen, storeConfig } = useStore();
 
-  const [activeTab, setActiveTab] = useState("all"); // 'all' | 'prince-coat' | 'waistcoat'
-  const [activeId, setActiveId] = useState(401); // Default to Midnight Black Prince Coat
+  const [activeTab, setActiveTab] = useState("all");
+  const [activeId, setActiveId] = useState(401);
   const [viewSide, setViewSide] = useState("front"); // 'front' | 'back'
+  const [rotationDeg, setRotationDeg] = useState(0); // For full 3D rotation
   const [selectedSize, setSelectedSize] = useState("Medium (M)");
   const [quantity, setQuantity] = useState(1);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [isZooming, setIsZooming] = useState(false);
 
   const rackScrollRef = useRef(null);
 
   const activeProduct = COATS_DATA.find((c) => c.id === activeId) || COATS_DATA[0];
 
-  // Filtered items on the hanging rack
   const rackItems =
     activeTab === "all"
       ? COATS_DATA
       : COATS_DATA.filter((item) => item.type === activeTab);
 
-  // Available color swatches within current product's category group
   const colorSwatches = COATS_DATA.filter((item) => item.type === activeProduct.type);
 
+  // Smooth item selection & zoom
   const handleSelectProduct = (product) => {
     if (product.id === activeId) return;
-    setIsAnimating(true);
+    setIsZooming(true);
     setActiveId(product.id);
     setTimeout(() => {
-      setIsAnimating(false);
-    }, 350);
+      setIsZooming(false);
+    }, 300);
   };
 
-  const handleFlipView = (side) => {
-    setViewSide(side);
+  // 3D Front / Back flip
+  const handleToggleFlip = (targetSide) => {
+    if (targetSide === "back") {
+      setViewSide("back");
+      setRotationDeg(180);
+    } else {
+      setViewSide("front");
+      setRotationDeg(0);
+    }
+  };
+
+  // Full 360 Spin
+  const handleFullSpin = () => {
+    setRotationDeg((prev) => prev + 360);
   };
 
   const handleBuyNow = () => {
@@ -262,18 +267,18 @@ export default function VirtualRackViewer() {
       `Assalam-o-Alaikum! I want to order from *Zargul Collection*:\n\n` +
       `✦ *Item:* ${activeProduct.title}\n` +
       `✦ *Category:* ${activeProduct.typeLabel}\n` +
-      `✦ *Color:* ${activeProduct.colorName}\n` +
+      `✦ *Colorway:* ${activeProduct.colorName}\n` +
       `✦ *Price:* Rs. ${activeProduct.price.toLocaleString()}\n` +
-      `✦ *Selected Size:* ${selectedSize}\n` +
+      `✦ *Size:* ${selectedSize}\n` +
       `✦ *Quantity:* ${quantity}\n` +
       `✦ *Total Amount:* Rs. ${(activeProduct.price * quantity).toLocaleString()}\n\n` +
-      `🔗 *Product Link:* https://zargul.net/product/${activeProduct.id}\n\n` +
-      `Please confirm my doorstep parcel inspection & Cash on Delivery (COD).`;
+      `🔗 *Link:* https://zargul.net/product/${activeProduct.id}\n\n` +
+      `Please confirm Cash on Delivery & doorstep parcel inspection.`;
 
     window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
-  // Scroll active hanger into view smoothly
+  // Auto scroll rack to active product
   useEffect(() => {
     if (rackScrollRef.current) {
       const activeEl = rackScrollRef.current.querySelector(`[data-id="${activeId}"]`);
@@ -284,72 +289,89 @@ export default function VirtualRackViewer() {
   }, [activeId]);
 
   return (
-    <section className="virtual-rack-section" style={{ padding: "20px 4% 32px", maxWidth: "1400px", margin: "0 auto" }}>
-      {/* SECTION HEADER */}
-      <div style={{ textAlign: "center", marginBottom: "18px" }}>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: "6px" }} className="hero-tag">
-          <span style={{ color: "#d4af37" }}>✦</span>
-          <span>3D Virtual Atelier &amp; Hanging Studio</span>
-        </div>
+    <section
+      className="virtual-atelier-immersive"
+      style={{
+        padding: "24px 4% 36px",
+        maxWidth: "1400px",
+        margin: "0 auto",
+        position: "relative"
+      }}
+    >
+      {/* MINIMAL HEADER - NO BOXES */}
+      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+        <span
+          style={{
+            fontSize: "0.72rem",
+            fontWeight: "800",
+            letterSpacing: "1.5px",
+            color: "var(--color-accent-dark)",
+            textTransform: "uppercase",
+            display: "inline-block",
+            marginBottom: "4px"
+          }}
+        >
+          ✦ 3D VIRTUAL ATELIER
+        </span>
         <h2
           style={{
             fontFamily: "var(--font-display)",
-            fontSize: "1.5rem",
+            fontSize: "1.65rem",
             fontWeight: "800",
-            margin: "6px 0 4px",
             color: "var(--color-text-dark)",
-            letterSpacing: "-0.3px"
+            margin: "0 0 6px",
+            letterSpacing: "-0.4px"
           }}
         >
-          Royal Prince Coats &amp; Classic Waistcoats
+          Prince Coats &amp; Classic Waistcoats
         </h2>
-        <p style={{ fontSize: "0.82rem", color: "var(--color-text-muted)", margin: "0 auto", maxWidth: "620px", lineHeight: 1.4 }}>
-          Tap any garment on the virtual rack to inspect in 3D. Switch colors in real-time, flip between front &amp; back views, and order directly via WhatsApp or Cash on Delivery.
+        <p style={{ fontSize: "0.82rem", color: "var(--color-text-muted)", margin: "0 auto", maxWidth: "560px", lineHeight: 1.4 }}>
+          Swipe the hanging rack, tap any coat to inspect, switch colors in real-time, and spin in 3D.
         </p>
 
-        {/* COLLECTION FILTER TABS */}
+        {/* MINIMAL PILL FILTER (BORDERLESS) */}
         <div
           style={{
             display: "inline-flex",
-            background: "#f4f1f5",
-            borderRadius: "30px",
-            padding: "4px",
+            alignItems: "center",
+            gap: "6px",
             marginTop: "12px",
-            gap: "4px",
-            boxShadow: "inset 0 1px 4px rgba(0,0,0,0.06)"
+            background: "rgba(0,0,0,0.04)",
+            padding: "3px 6px",
+            borderRadius: "30px"
           }}
         >
           <button
             type="button"
             onClick={() => setActiveTab("all")}
             style={{
-              padding: "6px 14px",
-              borderRadius: "24px",
+              padding: "5px 14px",
+              borderRadius: "20px",
               border: "none",
               cursor: "pointer",
-              fontSize: "0.75rem",
-              fontWeight: activeTab === "all" ? "750" : "600",
+              fontSize: "0.74rem",
+              fontWeight: activeTab === "all" ? "800" : "600",
               background: activeTab === "all" ? "#ffffff" : "transparent",
               color: activeTab === "all" ? "var(--color-text-dark)" : "var(--color-text-muted)",
               boxShadow: activeTab === "all" ? "0 2px 8px rgba(0,0,0,0.08)" : "none",
               transition: "all 0.2s ease"
             }}
           >
-            All Wardrobe ({COATS_DATA.length})
+            All Pieces ({COATS_DATA.length})
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("prince-coat")}
             style={{
-              padding: "6px 14px",
-              borderRadius: "24px",
+              padding: "5px 14px",
+              borderRadius: "20px",
               border: "none",
               cursor: "pointer",
-              fontSize: "0.75rem",
-              fontWeight: activeTab === "prince-coat" ? "750" : "600",
+              fontSize: "0.74rem",
+              fontWeight: activeTab === "prince-coat" ? "800" : "600",
               background: activeTab === "prince-coat" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "transparent",
               color: activeTab === "prince-coat" ? "#ffffff" : "var(--color-text-muted)",
-              boxShadow: activeTab === "prince-coat" ? "0 2px 8px rgba(197, 160, 89, 0.3)" : "none",
+              boxShadow: activeTab === "prince-coat" ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
               transition: "all 0.2s ease"
             }}
           >
@@ -359,15 +381,15 @@ export default function VirtualRackViewer() {
             type="button"
             onClick={() => setActiveTab("waistcoat")}
             style={{
-              padding: "6px 14px",
-              borderRadius: "24px",
+              padding: "5px 14px",
+              borderRadius: "20px",
               border: "none",
               cursor: "pointer",
-              fontSize: "0.75rem",
-              fontWeight: activeTab === "waistcoat" ? "750" : "600",
+              fontSize: "0.74rem",
+              fontWeight: activeTab === "waistcoat" ? "800" : "600",
               background: activeTab === "waistcoat" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "transparent",
               color: activeTab === "waistcoat" ? "#ffffff" : "var(--color-text-muted)",
-              boxShadow: activeTab === "waistcoat" ? "0 2px 8px rgba(197, 160, 89, 0.3)" : "none",
+              boxShadow: activeTab === "waistcoat" ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
               transition: "all 0.2s ease"
             }}
           >
@@ -376,70 +398,35 @@ export default function VirtualRackViewer() {
         </div>
       </div>
 
-      {/* VIRTUAL HANGING RACK (BOUTIQUE RAIL WITH WOODEN HANGERS) */}
-      <div
-        className="hanging-rack-container clay-card white"
-        style={{
-          borderRadius: "20px",
-          padding: "20px 16px 16px",
-          marginBottom: "20px",
-          background: "linear-gradient(180deg, #fdfbfd 0%, #f7f3f8 100%)",
-          border: "1.5px solid rgba(197, 160, 89, 0.25)",
-          boxShadow: "0 8px 30px rgba(0,0,0,0.06)",
-          position: "relative",
-          overflow: "hidden"
-        }}
-      >
-        {/* TOP GOLD BRASS RAIL */}
+      {/* 1. VIRTUAL HANGING RACK: THIN METALLIC RAIL (NO BOXES, NO CARDS) */}
+      <div style={{ position: "relative", width: "100%", marginBottom: "32px", padding: "10px 0" }}>
+        {/* THIN HORIZONTAL METALLIC RAIL */}
         <div
           style={{
-            position: "relative",
-            width: "100%",
-            height: "12px",
-            background: "linear-gradient(180deg, #ffd700 0%, #d4af37 50%, #996515 100%)",
-            borderRadius: "6px",
-            boxShadow: "0 3px 8px rgba(0,0,0,0.2), inset 0 1px 2px rgba(255,255,255,0.6)",
-            marginBottom: "16px"
+            position: "absolute",
+            top: "20px",
+            left: "0",
+            right: "0",
+            height: "3px",
+            background: "linear-gradient(90deg, rgba(197, 160, 89, 0.1) 0%, #c5a059 15%, #ffd700 50%, #c5a059 85%, rgba(197, 160, 89, 0.1) 100%)",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
+            zIndex: 1
           }}
-        >
-          {/* Left & Right Brass End Mounts */}
-          <div
-            style={{
-              position: "absolute",
-              left: "-8px",
-              top: "-5px",
-              width: "16px",
-              height: "22px",
-              background: "linear-gradient(135deg, #b8860b 0%, #684803 100%)",
-              borderRadius: "4px",
-              boxShadow: "0 2px 5px rgba(0,0,0,0.3)"
-            }}
-          />
-          <div
-            style={{
-              position: "absolute",
-              right: "-8px",
-              top: "-5px",
-              width: "16px",
-              height: "22px",
-              background: "linear-gradient(135deg, #b8860b 0%, #684803 100%)",
-              borderRadius: "4px",
-              boxShadow: "0 2px 5px rgba(0,0,0,0.3)"
-            }}
-          />
-        </div>
+        />
 
-        {/* SCROLLABLE HANGERS TRACK */}
+        {/* HANGING COATS ROW (TRANSPARENT, FLOATING OBJECTS) */}
         <div
           ref={rackScrollRef}
           style={{
             display: "flex",
-            gap: "14px",
+            gap: "18px",
             overflowX: "auto",
-            padding: "8px 6px 16px",
-            scrollbarWidth: "thin",
-            scrollbarColor: "#d4af37 transparent",
-            WebkitOverflowScrolling: "touch"
+            padding: "8px 10px 14px",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            WebkitOverflowScrolling: "touch",
+            position: "relative",
+            zIndex: 2
           }}
         >
           {rackItems.map((item) => {
@@ -451,214 +438,181 @@ export default function VirtualRackViewer() {
                 onClick={() => handleSelectProduct(item)}
                 style={{
                   flexShrink: 0,
-                  width: "140px",
+                  width: "110px",
                   cursor: "pointer",
                   textAlign: "center",
                   position: "relative",
-                  transition: "transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s ease",
-                  transform: isSelected ? "translateY(-6px) scale(1.03)" : "translateY(0) scale(1)"
+                  transition: "transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
+                  transform: isSelected ? "translateY(-6px) scale(1.05)" : "translateY(0) scale(1)"
                 }}
                 title={`Click to inspect ${item.title}`}
               >
-                {/* HANGER HOOK & WOODEN SHOULDER */}
-                <div style={{ position: "relative", width: "100%", height: "28px", display: "flex", justifyContent: "center", alignItems: "flex-end" }}>
-                  {/* Brass Hook */}
+                {/* METALLIC BRASS HOOK ON THE LINE */}
+                <div style={{ display: "flex", justifyContent: "center", position: "relative", height: "18px" }}>
                   <div
                     style={{
-                      position: "absolute",
-                      top: "-12px",
                       width: "14px",
-                      height: "18px",
-                      border: "2.5px solid #d4af37",
+                      height: "16px",
+                      border: isSelected ? "2.5px solid #d4af37" : "2px solid #a8833e",
                       borderBottom: "none",
                       borderRadius: "10px 10px 0 0",
                       background: "transparent",
-                      boxShadow: "0 2px 4px rgba(0,0,0,0.15)"
-                    }}
-                  />
-                  {/* Wooden Shoulder Frame */}
-                  <div
-                    style={{
-                      width: "85px",
-                      height: "7px",
-                      background: "linear-gradient(180deg, #8B5A2B 0%, #5C3A21 100%)",
-                      borderRadius: "6px",
-                      boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
+                      boxShadow: isSelected ? "0 0 8px rgba(212, 175, 55, 0.7)" : "none",
+                      transition: "all 0.2s ease"
                     }}
                   />
                 </div>
 
-                {/* GARMENT CARD */}
+                {/* WOODEN HANGER TOP BAR */}
                 <div
                   style={{
-                    background: isSelected ? "#ffffff" : "rgba(255,255,255,0.85)",
-                    borderRadius: "14px",
-                    padding: "8px 8px 10px",
-                    border: isSelected ? "2px solid #d4af37" : "1px solid rgba(0,0,0,0.08)",
-                    boxShadow: isSelected
-                      ? "0 10px 24px rgba(212, 175, 55, 0.28)"
-                      : "0 4px 12px rgba(0,0,0,0.04)",
+                    width: "72px",
+                    height: "5px",
+                    margin: "0 auto 3px",
+                    background: "linear-gradient(180deg, #8B5A2B 0%, #5C3A21 100%)",
+                    borderRadius: "4px",
+                    boxShadow: "0 2px 4px rgba(0,0,0,0.25)"
+                  }}
+                />
+
+                {/* FLOATING COAT CUTOUT OBJECT (NO BOX, NO CARD) */}
+                <div
+                  style={{
+                    width: "100%",
+                    aspectRatio: "1 / 1",
+                    borderRadius: "12px",
+                    overflow: "hidden",
                     position: "relative",
-                    transition: "all 0.25s ease"
+                    filter: isSelected
+                      ? "drop-shadow(0 10px 20px rgba(197, 160, 89, 0.45))"
+                      : "drop-shadow(0 4px 10px rgba(0,0,0,0.12))",
+                    transform: isSelected ? "scale(1.02)" : "scale(0.96)",
+                    transition: "all 0.3s ease"
                   }}
                 >
-                  {/* PRICE TAG PINNED TO GARMENT */}
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block"
+                    }}
+                    loading="eager"
+                    onError={(e) => {
+                      e.currentTarget.src = "/assets/logo.jpg";
+                    }}
+                  />
+
+                  {/* FLOATING MINI PRICE BADGE */}
                   <div
                     style={{
                       position: "absolute",
-                      top: "6px",
-                      right: "6px",
-                      background: isSelected ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "rgba(20, 16, 22, 0.8)",
+                      bottom: "4px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      background: isSelected
+                        ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)"
+                        : "rgba(20, 16, 22, 0.8)",
                       color: "#ffffff",
-                      fontSize: "0.62rem",
+                      fontSize: "0.6rem",
                       fontWeight: "800",
-                      padding: "2px 6px",
-                      borderRadius: "6px",
+                      padding: "1px 6px",
+                      borderRadius: "10px",
+                      whiteSpace: "nowrap",
                       letterSpacing: "0.3px",
-                      zIndex: 2,
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.15)"
+                      boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
                     }}
                   >
                     Rs. {item.price.toLocaleString()}
                   </div>
+                </div>
 
-                  {/* THUMBNAIL IMAGE */}
-                  <div
-                    style={{
-                      width: "100%",
-                      aspectRatio: "1 / 1",
-                      borderRadius: "10px",
-                      overflow: "hidden",
-                      background: "#f4f1f5",
-                      marginBottom: "6px"
-                    }}
-                  >
-                    <img
-                      src={item.image}
-                      alt={item.title}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        display: "block",
-                        transition: "transform 0.3s ease"
-                      }}
-                      loading="eager"
-                      onError={(e) => {
-                        e.currentTarget.src = "/assets/logo.jpg";
-                      }}
-                    />
-                  </div>
-
-                  {/* COLOR DOT & TITLE */}
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "5px", marginBottom: "3px" }}>
-                    <span
-                      style={{
-                        width: "10px",
-                        height: "10px",
-                        borderRadius: "50%",
-                        background: item.colorHex,
-                        border: `1.5px solid ${item.colorBorder}`,
-                        boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
-                        flexShrink: 0
-                      }}
-                    />
-                    <span
-                      style={{
-                        fontFamily: "var(--font-display)",
-                        fontSize: "0.72rem",
-                        fontWeight: "750",
-                        color: "var(--color-text-dark)",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        maxWidth: "100px"
-                      }}
-                    >
-                      {item.colorName}
-                    </span>
-                  </div>
-
+                {/* COLOR NAME & SELECTION DOT */}
+                <div style={{ marginTop: "4px", display: "flex", alignItems: "center", justifyContent: "center", gap: "4px" }}>
                   <span
                     style={{
-                      fontSize: "0.62rem",
-                      color: isSelected ? "var(--color-accent-dark)" : "var(--color-text-muted)",
-                      fontWeight: isSelected ? "700" : "500",
-                      display: "block"
+                      width: "8px",
+                      height: "8px",
+                      borderRadius: "50%",
+                      background: item.colorHex,
+                      border: `1px solid ${item.colorBorder}`,
+                      display: "inline-block"
+                    }}
+                  />
+                  <span
+                    style={{
+                      fontSize: "0.68rem",
+                      fontWeight: isSelected ? "800" : "600",
+                      color: isSelected ? "var(--color-accent-dark)" : "var(--color-text-dark)",
+                      whiteSpace: "nowrap"
                     }}
                   >
-                    {isSelected ? "✦ Active in 3D" : "Tap to Inspect"}
+                    {item.colorName.split(" ")[0]}
                   </span>
                 </div>
               </div>
             );
           })}
         </div>
-
-        <div style={{ textAlign: "center", fontSize: "0.7rem", color: "var(--color-text-muted)", marginTop: "2px" }}>
-          👈 Swipe / Scroll rack to explore all coats &amp; waistcoats 👉
-        </div>
       </div>
 
-      {/* 3D CENTER INSPECTION SHOWCASE STUDIO */}
+      {/* 2. IMMERSIVE 3D CENTER CANVAS: HERO COAT FLOATING IN SPACE (NO CARDS, NO BOXES) */}
       <div
-        className="center-studio-grid clay-card white"
+        className="immersive-canvas-stage"
         style={{
-          borderRadius: "24px",
-          padding: "24px 20px",
-          background: "linear-gradient(135deg, #ffffff 0%, #faf8fa 100%)",
-          border: "2px solid rgba(197, 160, 89, 0.35)",
-          boxShadow: "0 14px 40px rgba(0,0,0,0.08)",
           display: "grid",
-          gridTemplateColumns: "minmax(320px, 480px) 1fr",
-          gap: "28px",
+          gridTemplateColumns: "minmax(300px, 460px) 1fr",
+          gap: "36px",
           alignItems: "center"
         }}
       >
-        {/* LEFT COLUMN: 3D FLIP PRODUCT CARD (FRONT / BACK) */}
+        {/* LEFT COLUMN: REAL 3D ROTATION & FLIP HERO OBJECT */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-          {/* TOP HANGER OVER MAIN SHOWCASE */}
-          <div style={{ position: "relative", width: "160px", height: "30px", display: "flex", justifyContent: "center", alignItems: "flex-end", marginBottom: "-10px", zIndex: 10 }}>
-            {/* Brass Hook */}
+          {/* HANGER SUSPENDED IN AIR */}
+          <div style={{ position: "relative", width: "150px", height: "26px", display: "flex", justifyContent: "center", alignItems: "flex-end", marginBottom: "-6px", zIndex: 10 }}>
+            {/* Curved Brass Hook */}
             <div
               style={{
                 position: "absolute",
                 top: "-10px",
-                width: "20px",
-                height: "22px",
-                border: "3px solid #d4af37",
+                width: "18px",
+                height: "20px",
+                border: "2.5px solid #d4af37",
                 borderBottom: "none",
-                borderRadius: "14px 14px 0 0",
-                boxShadow: "0 3px 6px rgba(0,0,0,0.2)"
+                borderRadius: "12px 12px 0 0",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
               }}
             />
-            {/* Sculpted Wooden Bar */}
+            {/* Wooden Hanger Bar */}
             <div
               style={{
-                width: "140px",
-                height: "9px",
+                width: "130px",
+                height: "7px",
                 background: "linear-gradient(180deg, #8B5A2B 0%, #5C3A21 100%)",
-                borderRadius: "8px",
-                boxShadow: "0 4px 8px rgba(0,0,0,0.25)"
+                borderRadius: "6px",
+                boxShadow: "0 3px 6px rgba(0,0,0,0.2)"
               }}
             />
           </div>
 
-          {/* 3D PERSPECTIVE FLIP CARD CONTAINER */}
+          {/* REAL 3D PERSPECTIVE ROTATION CONTAINER */}
           <div
-            onClick={() => handleFlipView(viewSide === "front" ? "back" : "front")}
+            onClick={() => handleToggleFlip(viewSide === "front" ? "back" : "front")}
             style={{
-              perspective: "1400px",
+              perspective: "1200px",
               width: "100%",
-              maxWidth: "420px",
+              maxWidth: "400px",
               aspectRatio: "1 / 1",
               position: "relative",
               cursor: "pointer",
-              borderRadius: "20px"
+              transform: isZooming ? "scale(0.96)" : "scale(1)",
+              transition: "transform 0.3s ease"
             }}
-            title="Click image to flip between FRONT and BACK view"
+            title="Click coat to flip 3D view"
           >
-            {/* INNER CARD WITH 3D ROTATION */}
+            {/* 3D ROTATING ELEMENT (PERSISTENT 3D ROTATEY) */}
             <div
               style={{
                 width: "100%",
@@ -666,13 +620,11 @@ export default function VirtualRackViewer() {
                 position: "relative",
                 transformStyle: "preserve-3d",
                 WebkitTransformStyle: "preserve-3d",
-                transition: "transform 0.65s cubic-bezier(0.35, 1, 0.35, 1)",
-                transform: viewSide === "back" ? "rotateY(180deg)" : "rotateY(0deg)",
-                boxShadow: "0 12px 35px rgba(0,0,0,0.12)",
-                borderRadius: "20px"
+                transition: "transform 0.85s cubic-bezier(0.34, 1.25, 0.64, 1)",
+                transform: `rotateY(${rotationDeg}deg)`
               }}
             >
-              {/* FRONT FACE */}
+              {/* FRONT VIEW (FLOATING OBJECT WITH SHADOW) */}
               <div
                 style={{
                   position: "absolute",
@@ -681,13 +633,9 @@ export default function VirtualRackViewer() {
                   height: "100%",
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
-                  borderRadius: "20px",
+                  borderRadius: "16px",
                   overflow: "hidden",
-                  background: "#ffffff",
-                  border: "2px solid rgba(197, 160, 89, 0.3)",
-                  opacity: isAnimating ? 0.3 : 1,
-                  transform: isAnimating ? "scale(0.96)" : "scale(1)",
-                  transition: "opacity 0.25s ease, transform 0.25s ease"
+                  filter: "drop-shadow(0 20px 35px rgba(0,0,0,0.16))"
                 }}
               >
                 <img
@@ -705,47 +653,45 @@ export default function VirtualRackViewer() {
                   }}
                 />
 
-                {/* Front Badge */}
+                {/* Subtle Front Pill */}
                 <div
                   style={{
                     position: "absolute",
-                    top: "12px",
-                    left: "12px",
-                    background: "rgba(20, 16, 22, 0.8)",
+                    top: "10px",
+                    left: "10px",
+                    background: "rgba(20, 16, 22, 0.75)",
                     backdropFilter: "blur(6px)",
                     WebkitBackdropFilter: "blur(6px)",
                     color: "#ffffff",
-                    fontSize: "0.68rem",
+                    fontSize: "0.64rem",
                     fontWeight: "800",
-                    padding: "4px 10px",
+                    padding: "3px 8px",
                     borderRadius: "20px",
                     display: "flex",
                     alignItems: "center",
-                    gap: "5px",
+                    gap: "4px",
                     letterSpacing: "0.5px"
                   }}
                 >
                   <span style={{ color: "#d4af37" }}>✦</span> FRONT VIEW
                 </div>
 
-                {/* Watermark */}
                 <div
                   style={{
                     position: "absolute",
-                    bottom: "10px",
-                    right: "12px",
-                    fontSize: "0.68rem",
+                    bottom: "8px",
+                    right: "10px",
+                    fontSize: "0.64rem",
                     fontWeight: "750",
                     color: "rgba(255, 255, 255, 0.85)",
-                    textShadow: "0 1px 3px rgba(0,0,0,0.7)",
-                    letterSpacing: "0.5px"
+                    textShadow: "0 1px 3px rgba(0,0,0,0.8)"
                   }}
                 >
                   zargul.net
                 </div>
               </div>
 
-              {/* BACK FACE (TAILORED REVERSE WITH WAIST CINCH STRAP & BUCKLE) */}
+              {/* BACK VIEW (TAILORED REVERSE WITH BUCKLE) */}
               <div
                 style={{
                   position: "absolute",
@@ -755,57 +701,55 @@ export default function VirtualRackViewer() {
                   backfaceVisibility: "hidden",
                   WebkitBackfaceVisibility: "hidden",
                   transform: "rotateY(180deg)",
-                  borderRadius: "20px",
+                  borderRadius: "16px",
                   overflow: "hidden",
                   background: activeProduct.backTheme.base,
-                  border: "2px solid rgba(197, 160, 89, 0.4)",
+                  filter: "drop-shadow(0 20px 35px rgba(0,0,0,0.22))",
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "space-between",
-                  padding: "24px 20px 18px",
+                  padding: "20px 18px 16px",
                   boxSizing: "border-box"
                 }}
               >
-                {/* Back Collar Curve */}
+                {/* Back Collar Arch */}
                 <div
                   style={{
-                    width: "110px",
-                    height: "16px",
+                    width: "100px",
+                    height: "14px",
                     borderRadius: "0 0 50px 50px",
                     background: activeProduct.backTheme.accent,
                     borderBottom: `2px solid ${activeProduct.backTheme.stitching}`,
-                    boxShadow: "0 4px 8px rgba(0,0,0,0.3)"
+                    boxShadow: "0 3px 6px rgba(0,0,0,0.3)"
                   }}
                 />
 
-                {/* Back Badge Tag */}
                 <div
                   style={{
-                    background: "rgba(0, 0, 0, 0.4)",
+                    background: "rgba(0, 0, 0, 0.45)",
                     backdropFilter: "blur(6px)",
                     WebkitBackdropFilter: "blur(6px)",
                     color: "#ffffff",
-                    fontSize: "0.68rem",
+                    fontSize: "0.64rem",
                     fontWeight: "800",
-                    padding: "4px 10px",
+                    padding: "3px 8px",
                     borderRadius: "20px",
                     display: "flex",
                     alignItems: "center",
-                    gap: "5px",
-                    letterSpacing: "0.5px"
+                    gap: "4px"
                   }}
                 >
                   <span style={{ color: "#d4af37" }}>⟳</span> TAILORED BACK VIEW
                 </div>
 
-                {/* TAILORED BACK DETAILS & CREST */}
+                {/* TAILORED SEAMS & CREST */}
                 <div style={{ textAlign: "center", width: "100%" }}>
-                  {/* Vertical Back Seams (Princess Darts) */}
-                  <div style={{ display: "flex", justifyContent: "space-around", width: "80%", margin: "0 auto 16px" }}>
-                    <div style={{ width: "1px", height: "110px", background: activeProduct.backTheme.stitching, boxShadow: "0 0 4px rgba(0,0,0,0.5)" }} />
-                    <div style={{ width: "1px", height: "130px", background: activeProduct.backTheme.stitching, boxShadow: "0 0 4px rgba(0,0,0,0.5)" }} />
-                    <div style={{ width: "1px", height: "110px", background: activeProduct.backTheme.stitching, boxShadow: "0 0 4px rgba(0,0,0,0.5)" }} />
+                  {/* Vertical Darts */}
+                  <div style={{ display: "flex", justifyContent: "space-around", width: "75%", margin: "0 auto 12px" }}>
+                    <div style={{ width: "1px", height: "90px", background: activeProduct.backTheme.stitching }} />
+                    <div style={{ width: "1px", height: "115px", background: activeProduct.backTheme.stitching }} />
+                    <div style={{ width: "1px", height: "90px", background: activeProduct.backTheme.stitching }} />
                   </div>
 
                   {/* EMBROIDERED ZARGUL CREST */}
@@ -813,200 +757,195 @@ export default function VirtualRackViewer() {
                     style={{
                       display: "inline-block",
                       border: "1px solid rgba(197, 160, 89, 0.4)",
-                      padding: "8px 18px",
-                      borderRadius: "12px",
+                      padding: "6px 14px",
+                      borderRadius: "10px",
                       background: "rgba(0,0,0,0.25)",
-                      marginBottom: "16px"
+                      marginBottom: "14px"
                     }}
                   >
-                    <span style={{ color: "#d4af37", fontSize: "0.95rem", display: "block" }}>👑</span>
-                    <span style={{ fontFamily: "var(--font-display)", fontSize: "0.76rem", fontWeight: "800", color: "#fef08a", letterSpacing: "1px", display: "block" }}>
+                    <span style={{ color: "#d4af37", fontSize: "0.85rem", display: "block" }}>👑</span>
+                    <span style={{ fontFamily: "var(--font-display)", fontSize: "0.72rem", fontWeight: "800", color: "#fef08a", letterSpacing: "1px", display: "block" }}>
                       ZARGUL ATELIER
                     </span>
-                    <span style={{ fontSize: "0.62rem", color: activeProduct.backTheme.textColor, opacity: 0.85, letterSpacing: "0.5px" }}>
+                    <span style={{ fontSize: "0.58rem", color: activeProduct.backTheme.textColor, opacity: 0.85 }}>
                       Bespoke Tailoring • Swat Valley
                     </span>
                   </div>
 
-                  {/* BESPOKE ADJUSTABLE WAIST CINCH BELT & METALLIC BUCKLE */}
+                  {/* WAIST CINCH STRAP WITH METALLIC BUCKLE */}
                   <div
                     style={{
-                      width: "85%",
+                      width: "82%",
                       margin: "0 auto",
-                      height: "18px",
+                      height: "16px",
                       background: activeProduct.backTheme.accent,
                       borderTop: `1px solid ${activeProduct.backTheme.stitching}`,
                       borderBottom: `1px solid ${activeProduct.backTheme.stitching}`,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      position: "relative",
-                      boxShadow: "0 3px 6px rgba(0,0,0,0.25)"
+                      boxShadow: "0 2px 5px rgba(0,0,0,0.25)"
                     }}
                   >
-                    {/* Center Brass/Chrome Buckle */}
                     <div
                       style={{
-                        width: "28px",
-                        height: "26px",
+                        width: "24px",
+                        height: "22px",
                         background: activeProduct.backTheme.buckle,
-                        borderRadius: "5px",
+                        borderRadius: "4px",
                         border: `1.5px solid ${activeProduct.backTheme.buckleBorder}`,
                         display: "flex",
                         alignItems: "center",
-                        justifyContent: "center",
-                        boxShadow: "0 2px 6px rgba(0,0,0,0.4)"
+                        justifyContent: "center"
                       }}
                     >
-                      <div style={{ width: "12px", height: "10px", background: activeProduct.backTheme.base, borderRadius: "2px" }} />
+                      <div style={{ width: "10px", height: "8px", background: activeProduct.backTheme.base, borderRadius: "2px" }} />
                     </div>
                   </div>
                 </div>
 
-                {/* Bottom Tailored Hem & Watermark */}
-                <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "flex-end", fontSize: "0.65rem", color: activeProduct.backTheme.textColor, opacity: 0.8 }}>
-                  <span>Tailored Slim-Fit Vented Hem</span>
+                <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "flex-end", fontSize: "0.62rem", color: activeProduct.backTheme.textColor, opacity: 0.8 }}>
+                  <span>Tailored Vented Hem</span>
                   <span style={{ fontWeight: "750" }}>zargul.net</span>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* FRONT & BACK VIEW TOGGLE BUTTONS */}
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              background: "#ede9f0",
-              borderRadius: "30px",
-              padding: "4px",
-              marginTop: "14px",
-              gap: "4px",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.06)"
-            }}
-          >
+          {/* FLOATING 3D ROTATION BUTTONS (MINIMAL, NO BOX) */}
+          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "14px" }}>
+            {/* FRONT BUTTON */}
             <button
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                handleFlipView("front");
+                handleToggleFlip("front");
               }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "5px",
-                padding: "6px 16px",
+                gap: "4px",
+                padding: "6px 14px",
                 borderRadius: "20px",
                 border: "none",
                 cursor: "pointer",
-                fontSize: "0.75rem",
+                fontSize: "0.74rem",
                 fontWeight: viewSide === "front" ? "800" : "600",
-                background: viewSide === "front" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "transparent",
+                background: viewSide === "front" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "rgba(0,0,0,0.06)",
                 color: viewSide === "front" ? "#ffffff" : "var(--color-text-dark)",
                 boxShadow: viewSide === "front" ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
                 transition: "all 0.2s ease"
               }}
             >
-              <span>✦</span> FRONT VIEW
+              <span>✦</span> FRONT
             </button>
+
+            {/* BACK BUTTON */}
             <button
               type="button"
               onClick={(e) => {
                 e.stopPropagation();
-                handleFlipView("back");
+                handleToggleFlip("back");
               }}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
-                gap: "5px",
-                padding: "6px 16px",
+                gap: "4px",
+                padding: "6px 14px",
                 borderRadius: "20px",
                 border: "none",
                 cursor: "pointer",
-                fontSize: "0.75rem",
+                fontSize: "0.74rem",
                 fontWeight: viewSide === "back" ? "800" : "600",
-                background: viewSide === "back" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "transparent",
+                background: viewSide === "back" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "rgba(0,0,0,0.06)",
                 color: viewSide === "back" ? "#ffffff" : "var(--color-text-dark)",
                 boxShadow: viewSide === "back" ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
                 transition: "all 0.2s ease"
               }}
             >
-              <span>⟳</span> BACK VIEW
+              <span>⟳</span> BACK
+            </button>
+
+            {/* 360 SPIN BUTTON */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleFullSpin();
+              }}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "4px",
+                padding: "6px 12px",
+                borderRadius: "20px",
+                border: "1px solid rgba(0,0,0,0.12)",
+                cursor: "pointer",
+                fontSize: "0.72rem",
+                fontWeight: "700",
+                background: "#ffffff",
+                color: "var(--color-text-dark)",
+                transition: "all 0.2s ease"
+              }}
+              title="Spin coat 360 degrees"
+            >
+              <span>🔄</span> 360° Spin
             </button>
           </div>
-          <span style={{ fontSize: "0.68rem", color: "var(--color-text-muted)", marginTop: "4px" }}>
-            Tap card or toggle buttons to flip 3D view
+          <span style={{ fontSize: "0.66rem", color: "var(--color-text-muted)", marginTop: "4px" }}>
+            Tap garment or click buttons for 3D rotation
           </span>
         </div>
 
-        {/* RIGHT COLUMN: PRODUCT DETAILS, COLOR SWATCHES & BUY ACTIONS */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-          {/* BADGES & RATING */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "6px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <span className={`product-badge ${activeProduct.badgeType || "sale"}`} style={{ position: "static" }}>
-                {activeProduct.tag}
-              </span>
-              <span
-                style={{
-                  fontSize: "0.72rem",
-                  fontWeight: "750",
-                  padding: "3px 10px",
-                  borderRadius: "12px",
-                  background: "rgba(197, 160, 89, 0.15)",
-                  color: "var(--color-accent-dark)"
-                }}
-              >
-                {activeProduct.typeLabel}
-              </span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "0.75rem", color: "#f5a623", fontWeight: "700" }}>
+        {/* RIGHT COLUMN: IMMERSIVE DETAILS, COLOR SWATCHES & BUY CONTROLS */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          {/* CATEGORY & RATING ROW */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span
+              style={{
+                fontSize: "0.74rem",
+                fontWeight: "800",
+                letterSpacing: "0.5px",
+                color: "var(--color-accent-dark)",
+                textTransform: "uppercase"
+              }}
+            >
+              ✦ {activeProduct.typeLabel}
+            </span>
+            <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "0.74rem", color: "#f5a623", fontWeight: "700" }}>
               <span>★</span>
               <span>{activeProduct.rating}</span>
-              <span style={{ color: "var(--color-text-muted)", fontWeight: "500", fontSize: "0.7rem" }}>
+              <span style={{ color: "var(--color-text-muted)", fontWeight: "500", fontSize: "0.68rem" }}>
                 ({activeProduct.reviews} reviews)
               </span>
             </div>
           </div>
 
-          {/* TITLE & CATEGORY */}
+          {/* TITLE & COLORWAY */}
           <div>
             <h3
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "1.35rem",
+                fontSize: "1.45rem",
                 fontWeight: "800",
                 color: "var(--color-text-dark)",
-                margin: "0 0 6px",
+                margin: "0 0 4px",
                 lineHeight: "1.25"
               }}
             >
               {activeProduct.title}
             </h3>
             <span style={{ fontSize: "0.78rem", color: "var(--color-text-muted)" }}>
-              Colorway: <strong style={{ color: "var(--color-text-dark)" }}>{activeProduct.colorName}</strong>
+              Color: <strong style={{ color: "var(--color-text-dark)" }}>{activeProduct.colorName}</strong>
             </span>
           </div>
 
-          {/* DYNAMIC COLOR SWATCHES (CLICK TO CHANGE COLOR) */}
-          <div
-            style={{
-              background: "#faf7fa",
-              padding: "10px 14px",
-              borderRadius: "14px",
-              border: "1px solid rgba(0,0,0,0.06)"
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-              <span style={{ fontSize: "0.74rem", fontWeight: "750", color: "var(--color-text-dark)" }}>
-                🎨 Available Color Swatches ({colorSwatches.length}):
-              </span>
-              <span style={{ fontSize: "0.68rem", color: "var(--color-accent-dark)", fontWeight: "600" }}>
-                Instant Color Switch
-              </span>
-            </div>
-
-            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+          {/* INTERACTIVE COLOR SWATCHES (DYNAMIC CHANGE IN 3D) */}
+          <div style={{ padding: "6px 0" }}>
+            <span style={{ display: "block", fontSize: "0.74rem", fontWeight: "800", color: "var(--color-text-dark)", marginBottom: "8px" }}>
+              🎨 Select Color Swatch:
+            </span>
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
               {colorSwatches.map((swatch) => {
                 const isSelectedSwatch = swatch.id === activeId;
                 return (
@@ -1015,7 +954,7 @@ export default function VirtualRackViewer() {
                     type="button"
                     onClick={() => handleSelectProduct(swatch)}
                     style={{
-                      display: "flex",
+                      display: "inline-flex",
                       alignItems: "center",
                       gap: "6px",
                       padding: "5px 12px",
@@ -1030,12 +969,11 @@ export default function VirtualRackViewer() {
                   >
                     <span
                       style={{
-                        width: "14px",
-                        height: "14px",
+                        width: "12px",
+                        height: "12px",
                         borderRadius: "50%",
                         background: swatch.colorHex,
-                        border: `1.5px solid ${swatch.colorBorder}`,
-                        boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                        border: `1px solid ${swatch.colorBorder}`,
                         flexShrink: 0
                       }}
                     />
@@ -1049,11 +987,11 @@ export default function VirtualRackViewer() {
           </div>
 
           {/* STRICT PRICING DISPLAY */}
-          <div style={{ display: "flex", alignItems: "baseline", gap: "10px", padding: "4px 0" }}>
+          <div style={{ display: "flex", alignItems: "baseline", gap: "10px", margin: "2px 0" }}>
             <span
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "1.6rem",
+                fontSize: "1.7rem",
                 fontWeight: "900",
                 color: "var(--color-text-dark)",
                 letterSpacing: "-0.5px"
@@ -1084,8 +1022,8 @@ export default function VirtualRackViewer() {
             </span>
           </div>
 
-          {/* FEATURES / SPECS BULLETS */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px" }}>
+          {/* KEY SPECS */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
             {activeProduct.features.map((feat, i) => (
               <div key={i} style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "0.72rem", color: "var(--color-text-dark)" }}>
                 <span style={{ color: "var(--color-accent-dark)", fontWeight: "800" }}>✓</span>
@@ -1094,14 +1032,14 @@ export default function VirtualRackViewer() {
             ))}
           </div>
 
-          {/* SIZE & QUANTITY SELECTOR */}
-          <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap", paddingTop: "4px" }}>
-            {/* Size Selector */}
-            <div style={{ flex: "1 1 200px" }}>
+          {/* SIZE & QUANTITY SELECTORS */}
+          <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", marginTop: "4px" }}>
+            {/* Size */}
+            <div style={{ flex: "1 1 180px" }}>
               <label style={{ display: "block", fontSize: "0.72rem", fontWeight: "750", color: "var(--color-text-dark)", marginBottom: "4px" }}>
-                Select Tailored Size:
+                Select Size:
               </label>
-              <div style={{ display: "flex", gap: "6px" }}>
+              <div style={{ display: "flex", gap: "5px" }}>
                 {["Small (S)", "Medium (M)", "Large (L)", "Extra Large (XL)"].map((s) => (
                   <button
                     key={s}
@@ -1126,10 +1064,10 @@ export default function VirtualRackViewer() {
               </div>
             </div>
 
-            {/* Quantity Selector */}
-            <div style={{ flex: "0 0 100px" }}>
+            {/* Quantity */}
+            <div style={{ flex: "0 0 95px" }}>
               <label style={{ display: "block", fontSize: "0.72rem", fontWeight: "750", color: "var(--color-text-dark)", marginBottom: "4px" }}>
-                Quantity:
+                Qty:
               </label>
               <div
                 style={{
@@ -1137,7 +1075,7 @@ export default function VirtualRackViewer() {
                   alignItems: "center",
                   justifyContent: "space-between",
                   background: "#f4f1f5",
-                  borderRadius: "10px",
+                  borderRadius: "8px",
                   padding: "3px 8px",
                   border: "1px solid rgba(0,0,0,0.08)"
                 }}
@@ -1180,8 +1118,7 @@ export default function VirtualRackViewer() {
           </div>
 
           {/* DUAL ACTION BUTTONS: BUY NOW & WHATSAPP ORDER */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "4px" }}>
-            {/* BUY NOW BUTTON */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "6px" }}>
             <button
               type="button"
               onClick={handleBuyNow}
@@ -1207,7 +1144,6 @@ export default function VirtualRackViewer() {
               <span>⚡</span> BUY NOW
             </button>
 
-            {/* ORDER VIA WHATSAPP BUTTON */}
             <button
               type="button"
               onClick={handleWhatsAppOrder}
@@ -1233,9 +1169,9 @@ export default function VirtualRackViewer() {
             </button>
           </div>
 
-          {/* FOOTER LINK TO PRODUCT DETAILS */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "4px" }}>
-            <span style={{ fontSize: "0.7rem", color: "var(--color-text-muted)" }}>
+          {/* FOOTER SPECS LINK */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "2px" }}>
+            <span style={{ fontSize: "0.68rem", color: "var(--color-text-muted)" }}>
               🚚 Free Delivery &amp; Doorstep Parcel Inspection Across Pakistan
             </span>
             <Link
@@ -1248,7 +1184,7 @@ export default function VirtualRackViewer() {
                 whiteSpace: "nowrap"
               }}
             >
-              View Full Specs →
+              Full Details →
             </Link>
           </div>
         </div>
