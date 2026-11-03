@@ -1716,3 +1716,26 @@ img {
   letter-spacing: 0.5px;
 }
 
+/* ================================================================
+   12. 3D VIRTUAL RACK ATELIER & STUDIO ANIMATIONS
+   ================================================================ */
+@keyframes rackSway {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  75% { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.hanging-rack-container:hover .rack-sway-item {
+  animation: rackSway 3s ease-in-out infinite;
+}
+
+@media (max-width: 820px) {
+  .center-studio-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+    padding: 18px 14px !important;
+  }
+}
+
+
