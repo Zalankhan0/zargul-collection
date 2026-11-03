@@ -8,7 +8,7 @@ import ProductCard from "@/components/ProductCard";
 
 export default function ProductDetailPage() {
   const params = useParams();
-  const { products, addToCart, setIsCartOpen, storeConfig, showToast } = useStore();
+  const { products, addToCart, setIsCartOpen, storeConfig, showToast, isVaultUnlocked } = useStore();
 
   const productId = parseInt(params.id);
   const product = products.find((p) => p.id === productId) || products[0];
@@ -108,8 +108,11 @@ export default function ProductDetailPage() {
     msg += `*Product:* ${product.title}\n`;
     msg += `*Option / Size:* ${selectedVariant}\n`;
     msg += `*Quantity:* ${quantity}x\n`;
-    msg += `*Total Amount:* Rs. ${totalPrice.toLocaleString()} (COD)\n\n`;
-    msg += `Please confirm availability and dispatch to my doorstep! ✨`;
+    msg += `*Total Amount:* Rs. ${totalPrice.toLocaleString()} (COD)\n`;
+    if (isVaultUnlocked) {
+      msg += `🎁 *VIP VAULT REWARD:* +1 FREE 30ml Luxury Perfume Applied (Secret Code: 7860 Verified)\n`;
+    }
+    msg += `\nPlease confirm availability and dispatch to my doorstep! ✨`;
 
     showToast("Opening WhatsApp Concierge...");
     window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank");
