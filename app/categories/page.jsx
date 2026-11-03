@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import ProductCard from "@/components/ProductCard";
 import VirtualRackViewer from "@/components/VirtualRackViewer";
+import Footwear3DPopout from "@/components/Footwear3DPopout";
 
 function CategoriesContent() {
   const searchParams = useSearchParams();
@@ -254,6 +255,13 @@ function CategoriesContent() {
       {activeCategory === "coats" && (
         <div style={{ marginBottom: "28px" }}>
           <VirtualRackViewer />
+        </div>
+      )}
+
+      {/* Interactive 3D Pop-Out Illusion when browsing Footwear */}
+      {(activeCategory === "shoes" || activeCategory === "footwear" || activeCategory === "loafers") && (
+        <div style={{ marginBottom: "28px" }}>
+          <Footwear3DPopout />
         </div>
       )}
 
