@@ -14,7 +14,7 @@ const FOOTWEAR_DATA = [
     originalPrice: 7500,
     type: "boots",
     typeLabel: "Luxury Chelsea Boots",
-    image: "/assets/shoes/black_chelsea_boots_5999.jpg",
+    image: "/assets/shoes/black_chelsea_boots_5999.webp",
     material: "100% Genuine Full-Grain Calfskin Leather",
     sole: "Durable Anti-Slip Stacked Leather Sole",
     color: "Jet Black",
@@ -37,7 +37,7 @@ const FOOTWEAR_DATA = [
     originalPrice: 7500,
     type: "formal",
     typeLabel: "Glossy Derby Shoes",
-    image: "/assets/shoes/glossy_black_derby_shoes_5999.jpg",
+    image: "/assets/shoes/glossy_black_derby_shoes_5999.webp",
     material: "Mirror-Shine Glossy Patent Calf Leather",
     sole: "Formal Executive Beveled Edge Leather Sole",
     color: "Glossy Black",
@@ -48,199 +48,158 @@ const FOOTWEAR_DATA = [
     features: [
       "High-Gloss Mirror Finish for Black-Tie Events",
       "5-Eyelet Waxed Lace Front Closure",
-      "Hand-Polished Clean Toe Cap Contour",
-      "Anti-Fatigue Arch Support Footbed"
+      "Shock-Absorbing Memory Foam Heel Cushion",
+      "Hand-Stitched Welted Outsole"
     ]
   },
   {
     id: 503,
-    title: "Royal Oxblood Glossy Leather Formal Shoes",
+    title: "Royal Oxblood Burnished Formal Shoes",
     category: "Footwear",
     price: 5999,
     originalPrice: 7500,
     type: "formal",
-    typeLabel: "Royal Formal Shoes",
-    image: "/assets/shoes/royal_oxblood_formal_shoes_5999.jpg",
-    material: "Hand-Burnished Deep Maroon Oxblood Leather",
-    sole: "Artisanal Finished Edge Dress Sole",
-    color: "Glossy Maroon / Oxblood",
-    tag: "EXCLUSIVE",
+    typeLabel: "Oxblood Formal Shoes",
+    image: "/assets/shoes/royal_oxblood_formal_shoes_5999.webp",
+    material: "Hand-Burnished Deep Oxblood Crust Leather",
+    sole: "Signature Burgundy-Toned Leather Sole",
+    color: "Royal Oxblood",
+    tag: "SIGNATURE",
     badgeType: "sale",
-    rating: 4.9,
-    reviews: 110,
+    rating: 5.0,
+    reviews: 78,
     features: [
-      "Deep Two-Tone Burgundy Oxblood Patina",
-      "Sleek Chiseled Toe Formal Silhouette",
-      "Gentlemen's Dress Heel with Rubber Grip",
-      "Premium Moisture-Wicking Leather Lining"
+      "Artisan Ombré Burnished Toe Cap",
+      "Almond-Toe Silhouette for Contemporary Elegance",
+      "Full Glove-Soft Calf Leather Inner Lining",
+      "Handcrafted in Precision Atelier"
     ]
   },
 
-  // LORO PIANA STYLE SUEDE LOAFERS (Strictly Rs. 4,999)
+  // 6 LORO PIANA STYLE SUEDE LOAFERS (Strictly Rs. 4,999)
   {
     id: 701,
-    title: "Loro Piana Style Sand Beige Suede Loafers",
+    title: "Camel Tan Suede Loafer",
     category: "Footwear",
     price: 4999,
     originalPrice: 6500,
-    type: "loafers",
-    typeLabel: "Summer Walk Loafers",
-    image: "/assets/loafers/sand_beige_suede_loafer_4999.jpg",
-    material: "Velvety Water-Repellent Italian Suede",
-    sole: "Signature Off-White Ergonomic Rubber Sole",
-    color: "Sand Beige",
-    tag: "TRENDING",
+    type: "loafer",
+    typeLabel: "Loro Piana Style Loafer",
+    image: "/assets/loafers/camel_tan_suede_loafer_4999.webp",
+    material: "Ultra-Soft Water-Repellent Calf Suede",
+    sole: "White Non-Slip Latex Sole",
+    color: "Camel Tan",
+    tag: "SUMMER DROP",
     badgeType: "sale",
-    rating: 5.0,
-    reviews: 128,
-    features: [
-      "Signature White Sole Cushioning",
-      "Slip-On Venetian Clean Vamp Cut",
-      "Ultra-Soft Glove-Like Insole Lining",
-      "Bespoke Contrast Hand-Stitched Apron"
-    ]
+    rating: 4.9,
+    reviews: 64,
+    features: ["Classic White Slip-Resistant Outsole", "Supple Velvet-Touch Suede Upper", "Padded Insole for Cloud-Like Walking", "Embossed Zargul Monogram on Insole"]
   },
   {
     id: 702,
-    title: "Loro Piana Style Ocean Blue Suede Loafers",
+    title: "Chocolate Brown Suede Loafer",
     category: "Footwear",
     price: 4999,
     originalPrice: 6500,
-    type: "loafers",
-    typeLabel: "Summer Walk Loafers",
-    image: "/assets/loafers/ocean_blue_suede_loafer_4999.jpg",
-    material: "Ultra-Soft Ocean Blue Nap Suede",
-    sole: "Signature White Flexible Walking Sole",
-    color: "Ocean Blue",
-    tag: "POPULAR",
-    badgeType: "sale",
-    rating: 4.9,
-    reviews: 96,
-    features: [
-      "Vibrant Riviera Blue Shade",
-      "Ultra-Flexible Featherweight Architecture",
-      "All-Day Walking Cushioning",
-      "Handcrafted Suede Edge Piping"
-    ]
-  },
-  {
-    id: 703,
-    title: "Loro Piana Style Chocolate Brown Suede Loafers",
-    category: "Footwear",
-    price: 4999,
-    originalPrice: 6500,
-    type: "loafers",
-    typeLabel: "Summer Walk Loafers",
-    image: "/assets/loafers/chocolate_brown_suede_loafer_4999.jpg",
-    material: "Rich Espresso Dark Chocolate Suede",
-    sole: "Signature White Non-Marking Rubber Sole",
+    type: "loafer",
+    typeLabel: "Loro Piana Style Loafer",
+    image: "/assets/loafers/chocolate_brown_suede_loafer_4999.webp",
+    material: "Rich Cocoa Napcalf Suede",
+    sole: "White Non-Slip Latex Sole",
     color: "Chocolate Brown",
     tag: "BESTSELLER",
     badgeType: "sale",
     rating: 5.0,
-    reviews: 114,
-    features: [
-      "Deep Earthy Muted Espresso Tone",
-      "Water-Resistant Scotchgard Coating",
-      "Memory Foam Padded Insole",
-      "Effortless Formal-Casual Transition"
-    ]
+    reviews: 58,
+    features: ["Deep Mocha Palette for Formal & Casual", "Flexible Strobel Construction", "Treated Against Dust and Moisture", "Soft Unlined Forefoot for Instant Ease"]
+  },
+  {
+    id: 703,
+    title: "Midnight Navy Suede Loafer",
+    category: "Footwear",
+    price: 4999,
+    originalPrice: 6500,
+    type: "loafer",
+    typeLabel: "Loro Piana Style Loafer",
+    image: "/assets/loafers/midnight_navy_suede_loafer_4999.webp",
+    material: "Deep Navy Blue Suede Leather",
+    sole: "White Non-Slip Latex Sole",
+    color: "Midnight Navy",
+    tag: "ROYAL NAVY",
+    badgeType: "sale",
+    rating: 5.0,
+    reviews: 72,
+    features: ["Understated Luxury for Riviera Style", "Natural Ergonomic Heel Cup", "High-Friction Grooved Rubber Tread", "Breathable Perforated Arch Support"]
   },
   {
     id: 704,
-    title: "Loro Piana Style Midnight Navy Suede Loafers",
+    title: "Ocean Blue Suede Loafer",
     category: "Footwear",
     price: 4999,
     originalPrice: 6500,
-    type: "loafers",
-    typeLabel: "Summer Walk Loafers",
-    image: "/assets/loafers/midnight_navy_suede_loafer_4999.jpg",
-    material: "Regal Midnight Navy Calf Suede",
-    sole: "Signature White Ergonomic Grip Sole",
-    color: "Midnight Navy",
-    tag: "ROYAL EDITION",
+    type: "loafer",
+    typeLabel: "Loro Piana Style Loafer",
+    image: "/assets/loafers/ocean_blue_suede_loafer_4999.webp",
+    material: "Vibrant Mediterranean Azure Suede",
+    sole: "White Non-Slip Latex Sole",
+    color: "Ocean Blue",
+    tag: "SUMMER SPECIAL",
     badgeType: "sale",
     rating: 4.9,
-    reviews: 87,
-    features: [
-      "Aristocratic Deep Navy Hue",
-      "Hand-Stitched Front Saddle Apron",
-      "Ultra-Lightweight Construction",
-      "Supple Calf Leather Internal Lining"
-    ]
+    reviews: 46,
+    features: ["Striking Marine Hue for Linen Trousers", "Lightweight Flexible Outsole", "Antimicrobial Leather Footbed", "Hand-Finished Stitched Apron Toe"]
   },
   {
     id: 705,
-    title: "Loro Piana Style Taupe Grey Suede Loafers",
+    title: "Sand Beige Suede Loafer",
     category: "Footwear",
     price: 4999,
     originalPrice: 6500,
-    type: "loafers",
-    typeLabel: "Summer Walk Loafers",
-    image: "/assets/loafers/taupe_grey_suede_loafer_4999.jpg",
-    material: "Contemporary Muted Taupe Grey Suede",
-    sole: "Signature White Flexible Walking Sole",
-    color: "Taupe Grey",
-    tag: "POPULAR",
+    type: "loafer",
+    typeLabel: "Loro Piana Style Loafer",
+    image: "/assets/loafers/sand_beige_suede_loafer_4999.webp",
+    material: "Subtle Warm Sand Velvet Suede",
+    sole: "White Non-Slip Latex Sole",
+    color: "Sand Beige",
+    tag: "TRENDING",
     badgeType: "sale",
-    rating: 4.8,
-    reviews: 73,
-    features: [
-      "Versatile Neutral Earth Tone",
-      "Pair with Chinos, Denim & Shalwar Kameez",
-      "Shock-Absorbing White Rubber Base",
-      "Breathable Anti-Odor Footbed"
-    ]
+    rating: 4.9,
+    reviews: 52,
+    features: ["Neutral Colorway Pairing with Everything", "Featherweight 260g Travel Profile", "Slip-On Loafer Silhouette", "Water-Repellent Suede Treatment"]
   },
   {
     id: 706,
-    title: "Loro Piana Style Camel Tan Suede Loafers",
+    title: "Taupe Grey Suede Loafer",
     category: "Footwear",
     price: 4999,
     originalPrice: 6500,
-    type: "loafers",
-    typeLabel: "Summer Walk Loafers",
-    image: "/assets/loafers/camel_tan_suede_loafer_4999.jpg",
-    material: "Warm Golden Camel Italian Suede",
-    sole: "Signature White Non-Slip Rubber Sole",
-    color: "Camel Tan",
-    tag: "NEW ARRIVAL",
+    type: "loafer",
+    typeLabel: "Loro Piana Style Loafer",
+    image: "/assets/loafers/taupe_grey_suede_loafer_4999.webp",
+    material: "Cool-Tone Ash Taupe Suede",
+    sole: "White Non-Slip Latex Sole",
+    color: "Taupe Grey",
+    tag: "NEW DROP",
     badgeType: "sale",
-    rating: 4.9,
-    reviews: 91,
-    features: [
-      "Warm Golden Sand Accent Tone",
-      "Handcrafted Precision Italian Stitching",
-      "Featherlight Comfort for Long Wear",
-      "Signature White Outsole Durability"
-    ]
+    rating: 4.8,
+    reviews: 39,
+    features: ["Refined Contemporary Monochromatic Look", "Arch-Support Ergonomic Bed", "Reinforced Heel Counter", "All-Day Casual Walking Comfort"]
   }
 ];
 
 export default function Footwear3DPopout() {
-  const { addToCart, setIsCartOpen, storeConfig } = useStore();
-
-  const [activeTab, setActiveTab] = useState("all"); // 'all' | 'formal' | 'loafers'
-  const [activeId, setActiveId] = useState(501); // Default to Chelsea Boots
-  const [isPopoutEngaged, setIsPopoutEngaged] = useState(true); // Hyper-realistic 3D Pop-Out
-  const [tilt, setTilt] = useState({ x: -10, y: 14 }); // 3D rotation angles
-  const [selectedSize, setSelectedSize] = useState("Size EU 42 (Standard)");
+  const { addToCart } = useStore();
+  const [selectedShoeIndex, setSelectedShoeIndex] = useState(0);
+  const [isPopoutEngaged, setIsPopoutEngaged] = useState(true); // Default engaged for maximum impact
+  const [tilt, setTilt] = useState({ x: 12, y: -8 }); // Realistic 3D angle
+  const [selectedSize, setSelectedSize] = useState("42");
   const [quantity, setQuantity] = useState(1);
-  const [autoRotate, setAutoRotate] = useState(false);
-
+  const [addedToast, setAddedToast] = useState(false);
   const stageRef = useRef(null);
-  const galleryScrollRef = useRef(null);
 
-  const activeShoe = FOOTWEAR_DATA.find((s) => s.id === activeId) || FOOTWEAR_DATA[0];
+  const activeShoe = FOOTWEAR_DATA[selectedShoeIndex];
 
-  const filteredShoes =
-    activeTab === "all"
-      ? FOOTWEAR_DATA
-      : activeTab === "formal"
-      ? FOOTWEAR_DATA.filter((s) => s.id >= 501 && s.id <= 503)
-      : FOOTWEAR_DATA.filter((s) => s.id >= 701 && s.id <= 706);
-
-  // Mouse move 3D tilt tracking for realistic optical perspective
+  // Gyro / Pointer dynamic 3D tilt tracking
   const handleMouseMove = (e) => {
     if (!stageRef.current) return;
     const rect = stageRef.current.getBoundingClientRect();
@@ -249,207 +208,125 @@ export default function Footwear3DPopout() {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    // Subtle natural tilt angles (-18deg to +18deg)
-    const tiltX = -((y - centerY) / centerY) * 16;
-    const tiltY = ((x - centerX) / centerX) * 20;
-
-    setTilt({ x: Math.max(-20, Math.min(20, tiltX)), y: Math.max(-24, Math.min(24, tiltY)) });
+    // Responsive 3D rotation angles
+    const rotateY = ((x - centerX) / centerX) * 22;
+    const rotateX = -((y - centerY) / centerY) * 22;
+    setTilt({ x: rotateX, y: rotateY });
   };
 
   const handleMouseLeave = () => {
-    // Reset to dramatic pop-out angle
-    setTilt({ x: -10, y: 14 });
+    // Return to dramatic default 3D pose
+    setTilt({ x: 12, y: -8 });
   };
 
-  // Touch move for mobile devices
   const handleTouchMove = (e) => {
     if (!stageRef.current || !e.touches[0]) return;
+    const touch = e.touches[0];
     const rect = stageRef.current.getBoundingClientRect();
-    const x = e.touches[0].clientX - rect.left;
-    const y = e.touches[0].clientY - rect.top;
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-
-    const tiltX = -((y - centerY) / centerY) * 14;
-    const tiltY = ((x - centerX) / centerX) * 18;
-
-    setTilt({ x: Math.max(-18, Math.min(18, tiltX)), y: Math.max(-20, Math.min(20, tiltY)) });
+    const rotateY = ((x - centerX) / centerX) * 20;
+    const rotateX = -((y - centerY) / centerY) * 20;
+    setTilt({ x: rotateX, y: rotateY });
   };
 
-  const handleSelectShoe = (shoe) => {
-    setActiveId(shoe.id);
-  };
-
-  const handleBuyNow = () => {
-    const cartProduct = {
+  const handleAddToCart = () => {
+    addToCart({
       id: activeShoe.id,
-      title: activeShoe.title,
-      category: activeShoe.category,
+      title: `${activeShoe.title} (Size: EU ${selectedSize})`,
       price: activeShoe.price,
-      originalPrice: activeShoe.originalPrice,
       image: activeShoe.image,
-      inStock: true
-    };
-    addToCart(cartProduct, `Size: ${selectedSize}`, 0, quantity);
-    setIsCartOpen(true);
+      category: activeShoe.category
+    }, quantity);
+    setAddedToast(true);
+    setTimeout(() => setAddedToast(false), 2400);
   };
 
-  const handleWhatsAppOrder = () => {
-    const waNumber = (storeConfig?.whatsappNumber || "923485245955").replace(/[^0-9]/g, "");
-    const msg =
-      `Assalam-o-Alaikum! I want to order from *Zargul Collection*:\n\n` +
-      `✦ *Item:* ${activeShoe.title}\n` +
-      `✦ *Category:* Footwear (${activeShoe.typeLabel})\n` +
-      `✦ *Color:* ${activeShoe.color}\n` +
-      `✦ *Price:* Rs. ${activeShoe.price.toLocaleString()}\n` +
-      `✦ *Size:* ${selectedSize}\n` +
-      `✦ *Quantity:* ${quantity}\n` +
-      `✦ *Total:* Rs. ${(activeShoe.price * quantity).toLocaleString()}\n\n` +
-      `🔗 *Link:* https://zargul.net/product/${activeShoe.id}\n\n` +
-      `Please confirm Cash on Delivery with doorstep parcel inspection.`;
-
-    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank");
-  };
-
-  // Scroll thumbnail into view
-  useEffect(() => {
-    if (galleryScrollRef.current) {
-      const el = galleryScrollRef.current.querySelector(`[data-id="${activeId}"]`);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-      }
-    }
-  }, [activeId]);
+  const whatsappMessage = encodeURIComponent(
+    `Assalam-o-Alaikum Zargul Collection!\nI want to order:\n• Product: ${activeShoe.title}\n• Category: ${activeShoe.typeLabel}\n• Size: EU ${selectedSize}\n• Price: Rs. ${activeShoe.price.toLocaleString()}\n• Quantity: ${quantity}\nPlease confirm my delivery details.`
+  );
 
   return (
-    <section
-      className="footwear-3d-stage-section"
+    <div
       style={{
-        padding: "20px 4% 32px",
-        maxWidth: "1400px",
-        margin: "0 auto",
-        position: "relative"
+        position: "relative",
+        width: "100%",
+        maxWidth: "1160px",
+        margin: "0 auto 36px",
+        background: "radial-gradient(ellipse at 50% 25%, #ffffff 0%, #faf8fb 55%, #f2ebf4 100%)",
+        borderRadius: "28px",
+        boxShadow: "0 20px 50px rgba(20, 16, 22, 0.06), inset 0 1px 0 rgba(255,255,255,0.9)",
+        padding: "32px 18px 40px",
+        overflow: "visible" /* MUST BE VISIBLE SO SHOE BREAKS COMPLETELY OUT OF BOUNDS */
       }}
     >
-      {/* SECTION HEADER */}
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <div style={{ display: "inline-flex", alignItems: "center", gap: "6px" }} className="hero-tag">
-          <span style={{ color: "#d4af37" }}>✦</span>
-          <span>Hyper-Realistic 3D Optical Illusion</span>
-        </div>
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "1.65rem",
-            fontWeight: "800",
-            color: "var(--color-text-dark)",
-            margin: "6px 0 4px",
-            letterSpacing: "-0.4px"
-          }}
-        >
-          Luxury Footwear 3D Pop-Out Experience
-        </h2>
-        <p style={{ fontSize: "0.82rem", color: "var(--color-text-muted)", margin: "0 auto", maxWidth: "580px", lineHeight: 1.4 }}>
-          Tap any shoe to engage the 3D Pop-Out illusion. Move your cursor or swipe your finger to tilt the shoe in real-time as it projects outward from your screen!
-        </p>
-
-        {/* CATEGORY FILTER TABS */}
+      {/* HEADER BADGE */}
+      <div style={{ textAlign: "center", marginBottom: "22px" }}>
         <div
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "6px",
-            marginTop: "12px",
-            background: "rgba(0,0,0,0.04)",
-            padding: "3px 6px",
-            borderRadius: "30px"
+            gap: "8px",
+            background: "#ffffff",
+            padding: "5px 18px",
+            borderRadius: "30px",
+            boxShadow: "0 4px 14px rgba(0,0,0,0.05)",
+            border: "1px solid rgba(197, 160, 89, 0.3)",
+            marginBottom: "8px"
           }}
         >
-          <button
-            type="button"
-            onClick={() => setActiveTab("all")}
+          <span style={{ color: "#c5a059", fontSize: "0.9rem" }}>⚡</span>
+          <span
             style={{
-              padding: "5px 14px",
-              borderRadius: "20px",
-              border: "none",
-              cursor: "pointer",
               fontSize: "0.74rem",
-              fontWeight: activeTab === "all" ? "800" : "600",
-              background: activeTab === "all" ? "#ffffff" : "transparent",
-              color: activeTab === "all" ? "var(--color-text-dark)" : "var(--color-text-muted)",
-              boxShadow: activeTab === "all" ? "0 2px 8px rgba(0,0,0,0.08)" : "none",
-              transition: "all 0.2s ease"
+              fontWeight: "800",
+              letterSpacing: "1.6px",
+              textTransform: "uppercase",
+              color: "#18181b"
             }}
           >
-            All Footwear ({FOOTWEAR_DATA.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("formal")}
-            style={{
-              padding: "5px 14px",
-              borderRadius: "20px",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "0.74rem",
-              fontWeight: activeTab === "formal" ? "800" : "600",
-              background: activeTab === "formal" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "transparent",
-              color: activeTab === "formal" ? "#ffffff" : "var(--color-text-muted)",
-              boxShadow: activeTab === "formal" ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
-              transition: "all 0.2s ease"
-            }}
-          >
-            Leather Shoes &amp; Boots — Rs. 5,999 (3)
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("loafers")}
-            style={{
-              padding: "5px 14px",
-              borderRadius: "20px",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "0.74rem",
-              fontWeight: activeTab === "loafers" ? "800" : "600",
-              background: activeTab === "loafers" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "transparent",
-              color: activeTab === "loafers" ? "#ffffff" : "var(--color-text-muted)",
-              boxShadow: activeTab === "loafers" ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
-              transition: "all 0.2s ease"
-            }}
-          >
-            Suede Loafers — Rs. 4,999 (6)
-          </button>
+            Extreme 3D Pop-Out • Out of Bounds Illusion
+          </span>
+          <span style={{ color: "#c5a059", fontSize: "0.9rem" }}>⚡</span>
         </div>
+        <p style={{ margin: "2px 0 0", fontSize: "0.82rem", color: "#666666" }}>
+          Click or hover any shoe to make it leap forward on the Z-axis directly out of your screen
+        </p>
       </div>
 
-      {/* HORIZONTAL SWIPE FOOTWEAR SELECTOR ROW */}
+      {/* HORIZONTAL SHOES SELECTION CAROUSEL (TOP ROW) */}
       <div
-        ref={galleryScrollRef}
         style={{
           display: "flex",
-          gap: "12px",
+          gap: "10px",
           overflowX: "auto",
-          padding: "6px 8px 16px",
+          padding: "8px 6px 18px",
           marginBottom: "24px",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
+          scrollbarWidth: "thin",
           WebkitOverflowScrolling: "touch"
         }}
       >
-        {filteredShoes.map((shoe) => {
-          const isSelected = shoe.id === activeId;
+        {FOOTWEAR_DATA.map((shoe, idx) => {
+          const isSelected = idx === selectedShoeIndex;
           return (
             <div
               key={shoe.id}
-              data-id={shoe.id}
-              onClick={() => handleSelectShoe(shoe)}
+              onClick={() => {
+                setSelectedShoeIndex(idx);
+                setIsPopoutEngaged(true);
+              }}
               style={{
-                flexShrink: 0,
-                width: "95px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                flex: "0 0 94px",
                 cursor: "pointer",
                 textAlign: "center",
                 transition: "transform 0.25s ease",
-                transform: isSelected ? "translateY(-4px) scale(1.04)" : "translateY(0) scale(1)"
+                transform: isSelected ? "translateY(-5px) scale(1.05)" : "translateY(0) scale(1)",
+                userSelect: "none"
               }}
               title={`Click to pop-out ${shoe.title}`}
             >
@@ -457,11 +334,11 @@ export default function Footwear3DPopout() {
                 style={{
                   width: "100%",
                   aspectRatio: "1 / 1",
-                  borderRadius: "12px",
+                  borderRadius: "14px",
                   overflow: "hidden",
-                  border: isSelected ? "2px solid #d4af37" : "1px solid rgba(0,0,0,0.1)",
+                  border: isSelected ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.1)",
                   boxShadow: isSelected
-                    ? "0 8px 20px rgba(212, 175, 55, 0.35)"
+                    ? "0 8px 22px rgba(197, 160, 89, 0.45)"
                     : "0 2px 8px rgba(0,0,0,0.06)",
                   position: "relative",
                   background: "#ffffff",
@@ -471,12 +348,7 @@ export default function Footwear3DPopout() {
                 <img
                   src={shoe.image}
                   alt={shoe.title}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block"
-                  }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                   loading="eager"
                   onError={(e) => {
                     e.currentTarget.src = "/assets/logo.jpg";
@@ -488,9 +360,7 @@ export default function Footwear3DPopout() {
                     bottom: "2px",
                     left: "50%",
                     transform: "translateX(-50%)",
-                    background: isSelected
-                      ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)"
-                      : "rgba(20, 16, 22, 0.75)",
+                    background: isSelected ? "#c5a059" : "rgba(20, 16, 22, 0.75)",
                     color: "#ffffff",
                     fontSize: "0.56rem",
                     fontWeight: "800",
@@ -504,14 +374,15 @@ export default function Footwear3DPopout() {
               </div>
               <span
                 style={{
-                  fontSize: "0.66rem",
+                  fontSize: "0.68rem",
                   fontWeight: isSelected ? "800" : "600",
-                  color: isSelected ? "var(--color-accent-dark)" : "var(--color-text-dark)",
+                  color: isSelected ? "#c5a059" : "#333333",
                   display: "block",
-                  marginTop: "4px",
+                  marginTop: "5px",
                   whiteSpace: "nowrap",
                   overflow: "hidden",
-                  textOverflow: "ellipsis"
+                  textOverflow: "ellipsis",
+                  width: "100%"
                 }}
               >
                 {shoe.title.split(" ")[0]} {shoe.title.split(" ")[1]}
@@ -521,18 +392,27 @@ export default function Footwear3DPopout() {
         })}
       </div>
 
-      {/* 3D POP-OUT STAGE CONTAINER */}
+      {/* 3D POP-OUT STAGE CONTAINER (GRID) */}
       <div
         className="popout-stage-container"
         style={{
           display: "grid",
-          gridTemplateColumns: "minmax(300px, 440px) 1fr",
-          gap: "36px",
-          alignItems: "center"
+          gridTemplateColumns: "minmax(320px, 460px) 1fr",
+          gap: "40px",
+          alignItems: "center",
+          overflow: "visible" /* CRITICAL: NO CLIPPING */
         }}
       >
-        {/* LEFT COLUMN: THE HYPER-REALISTIC 3D POP-OUT OPTICAL ILLUSION CANVAS */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+        {/* LEFT COLUMN: THE HYPER-REALISTIC EXTREME 3D POP-OUT CANVAS */}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
+            overflow: "visible" /* NO BOX CLIPPING */
+          }}
+        >
           {/* THE STEREOSCOPIC POP-OUT STAGE */}
           <div
             ref={stageRef}
@@ -543,67 +423,87 @@ export default function Footwear3DPopout() {
             style={{
               position: "relative",
               width: "100%",
-              maxWidth: "360px",
+              maxWidth: "380px",
               aspectRatio: "1 / 1",
-              perspective: "1200px",
-              cursor: "grab",
-              userSelect: "none"
+              perspective: "900px", /* INTENSE PERSPECTIVE DEPTH */
+              WebkitPerspective: "900px",
+              cursor: "pointer",
+              userSelect: "none",
+              overflow: "visible" /* SHOE MUST BREAK OUT OF THIS STAGE */
             }}
-            title="Click or drag to toggle 3D Pop-Out depth"
+            title="Click or drag to toggle Extreme 3D Pop-Out"
           >
-            {/* RECESSED 3D BACKGROUND FRAME (PEDESTAL IN THE SCREEN) */}
+            {/* RECESSED 3D BACKGROUND PEDESTAL (STAYS SUNK DEEP IN THE SCREEN) */}
             <div
               style={{
                 position: "absolute",
-                inset: "18px",
-                borderRadius: "20px",
-                background: "radial-gradient(circle at 50% 50%, #faf6fa 0%, #ece5ed 100%)",
+                inset: "20px",
+                borderRadius: "24px",
+                background: "radial-gradient(circle at 50% 50%, #f7f3f8 0%, #ebe2ed 100%)",
                 border: "2px solid rgba(197, 160, 89, 0.4)",
-                boxShadow: "inset 0 4px 20px rgba(0,0,0,0.12), 0 10px 30px rgba(0,0,0,0.06)",
-                transform: "translateZ(0px)",
+                boxShadow: "inset 0 6px 25px rgba(0,0,0,0.18), 0 10px 30px rgba(0,0,0,0.06)",
+                transform: "translateZ(-40px)",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-between",
-                padding: "14px 16px",
+                padding: "16px",
                 zIndex: 1
               }}
             >
-              {/* Recessed Grid Lines */}
+              {/* Recessed Matrix Grid Lines */}
               <div
                 style={{
                   position: "absolute",
                   inset: 0,
-                  opacity: 0.15,
+                  opacity: 0.2,
                   backgroundImage: "radial-gradient(#c5a059 1px, transparent 1px)",
-                  backgroundSize: "16px 16px",
-                  borderRadius: "20px"
+                  backgroundSize: "18px 18px",
+                  borderRadius: "24px"
                 }}
               />
 
-              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.64rem", color: "var(--color-text-muted)", zIndex: 2 }}>
-                <span>✦ 3D STAGE RECESS</span>
-                <span style={{ fontWeight: "750" }}>{activeShoe.color}</span>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.66rem", color: "#666", zIndex: 2 }}>
+                <span style={{ fontWeight: "750", letterSpacing: "1px" }}>✦ 3D RECESS STAGE</span>
+                <span style={{ fontWeight: "800", color: "#c5a059" }}>{activeShoe.color}</span>
               </div>
 
-              {/* Pedestal Ellipse Shadow Surface */}
-              <div
-                style={{
-                  width: "80%",
-                  height: "28px",
-                  margin: "0 auto",
-                  borderRadius: "50%",
-                  background: isPopoutEngaged
-                    ? "radial-gradient(ellipse at center, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 50%, transparent 80%)"
-                    : "radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, transparent 70%)",
-                  filter: isPopoutEngaged ? "blur(6px)" : "blur(2px)",
-                  transform: isPopoutEngaged ? "scale(1.3) translateY(8px)" : "scale(1)",
-                  transition: "all 0.5s cubic-bezier(0.34, 1.3, 0.64, 1)",
-                  zIndex: 2
-                }}
-              />
+              {/* Pedestal Bottom Label */}
+              <div style={{ textAlign: "center", zIndex: 2 }}>
+                <span
+                  style={{
+                    fontSize: "0.62rem",
+                    fontWeight: "800",
+                    letterSpacing: "1px",
+                    color: isPopoutEngaged ? "#c5a059" : "#888",
+                    textTransform: "uppercase"
+                  }}
+                >
+                  {isPopoutEngaged ? "⚡ EXTREME OUT-OF-BOUNDS ACTIVE" : "Click Shoe to Pop Out"}
+                </span>
+              </div>
             </div>
 
-            {/* THE POPPING-OUT SHOE OBJECT (BREAKS OUT OF SCREEN BOUNDARY) */}
+            {/* DEEP PROJECTED FLOOR SHADOW (EXPANDS AND GETS DARKER AS SHOE FALLS FORWARD) */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: "10px",
+                left: "10%",
+                width: "80%",
+                height: "36px",
+                borderRadius: "50%",
+                background: isPopoutEngaged
+                  ? "radial-gradient(ellipse at center, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, transparent 80%)"
+                  : "radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, transparent 70%)",
+                filter: isPopoutEngaged ? "blur(12px)" : "blur(4px)",
+                transform: isPopoutEngaged ? "scale(1.55) translateY(42px)" : "scale(1)",
+                transition: "all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                zIndex: 2,
+                pointerEvents: "none"
+              }}
+            />
+
+            {/* THE POPPING-OUT SHOE OBJECT: BREAKS FULLY OUT OF BOUNDS */}
             <div
               style={{
                 position: "absolute",
@@ -613,24 +513,26 @@ export default function Footwear3DPopout() {
                 justifyContent: "center",
                 transformStyle: "preserve-3d",
                 WebkitTransformStyle: "preserve-3d",
+                /* DRAMATIC TRANSLATEZ + SCALE3D + DYNAMIC GYRO TILT */
                 transform: isPopoutEngaged
-                  ? `perspective(1200px) translateZ(120px) scale3d(1.28, 1.28, 1.28) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`
-                  : "perspective(1200px) translateZ(0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)",
-                transition: "transform 0.45s cubic-bezier(0.34, 1.25, 0.64, 1)",
-                zIndex: 10
+                  ? `perspective(850px) translateZ(240px) translateY(20px) scale3d(1.52, 1.52, 1.52) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`
+                  : "perspective(850px) translateZ(0px) translateY(0px) scale3d(1, 1, 1) rotateX(0deg) rotateY(0deg)",
+                transition: "transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                zIndex: 30,
+                overflow: "visible" /* ZERO CONTAINER CLIPPING */
               }}
             >
-              {/* HIGH RESOLUTION SHOE WITH MULTI-STAGE AMBIENT SHADOW */}
+              {/* HIGH RESOLUTION SHOE WITH MASSIVE INTENSE DROP SHADOW SEPARATING FROM BACKGROUND */}
               <div
                 style={{
-                  width: "82%",
+                  width: "85%",
                   aspectRatio: "1 / 1",
-                  borderRadius: "18px",
-                  overflow: "hidden",
+                  overflow: "visible", /* NEVER CLIPPED BY BORDER BOX */
                   position: "relative",
+                  /* INTENSE MULTI-LAYER DROP SHADOW (FALLING OUT ILLUSION) */
                   filter: isPopoutEngaged
-                    ? "drop-shadow(0 30px 45px rgba(0, 0, 0, 0.55)) drop-shadow(0 15px 25px rgba(197, 160, 89, 0.4))"
-                    : "drop-shadow(0 10px 18px rgba(0, 0, 0, 0.18))",
+                    ? "drop-shadow(0 50px 60px rgba(0, 0, 0, 0.85)) drop-shadow(0 20px 25px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 45px rgba(197, 160, 89, 0.45))"
+                    : "drop-shadow(0 10px 18px rgba(0, 0, 0, 0.2))",
                   transition: "filter 0.45s ease"
                 }}
               >
@@ -641,7 +543,8 @@ export default function Footwear3DPopout() {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
-                    display: "block"
+                    display: "block",
+                    borderRadius: "16px"
                   }}
                   loading="eager"
                   onError={(e) => {
@@ -649,356 +552,279 @@ export default function Footwear3DPopout() {
                   }}
                 />
 
-                {/* 3D Sheen Reflection Highlight */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 50%, rgba(0,0,0,0.15) 100%)",
-                    pointerEvents: "none",
-                    opacity: isPopoutEngaged ? 0.7 : 0.2,
-                    transition: "opacity 0.3s ease"
-                  }}
-                />
-
-                {/* Watermark */}
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "8px",
-                    right: "10px",
-                    fontSize: "0.62rem",
-                    fontWeight: "800",
-                    color: "rgba(255, 255, 255, 0.9)",
-                    textShadow: "0 1px 3px rgba(0,0,0,0.8)"
-                  }}
-                >
-                  zargul.net
-                </div>
+                {/* Floating "Out of Screen" Badge */}
+                {isPopoutEngaged && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "-12px",
+                      right: "-12px",
+                      background: "linear-gradient(135deg, #c5a059 0%, #99742e 100%)",
+                      color: "#ffffff",
+                      fontSize: "0.62rem",
+                      fontWeight: "900",
+                      padding: "4px 10px",
+                      borderRadius: "14px",
+                      boxShadow: "0 6px 14px rgba(0,0,0,0.35)",
+                      letterSpacing: "0.6px",
+                      animation: "pulse 2s infinite"
+                    }}
+                  >
+                    ✦ 3D POP-OUT
+                  </div>
+                )}
               </div>
-            </div>
-
-            {/* POP-OUT STATUS BADGE OVERLAY */}
-            <div
-              style={{
-                position: "absolute",
-                top: "4px",
-                left: "4px",
-                background: isPopoutEngaged
-                  ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)"
-                  : "rgba(20, 16, 22, 0.75)",
-                color: "#ffffff",
-                fontSize: "0.62rem",
-                fontWeight: "800",
-                padding: "3px 8px",
-                borderRadius: "14px",
-                display: "flex",
-                alignItems: "center",
-                gap: "4px",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.25)",
-                zIndex: 20
-              }}
-            >
-              <span>{isPopoutEngaged ? "🚀" : "✦"}</span>
-              <span>{isPopoutEngaged ? "3D POP-OUT ACTIVE" : "2D FLAT VIEW"}</span>
             </div>
           </div>
 
-          {/* INTERACTIVE CONTROLS FOR 3D EFFECT */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "14px" }}>
+          {/* INTERACTIVE CONTROLS UNDER CANVAS */}
+          <div style={{ display: "flex", gap: "10px", marginTop: "24px", zIndex: 35 }}>
             <button
-              type="button"
               onClick={() => setIsPopoutEngaged(!isPopoutEngaged)}
               style={{
-                padding: "6px 14px",
+                background: isPopoutEngaged ? "#18181b" : "#ffffff",
+                color: isPopoutEngaged ? "#ffffff" : "#333333",
+                border: "1px solid rgba(0,0,0,0.12)",
+                padding: "8px 18px",
                 borderRadius: "20px",
-                border: "none",
-                cursor: "pointer",
-                fontSize: "0.74rem",
+                fontSize: "0.76rem",
                 fontWeight: "800",
-                background: isPopoutEngaged ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "#f0edf1",
-                color: isPopoutEngaged ? "#ffffff" : "var(--color-text-dark)",
-                boxShadow: isPopoutEngaged ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
+                cursor: "pointer",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.06)",
                 transition: "all 0.2s ease"
               }}
             >
-              {isPopoutEngaged ? "✦ 3D Pop-Out Engaged" : "Engage 3D Pop-Out"}
+              {isPopoutEngaged ? "⚡ Pop-Out Leaping Forward (Click to Relax)" : "Tap to Engage 3D Leap"}
             </button>
-
             <button
-              type="button"
-              onClick={() => setTilt({ x: -14, y: -18 })}
+              onClick={() => setTilt({ x: 12, y: -8 })}
               style={{
-                padding: "6px 12px",
-                borderRadius: "20px",
-                border: "1px solid rgba(0,0,0,0.1)",
-                cursor: "pointer",
-                fontSize: "0.72rem",
-                fontWeight: "700",
                 background: "#ffffff",
-                color: "var(--color-text-dark)",
-                transition: "all 0.2s ease"
+                color: "#555",
+                border: "1px solid rgba(0,0,0,0.12)",
+                padding: "8px 14px",
+                borderRadius: "20px",
+                fontSize: "0.74rem",
+                fontWeight: "700",
+                cursor: "pointer",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.05)"
               }}
-              title="Reset angle"
             >
               ↺ Reset Angle
             </button>
           </div>
-          <span style={{ fontSize: "0.65rem", color: "var(--color-text-muted)", marginTop: "4px" }}>
-            Move cursor or drag on mobile to tilt in real 3D perspective
-          </span>
         </div>
 
-        {/* RIGHT COLUMN: FOOTWEAR SPECS, SIZES & DIRECT PURCHASE */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {/* TAG & RATING */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-              <span className={`product-badge ${activeShoe.badgeType || "sale"}`} style={{ position: "static" }}>
-                {activeShoe.tag}
-              </span>
-              <span
-                style={{
-                  fontSize: "0.72rem",
-                  fontWeight: "750",
-                  padding: "3px 10px",
-                  borderRadius: "12px",
-                  background: "rgba(197, 160, 89, 0.15)",
-                  color: "var(--color-accent-dark)"
-                }}
-              >
-                {activeShoe.typeLabel}
-              </span>
-            </div>
-            <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "0.74rem", color: "#f5a623", fontWeight: "700" }}>
-              <span>★</span>
-              <span>{activeShoe.rating}</span>
-              <span style={{ color: "var(--color-text-muted)", fontWeight: "500", fontSize: "0.68rem" }}>
-                ({activeShoe.reviews} reviews)
-              </span>
-            </div>
-          </div>
-
-          {/* TITLE & MATERIAL */}
-          <div>
-            <h3
+        {/* RIGHT COLUMN: PRODUCT DETAILS, STRICT PRICING & ACTIONS */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "16px", zIndex: 10 }}>
+          {/* Tag & Rating */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap" }}>
+            <span
               style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.4rem",
-                fontWeight: "800",
-                color: "var(--color-text-dark)",
-                margin: "0 0 4px",
-                lineHeight: "1.25"
+                background: "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)",
+                color: "#ffffff",
+                fontSize: "0.72rem",
+                fontWeight: "850",
+                padding: "4px 12px",
+                borderRadius: "12px",
+                letterSpacing: "1px"
               }}
             >
-              {activeShoe.title}
-            </h3>
-            <span style={{ fontSize: "0.78rem", color: "var(--color-text-muted)" }}>
-              Material: <strong style={{ color: "var(--color-text-dark)" }}>{activeShoe.material}</strong>
+              {activeShoe.tag}
+            </span>
+            <span style={{ fontSize: "0.82rem", color: "#666", fontWeight: "600" }}>
+              ⭐ {activeShoe.rating} ({activeShoe.reviews} Verified Reviews)
+            </span>
+            <span
+              style={{
+                background: "#e0f2fe",
+                color: "#0369a1",
+                fontSize: "0.7rem",
+                fontWeight: "750",
+                padding: "3px 10px",
+                borderRadius: "12px"
+              }}
+            >
+              {activeShoe.typeLabel}
             </span>
           </div>
 
-          {/* STRICT PRICING */}
-          <div style={{ display: "flex", alignItems: "baseline", gap: "10px", margin: "2px 0" }}>
-            <span
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.7rem",
-                fontWeight: "900",
-                color: "var(--color-text-dark)",
-                letterSpacing: "-0.5px"
-              }}
-            >
+          {/* Product Title */}
+          <h2
+            style={{
+              fontFamily: "var(--font-display)",
+              fontSize: "1.45rem",
+              fontWeight: "800",
+              color: "#18181b",
+              lineHeight: "1.25",
+              margin: 0
+            }}
+          >
+            {activeShoe.title}
+          </h2>
+
+          {/* STRICT PRICING BAR */}
+          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+            <span style={{ fontSize: "1.65rem", fontWeight: "900", color: "#c5a059" }}>
               Rs. {activeShoe.price.toLocaleString()}
             </span>
-            <span
-              style={{
-                fontSize: "0.95rem",
-                color: "var(--color-text-muted)",
-                textDecoration: "line-through"
-              }}
-            >
+            <span style={{ fontSize: "1rem", color: "#9ca3af", textDecoration: "line-through" }}>
               Rs. {activeShoe.originalPrice.toLocaleString()}
             </span>
             <span
               style={{
+                background: "#fee2e2",
+                color: "#dc2626",
                 fontSize: "0.72rem",
-                fontWeight: "750",
-                color: "#16a34a",
-                background: "rgba(22, 163, 74, 0.1)",
-                padding: "2px 8px",
-                borderRadius: "6px"
+                fontWeight: "800",
+                padding: "3px 10px",
+                borderRadius: "12px"
               }}
             >
-              Save Rs. {(activeShoe.originalPrice - activeShoe.price).toLocaleString()}
+              {activeShoe.price === 5999 ? "SAVE 20%" : "SAVE 23%"}
             </span>
           </div>
 
-          {/* FEATURES / SPECS */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
+          {/* Specifications Grid */}
+          <div
+            style={{
+              background: "#ffffff",
+              border: "1px solid rgba(0,0,0,0.08)",
+              borderRadius: "16px",
+              padding: "14px 18px",
+              boxShadow: "0 4px 14px rgba(0,0,0,0.03)"
+            }}
+          >
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", fontSize: "0.78rem" }}>
+              <div>
+                <span style={{ color: "#777", display: "block" }}>Craftsmanship</span>
+                <strong style={{ color: "#222" }}>{activeShoe.material}</strong>
+              </div>
+              <div>
+                <span style={{ color: "#777", display: "block" }}>Sole Construction</span>
+                <strong style={{ color: "#222" }}>{activeShoe.sole}</strong>
+              </div>
+            </div>
+          </div>
+
+          {/* Feature Highlights */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "5px" }}>
             {activeShoe.features.map((feat, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "0.72rem", color: "var(--color-text-dark)" }}>
-                <span style={{ color: "var(--color-accent-dark)", fontWeight: "800" }}>✓</span>
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.78rem", color: "#444" }}>
+                <span style={{ color: "#c5a059", fontWeight: "800" }}>✓</span>
                 <span>{feat}</span>
               </div>
             ))}
           </div>
 
-          {/* SIZE & QUANTITY SELECTOR */}
+          {/* Size Selector */}
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "8px" }}>
+              <span style={{ fontSize: "0.8rem", fontWeight: "750", color: "#333" }}>Select EU Shoe Size:</span>
+              <span style={{ fontSize: "0.72rem", color: "#c5a059", fontWeight: "700" }}>True to Size Fit</span>
+            </div>
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+              {["39", "40", "41", "42", "43", "44", "45"].map((sz) => (
+                <button
+                  key={sz}
+                  onClick={() => setSelectedSize(sz)}
+                  style={{
+                    width: "42px",
+                    height: "38px",
+                    borderRadius: "10px",
+                    border: selectedSize === sz ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.12)",
+                    background: selectedSize === sz ? "#18181b" : "#ffffff",
+                    color: selectedSize === sz ? "#ffffff" : "#333333",
+                    fontSize: "0.82rem",
+                    fontWeight: "800",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease"
+                  }}
+                >
+                  {sz}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* ACTION BUTTONS: QUANTITY, BUY NOW, WHATSAPP */}
           <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", marginTop: "4px" }}>
-            {/* Size */}
-            <div style={{ flex: "1 1 200px" }}>
-              <label style={{ display: "block", fontSize: "0.72rem", fontWeight: "750", color: "var(--color-text-dark)", marginBottom: "4px" }}>
-                Select Shoe Size (EU):
-              </label>
-              <div style={{ display: "flex", gap: "5px", flexWrap: "wrap" }}>
-                {["39", "40", "41", "42 (Std)", "43", "44", "45"].map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => setSelectedSize(`Size EU ${s}`)}
-                    style={{
-                      padding: "5px 8px",
-                      borderRadius: "8px",
-                      border: selectedSize.includes(s) ? "2px solid #d4af37" : "1px solid rgba(0,0,0,0.12)",
-                      background: selectedSize.includes(s) ? "linear-gradient(135deg, #fff7fa 0%, #faedf3 100%)" : "#ffffff",
-                      color: selectedSize.includes(s) ? "var(--color-accent-dark)" : "var(--color-text-dark)",
-                      fontSize: "0.68rem",
-                      fontWeight: selectedSize.includes(s) ? "800" : "600",
-                      cursor: "pointer"
-                    }}
-                  >
-                    EU {s}
-                  </button>
-                ))}
-              </div>
-            </div>
-
             {/* Quantity */}
-            <div style={{ flex: "0 0 95px" }}>
-              <label style={{ display: "block", fontSize: "0.72rem", fontWeight: "750", color: "var(--color-text-dark)", marginBottom: "4px" }}>
-                Qty:
-              </label>
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  background: "#f4f1f5",
-                  borderRadius: "8px",
-                  padding: "3px 8px",
-                  border: "1px solid rgba(0,0,0,0.08)"
-                }}
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                background: "#ffffff",
+                border: "1px solid rgba(0,0,0,0.14)",
+                borderRadius: "16px",
+                padding: "6px 10px",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.04)"
+              }}
+            >
+              <button
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                style={{ border: "none", background: "transparent", fontSize: "1.1rem", padding: "0 8px", cursor: "pointer", fontWeight: "700" }}
               >
-                <button
-                  type="button"
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: "0.95rem",
-                    fontWeight: "800",
-                    color: "var(--color-text-dark)",
-                    padding: "0 4px"
-                  }}
-                >
-                  -
-                </button>
-                <span style={{ fontSize: "0.82rem", fontWeight: "800", color: "var(--color-text-dark)" }}>
-                  {quantity}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setQuantity(quantity + 1)}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: "0.95rem",
-                    fontWeight: "800",
-                    color: "var(--color-text-dark)",
-                    padding: "0 4px"
-                  }}
-                >
-                  +
-                </button>
-              </div>
+                −
+              </button>
+              <span style={{ fontSize: "0.92rem", fontWeight: "800", minWidth: "26px", textAlign: "center" }}>
+                {quantity}
+              </span>
+              <button
+                onClick={() => setQuantity(quantity + 1)}
+                style={{ border: "none", background: "transparent", fontSize: "1.1rem", padding: "0 8px", cursor: "pointer", fontWeight: "700" }}
+              >
+                +
+              </button>
             </div>
-          </div>
 
-          {/* DUAL ACTION BUTTONS: BUY NOW & WHATSAPP ORDER */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "6px" }}>
+            {/* BUY NOW */}
             <button
-              type="button"
-              onClick={handleBuyNow}
-              className="clay-btn accent"
+              onClick={handleAddToCart}
               style={{
-                width: "100%",
-                padding: "11px 12px",
-                borderRadius: "12px",
-                fontSize: "0.82rem",
-                fontWeight: "800",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                background: "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)",
+                flex: "1 1 180px",
+                padding: "13px 22px",
+                borderRadius: "16px",
+                background: addedToast ? "#10b981" : "linear-gradient(135deg, #18181b 0%, #27272a 100%)",
                 color: "#ffffff",
                 border: "none",
-                cursor: "pointer",
-                boxShadow: "0 4px 14px rgba(197, 160, 89, 0.35)",
-                whiteSpace: "nowrap"
-              }}
-            >
-              <span>⚡</span> BUY NOW
-            </button>
-
-            <button
-              type="button"
-              onClick={handleWhatsAppOrder}
-              style={{
-                width: "100%",
-                padding: "11px 12px",
-                borderRadius: "12px",
-                fontSize: "0.82rem",
+                fontSize: "0.88rem",
                 fontWeight: "800",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)",
-                color: "#ffffff",
-                border: "none",
+                letterSpacing: "0.5px",
                 cursor: "pointer",
-                boxShadow: "0 4px 14px rgba(37, 211, 102, 0.3)",
-                whiteSpace: "nowrap"
+                boxShadow: "0 8px 22px rgba(0,0,0,0.2)",
+                transition: "all 0.25s ease"
               }}
             >
-              <span>💬</span> Order via WhatsApp
+              {addedToast ? "✓ Added to Bag!" : `✦ BUY NOW • Rs. ${(activeShoe.price * quantity).toLocaleString()}`}
             </button>
-          </div>
 
-          {/* FOOTER LINK */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "2px" }}>
-            <span style={{ fontSize: "0.68rem", color: "var(--color-text-muted)" }}>
-              🚚 Free Doorstep Inspection Across Pakistan (Cash on Delivery)
-            </span>
-            <Link
-              href={`/product/${activeShoe.id}`}
+            {/* WHATSAPP ORDER */}
+            <a
+              href={`https://wa.me/923339194200?text=${whatsappMessage}`}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
-                fontSize: "0.72rem",
-                fontWeight: "750",
-                color: "var(--color-accent-dark)",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                padding: "13px 20px",
+                borderRadius: "16px",
+                background: "#25D366",
+                color: "#ffffff",
+                fontSize: "0.85rem",
+                fontWeight: "800",
                 textDecoration: "none",
-                whiteSpace: "nowrap"
+                boxShadow: "0 8px 20px rgba(37, 211, 102, 0.35)",
+                transition: "transform 0.2s ease"
               }}
             >
-              Full Details →
-            </Link>
+              <span>💬</span>
+              <span>Order via WhatsApp</span>
+            </a>
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
