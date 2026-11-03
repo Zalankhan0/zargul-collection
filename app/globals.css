@@ -1731,10 +1731,9 @@ img {
 }
 
 @media (max-width: 820px) {
-  .center-studio-grid {
+  .immersive-canvas-stage {
     grid-template-columns: 1fr !important;
-    gap: 20px !important;
-    padding: 18px 14px !important;
+    gap: 22px !important;
   }
 }
 
