@@ -2,10 +2,30 @@
 
 import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
+import dynamic from "next/dynamic";
 import { useStore } from "@/context/StoreContext";
 import ProductCard from "@/components/ProductCard";
-import VirtualRackViewer from "@/components/VirtualRackViewer";
-import Footwear3DPopout from "@/components/Footwear3DPopout";
+
+// Asynchronously Lazy-Load 3D modules so category page loads instantly
+const VirtualRackViewer = dynamic(() => import("@/components/VirtualRackViewer"), {
+  ssr: false,
+  loading: () => (
+    <div style={{ textAlign: "center", padding: "30px 16px", color: "var(--color-text-muted)" }}>
+      <span style={{ fontSize: "1.6rem", display: "block", marginBottom: "6px" }}>🧥</span>
+      <span style={{ fontSize: "0.82rem", fontWeight: "700", color: "#c5a059" }}>Loading Atelier 3D Rack...</span>
+    </div>
+  )
+});
+
+const Footwear3DPopout = dynamic(() => import("@/components/Footwear3DPopout"), {
+  ssr: false,
+  loading: () => (
+    <div style={{ textAlign: "center", padding: "30px 16px", color: "var(--color-text-muted)" }}>
+      <span style={{ fontSize: "1.6rem", display: "block", marginBottom: "6px" }}>👞</span>
+      <span style={{ fontSize: "0.82rem", fontWeight: "700", color: "#c5a059" }}>Loading 3D Footwear Studio...</span>
+    </div>
+  )
+});
 
 function CategoriesContent() {
   const searchParams = useSearchParams();
@@ -131,7 +151,17 @@ function CategoriesContent() {
   }
 
   return (
-    <div style={{ maxWidth: "1400px", margin: "0 auto 80px", padding: "0 5%" }}>
+    <div
+      className="category-page-container"
+      style={{
+        maxWidth: "1400px",
+        margin: "0 auto 80px",
+        padding: "0 4%",
+        width: "100%",
+        overflowX: "hidden",
+        boxSizing: "border-box"
+      }}
+    >
 
       {/* Page Hero Header */}
       <section style={{ textAlign: "center", padding: "40px 20px 32px" }}>
