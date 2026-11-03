@@ -398,30 +398,30 @@ export default function VirtualRackViewer() {
         </div>
       </div>
 
-      {/* 1. VIRTUAL HANGING RACK: THIN METALLIC RAIL (NO BOXES, NO CARDS) */}
-      <div style={{ position: "relative", width: "100%", marginBottom: "32px", padding: "10px 0" }}>
+      {/* 1. VIRTUAL HANGING RACK: THIN METALLIC RAIL (SCALED & COMPACT) */}
+      <div style={{ position: "relative", width: "100%", marginBottom: "24px", padding: "8px 0" }}>
         {/* THIN HORIZONTAL METALLIC RAIL */}
         <div
           style={{
             position: "absolute",
-            top: "20px",
+            top: "18px",
             left: "0",
             right: "0",
-            height: "3px",
+            height: "2.5px",
             background: "linear-gradient(90deg, rgba(197, 160, 89, 0.1) 0%, #c5a059 15%, #ffd700 50%, #c5a059 85%, rgba(197, 160, 89, 0.1) 100%)",
             boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
             zIndex: 1
           }}
         />
 
-        {/* HANGING COATS ROW (TRANSPARENT, FLOATING OBJECTS) */}
+        {/* HANGING COATS ROW (COMPACT, TRANSPARENT OBJECTS) */}
         <div
           ref={rackScrollRef}
           style={{
             display: "flex",
-            gap: "18px",
+            gap: "14px",
             overflowX: "auto",
-            padding: "8px 10px 14px",
+            padding: "6px 8px 12px",
             scrollbarWidth: "none",
             msOverflowStyle: "none",
             WebkitOverflowScrolling: "touch",
@@ -438,24 +438,24 @@ export default function VirtualRackViewer() {
                 onClick={() => handleSelectProduct(item)}
                 style={{
                   flexShrink: 0,
-                  width: "110px",
+                  width: "88px",
                   cursor: "pointer",
                   textAlign: "center",
                   position: "relative",
                   transition: "transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
-                  transform: isSelected ? "translateY(-6px) scale(1.05)" : "translateY(0) scale(1)"
+                  transform: isSelected ? "translateY(-5px) scale(1.05)" : "translateY(0) scale(1)"
                 }}
                 title={`Click to inspect ${item.title}`}
               >
                 {/* METALLIC BRASS HOOK ON THE LINE */}
-                <div style={{ display: "flex", justifyContent: "center", position: "relative", height: "18px" }}>
+                <div style={{ display: "flex", justifyContent: "center", position: "relative", height: "16px" }}>
                   <div
                     style={{
-                      width: "14px",
-                      height: "16px",
+                      width: "12px",
+                      height: "14px",
                       border: isSelected ? "2.5px solid #d4af37" : "2px solid #a8833e",
                       borderBottom: "none",
-                      borderRadius: "10px 10px 0 0",
+                      borderRadius: "8px 8px 0 0",
                       background: "transparent",
                       boxShadow: isSelected ? "0 0 8px rgba(212, 175, 55, 0.7)" : "none",
                       transition: "all 0.2s ease"
@@ -466,8 +466,8 @@ export default function VirtualRackViewer() {
                 {/* WOODEN HANGER TOP BAR */}
                 <div
                   style={{
-                    width: "72px",
-                    height: "5px",
+                    width: "58px",
+                    height: "4px",
                     margin: "0 auto 3px",
                     background: "linear-gradient(180deg, #8B5A2B 0%, #5C3A21 100%)",
                     borderRadius: "4px",
@@ -480,12 +480,12 @@ export default function VirtualRackViewer() {
                   style={{
                     width: "100%",
                     aspectRatio: "1 / 1",
-                    borderRadius: "12px",
+                    borderRadius: "10px",
                     overflow: "hidden",
                     position: "relative",
                     filter: isSelected
-                      ? "drop-shadow(0 10px 20px rgba(197, 160, 89, 0.45))"
-                      : "drop-shadow(0 4px 10px rgba(0,0,0,0.12))",
+                      ? "drop-shadow(0 8px 18px rgba(197, 160, 89, 0.45))"
+                      : "drop-shadow(0 3px 8px rgba(0,0,0,0.12))",
                     transform: isSelected ? "scale(1.02)" : "scale(0.96)",
                     transition: "all 0.3s ease"
                   }}
@@ -509,17 +509,17 @@ export default function VirtualRackViewer() {
                   <div
                     style={{
                       position: "absolute",
-                      bottom: "4px",
+                      bottom: "3px",
                       left: "50%",
                       transform: "translateX(-50%)",
                       background: isSelected
                         ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)"
                         : "rgba(20, 16, 22, 0.8)",
                       color: "#ffffff",
-                      fontSize: "0.6rem",
+                      fontSize: "0.56rem",
                       fontWeight: "800",
-                      padding: "1px 6px",
-                      borderRadius: "10px",
+                      padding: "1px 5px",
+                      borderRadius: "8px",
                       whiteSpace: "nowrap",
                       letterSpacing: "0.3px",
                       boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
@@ -530,11 +530,11 @@ export default function VirtualRackViewer() {
                 </div>
 
                 {/* COLOR NAME & SELECTION DOT */}
-                <div style={{ marginTop: "4px", display: "flex", alignItems: "center", justifyContent: "center", gap: "4px" }}>
+                <div style={{ marginTop: "3px", display: "flex", alignItems: "center", justifyContent: "center", gap: "3px" }}>
                   <span
                     style={{
-                      width: "8px",
-                      height: "8px",
+                      width: "7px",
+                      height: "7px",
                       borderRadius: "50%",
                       background: item.colorHex,
                       border: `1px solid ${item.colorBorder}`,
@@ -543,7 +543,7 @@ export default function VirtualRackViewer() {
                   />
                   <span
                     style={{
-                      fontSize: "0.68rem",
+                      fontSize: "0.64rem",
                       fontWeight: isSelected ? "800" : "600",
                       color: isSelected ? "var(--color-accent-dark)" : "var(--color-text-dark)",
                       whiteSpace: "nowrap"
@@ -558,52 +558,52 @@ export default function VirtualRackViewer() {
         </div>
       </div>
 
-      {/* 2. IMMERSIVE 3D CENTER CANVAS: HERO COAT FLOATING IN SPACE (NO CARDS, NO BOXES) */}
+      {/* 2. IMMERSIVE 3D CENTER CANVAS: SCALED-DOWN HERO COAT (NO CARDS, NO BOXES) */}
       <div
         className="immersive-canvas-stage"
         style={{
           display: "grid",
-          gridTemplateColumns: "minmax(300px, 460px) 1fr",
-          gap: "36px",
+          gridTemplateColumns: "minmax(250px, 310px) 1fr",
+          gap: "24px",
           alignItems: "center"
         }}
       >
         {/* LEFT COLUMN: REAL 3D ROTATION & FLIP HERO OBJECT */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
           {/* HANGER SUSPENDED IN AIR */}
-          <div style={{ position: "relative", width: "150px", height: "26px", display: "flex", justifyContent: "center", alignItems: "flex-end", marginBottom: "-6px", zIndex: 10 }}>
+          <div style={{ position: "relative", width: "120px", height: "22px", display: "flex", justifyContent: "center", alignItems: "flex-end", marginBottom: "-5px", zIndex: 10 }}>
             {/* Curved Brass Hook */}
             <div
               style={{
                 position: "absolute",
-                top: "-10px",
-                width: "18px",
-                height: "20px",
-                border: "2.5px solid #d4af37",
+                top: "-8px",
+                width: "16px",
+                height: "17px",
+                border: "2px solid #d4af37",
                 borderBottom: "none",
-                borderRadius: "12px 12px 0 0",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
+                borderRadius: "10px 10px 0 0",
+                boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
               }}
             />
             {/* Wooden Hanger Bar */}
             <div
               style={{
-                width: "130px",
-                height: "7px",
+                width: "105px",
+                height: "6px",
                 background: "linear-gradient(180deg, #8B5A2B 0%, #5C3A21 100%)",
-                borderRadius: "6px",
-                boxShadow: "0 3px 6px rgba(0,0,0,0.2)"
+                borderRadius: "5px",
+                boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
               }}
             />
           </div>
 
-          {/* REAL 3D PERSPECTIVE ROTATION CONTAINER */}
+          {/* REAL 3D PERSPECTIVE ROTATION CONTAINER (COMPACT 310PX) */}
           <div
             onClick={() => handleToggleFlip(viewSide === "front" ? "back" : "front")}
             style={{
               perspective: "1200px",
               width: "100%",
-              maxWidth: "400px",
+              maxWidth: "300px",
               aspectRatio: "1 / 1",
               position: "relative",
               cursor: "pointer",
