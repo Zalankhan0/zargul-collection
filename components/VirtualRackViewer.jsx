@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
 
+// ALL COATS & WAISTCOATS FOR THE ATELIER HANGING RACK
 const COATS_DATA = [
   // PRINCE COATS (Strictly Rs. 4,000)
   {
@@ -16,16 +17,16 @@ const COATS_DATA = [
     typeLabel: "Royal Prince Coat",
     colorName: "Midnight Black",
     colorHex: "#141416",
-    colorBorder: "#3f3f46",
+    tagColor: "#1a1a1a",
+    tagTextColor: "#f4f4f5",
     swatchName: "Jet Black",
-    image: "/assets/coats/midnight_black_prince_coat_4000.jpg",
+    image: "/assets/coats/midnight_black_prince_coat_4000.webp",
     backTheme: {
       base: "#161618",
       accent: "#222226",
       lining: "#0f0f11",
       stitching: "rgba(197, 160, 89, 0.4)",
       buckle: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
-      buckleBorder: "#d4af37",
       textColor: "#e4e4e7"
     },
     tag: "ROYAL EDITION",
@@ -43,16 +44,16 @@ const COATS_DATA = [
     typeLabel: "Royal Prince Coat",
     colorName: "Classic Brown",
     colorHex: "#4a2e1e",
-    colorBorder: "#784b30",
+    tagColor: "#4a2e1e",
+    tagTextColor: "#fde68a",
     swatchName: "Espresso Brown",
-    image: "/assets/coats/classic_brown_prince_coat_4000.jpg",
+    image: "/assets/coats/classic_brown_prince_coat_4000.webp",
     backTheme: {
       base: "#3b2214",
       accent: "#4d2e1b",
       lining: "#29160c",
       stitching: "rgba(212, 175, 55, 0.45)",
       buckle: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
-      buckleBorder: "#d4af37",
       textColor: "#fde68a"
     },
     tag: "BESTSELLER",
@@ -70,16 +71,16 @@ const COATS_DATA = [
     typeLabel: "Luxury Prince Coat",
     colorName: "Silver Grey",
     colorHex: "#8e99a8",
-    colorBorder: "#b0b9c6",
+    tagColor: "#8e99a8",
+    tagTextColor: "#ffffff",
     swatchName: "Steel Grey",
-    image: "/assets/coats/silver_grey_waistcoat_4000.jpg",
+    image: "/assets/coats/silver_grey_waistcoat_4000.webp",
     backTheme: {
       base: "#778393",
       accent: "#8b97a7",
       lining: "#545e6b",
       stitching: "rgba(255, 255, 255, 0.5)",
       buckle: "linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%)",
-      buckleBorder: "#cbd5e1",
       textColor: "#ffffff"
     },
     tag: "POPULAR",
@@ -97,16 +98,16 @@ const COATS_DATA = [
     typeLabel: "Royal Prince Coat",
     colorName: "Beige Royal",
     colorHex: "#c9ae8c",
-    colorBorder: "#deb887",
+    tagColor: "#c9ae8c",
+    tagTextColor: "#27272a",
     swatchName: "Royal Beige",
-    image: "/assets/coats/beige_royal_waistcoat_4000.jpg",
+    image: "/assets/coats/beige_royal_waistcoat_4000.webp",
     backTheme: {
       base: "#b39875",
       accent: "#c4aa87",
       lining: "#846d50",
       stitching: "rgba(255, 255, 255, 0.55)",
       buckle: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
-      buckleBorder: "#d4af37",
       textColor: "#ffffff"
     },
     tag: "NEW ARRIVAL",
@@ -126,16 +127,16 @@ const COATS_DATA = [
     typeLabel: "Classic Waistcoat",
     colorName: "Charcoal Black",
     colorHex: "#1c1c1f",
-    colorBorder: "#3f3f46",
+    tagColor: "#27272a",
+    tagTextColor: "#f4f4f5",
     swatchName: "Charcoal Jet",
-    image: "/assets/coats/classic_charcoal_black_waistcoat_3000.jpg",
+    image: "/assets/coats/classic_charcoal_black_waistcoat_3000.webp",
     backTheme: {
       base: "#1a1a1c",
       accent: "#26262a",
       lining: "#101012",
       stitching: "rgba(197, 160, 89, 0.4)",
       buckle: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
-      buckleBorder: "#d4af37",
       textColor: "#e4e4e7"
     },
     tag: "POPULAR",
@@ -153,16 +154,16 @@ const COATS_DATA = [
     typeLabel: "Classic Waistcoat",
     colorName: "Pearl Grey",
     colorHex: "#b8c0cc",
-    colorBorder: "#d1d5db",
+    tagColor: "#cbd5e1",
+    tagTextColor: "#1e293b",
     swatchName: "Pearl Grey",
-    image: "/assets/coats/pearl_grey_classic_waistcoat_3000.jpg",
+    image: "/assets/coats/pearl_grey_classic_waistcoat_3000.webp",
     backTheme: {
       base: "#9faab9",
       accent: "#b5c0cf",
       lining: "#737e8c",
       stitching: "rgba(255, 255, 255, 0.55)",
       buckle: "linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%)",
-      buckleBorder: "#cbd5e1",
       textColor: "#ffffff"
     },
     tag: "BESTSELLER",
@@ -179,1016 +180,853 @@ const COATS_DATA = [
     type: "waistcoat",
     typeLabel: "Classic Waistcoat",
     colorName: "Midnight Blue",
-    colorHex: "#16284e",
-    colorBorder: "#2563eb",
-    swatchName: "Midnight Blue",
-    image: "/assets/coats/midnight_blue_classic_waistcoat_3000.jpg",
+    colorHex: "#1a2538",
+    tagColor: "#1e293b",
+    tagTextColor: "#93c5fd",
+    swatchName: "Royal Navy",
+    image: "/assets/coats/midnight_blue_classic_waistcoat_3000.webp",
     backTheme: {
-      base: "#132140",
-      accent: "#1c2e56",
-      lining: "#0b1427",
-      stitching: "rgba(197, 160, 89, 0.45)",
+      base: "#162030",
+      accent: "#22314a",
+      lining: "#101622",
+      stitching: "rgba(212, 175, 55, 0.45)",
       buckle: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
-      buckleBorder: "#d4af37",
       textColor: "#93c5fd"
     },
-    tag: "ROYAL EDITION",
+    tag: "ROYAL NAVY",
     rating: 5.0,
-    reviews: 79,
-    features: ["Regal Mandarin Ban Collar", "Deep Aristocratic Navy Tone", "6 Button Fastening Front", "Full Satin Silk Inner Lining"]
+    reviews: 95,
+    features: ["Deep Midnight Navy Tropical Weave", "Contrast Gold-Edged Enamel Buttons", "Slim-Fit Contoured Waistline", "Full High-Lustre Navy Satin Lining"]
   }
 ];
 
 export default function VirtualRackViewer() {
-  const { addToCart, setIsCartOpen, storeConfig } = useStore();
-
-  const [activeTab, setActiveTab] = useState("all");
-  const [activeId, setActiveId] = useState(401);
-  const [viewSide, setViewSide] = useState("front"); // 'front' | 'back'
-  const [rotationDeg, setRotationDeg] = useState(0); // For full 3D rotation
-  const [selectedSize, setSelectedSize] = useState("Medium (M)");
+  const { addToCart } = useStore();
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [viewAngle, setViewAngle] = useState("front"); // 'front' | 'back'
+  const [selectedSize, setSelectedSize] = useState("40");
   const [quantity, setQuantity] = useState(1);
-  const [isZooming, setIsZooming] = useState(false);
+  const [addedAnimation, setAddedAnimation] = useState(false);
+  const [isRackOverview, setIsRackOverview] = useState(false);
 
-  const rackScrollRef = useRef(null);
+  const activeItem = COATS_DATA[selectedIndex];
+  const isPrinceCoat = activeItem.type === "prince-coat";
+  const currentGarmentGroup = COATS_DATA.filter(item => item.type === activeItem.type);
 
-  const activeProduct = COATS_DATA.find((c) => c.id === activeId) || COATS_DATA[0];
-
-  const rackItems =
-    activeTab === "all"
-      ? COATS_DATA
-      : COATS_DATA.filter((item) => item.type === activeTab);
-
-  const colorSwatches = COATS_DATA.filter((item) => item.type === activeProduct.type);
-
-  // Smooth item selection & zoom
-  const handleSelectProduct = (product) => {
-    if (product.id === activeId) return;
-    setIsZooming(true);
-    setActiveId(product.id);
-    setTimeout(() => {
-      setIsZooming(false);
-    }, 300);
+  // Reset angle to front when selecting different garment
+  const handleSelect = (idx) => {
+    setSelectedIndex(idx);
+    setViewAngle("front");
+    setIsRackOverview(false);
   };
 
-  // 3D Front / Back flip
-  const handleToggleFlip = (targetSide) => {
-    if (targetSide === "back") {
-      setViewSide("back");
-      setRotationDeg(180);
-    } else {
-      setViewSide("front");
-      setRotationDeg(0);
-    }
+  const handleNext = () => {
+    setSelectedIndex((prev) => (prev + 1) % COATS_DATA.length);
+    setViewAngle("front");
   };
 
-  // Full 360 Spin
-  const handleFullSpin = () => {
-    setRotationDeg((prev) => prev + 360);
+  const handlePrev = () => {
+    setSelectedIndex((prev) => (prev - 1 + COATS_DATA.length) % COATS_DATA.length);
+    setViewAngle("front");
   };
 
-  const handleBuyNow = () => {
-    const cartProduct = {
-      id: activeProduct.id,
-      title: activeProduct.title,
-      category: activeProduct.category,
-      price: activeProduct.price,
-      originalPrice: activeProduct.originalPrice,
-      image: activeProduct.image,
-      inStock: true
-    };
-    addToCart(cartProduct, `Size: ${selectedSize}`, 0, quantity);
-    setIsCartOpen(true);
+  const handleAddToCart = () => {
+    addToCart({
+      id: activeItem.id,
+      title: `${activeItem.title} (Size: ${selectedSize})`,
+      price: activeItem.price,
+      image: activeItem.image,
+      category: activeItem.category,
+      type: activeItem.type
+    }, quantity);
+    setAddedAnimation(true);
+    setTimeout(() => setAddedAnimation(false), 2200);
   };
 
-  const handleWhatsAppOrder = () => {
-    const waNumber = (storeConfig?.whatsappNumber || "923485245955").replace(/[^0-9]/g, "");
-    const msg =
-      `Assalam-o-Alaikum! I want to order from *Zargul Collection*:\n\n` +
-      `✦ *Item:* ${activeProduct.title}\n` +
-      `✦ *Category:* ${activeProduct.typeLabel}\n` +
-      `✦ *Colorway:* ${activeProduct.colorName}\n` +
-      `✦ *Price:* Rs. ${activeProduct.price.toLocaleString()}\n` +
-      `✦ *Size:* ${selectedSize}\n` +
-      `✦ *Quantity:* ${quantity}\n` +
-      `✦ *Total Amount:* Rs. ${(activeProduct.price * quantity).toLocaleString()}\n\n` +
-      `🔗 *Link:* https://zargul.net/product/${activeProduct.id}\n\n` +
-      `Please confirm Cash on Delivery & doorstep parcel inspection.`;
-
-    window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, "_blank");
-  };
-
-  // Auto scroll rack to active product
-  useEffect(() => {
-    if (rackScrollRef.current) {
-      const activeEl = rackScrollRef.current.querySelector(`[data-id="${activeId}"]`);
-      if (activeEl) {
-        activeEl.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-      }
-    }
-  }, [activeId]);
+  const whatsappMessage = encodeURIComponent(
+    `Assalam-o-Alaikum Zargul Collection!\nI want to order:\n• Product: ${activeItem.title}\n• Category: ${activeItem.typeLabel}\n• Size: ${selectedSize}\n• Price: Rs. ${activeItem.price.toLocaleString()}\n• Quantity: ${quantity}\nPlease confirm my delivery details.`
+  );
 
   return (
-    <section
-      className="virtual-atelier-immersive"
+    <div
       style={{
-        padding: "24px 4% 36px",
-        maxWidth: "1400px",
-        margin: "0 auto",
-        position: "relative"
+        position: "relative",
+        width: "100%",
+        maxWidth: "1100px",
+        margin: "0 auto 36px",
+        background: "radial-gradient(ellipse at 50% 30%, #ffffff 0%, #faf8fa 60%, #f4eff5 100%)",
+        borderRadius: "28px",
+        boxShadow: "0 15px 45px rgba(20, 16, 22, 0.05), inset 0 1px 0 rgba(255,255,255,0.9)",
+        padding: "30px 16px 36px",
+        overflow: "hidden"
       }}
     >
-      {/* MINIMAL HEADER - NO BOXES */}
+      {/* ATELIER TOP HEADER */}
       <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <span
-          style={{
-            fontSize: "0.72rem",
-            fontWeight: "800",
-            letterSpacing: "1.5px",
-            color: "var(--color-accent-dark)",
-            textTransform: "uppercase",
-            display: "inline-block",
-            marginBottom: "4px"
-          }}
-        >
-          ✦ 3D VIRTUAL ATELIER
-        </span>
-        <h2
-          style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "1.65rem",
-            fontWeight: "800",
-            color: "var(--color-text-dark)",
-            margin: "0 0 6px",
-            letterSpacing: "-0.4px"
-          }}
-        >
-          Prince Coats &amp; Classic Waistcoats
-        </h2>
-        <p style={{ fontSize: "0.82rem", color: "var(--color-text-muted)", margin: "0 auto", maxWidth: "560px", lineHeight: 1.4 }}>
-          Swipe the hanging rack, tap any coat to inspect, switch colors in real-time, and spin in 3D.
-        </p>
-
-        {/* MINIMAL PILL FILTER (BORDERLESS) */}
         <div
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "6px",
-            marginTop: "12px",
-            background: "rgba(0,0,0,0.04)",
-            padding: "3px 6px",
-            borderRadius: "30px"
+            gap: "8px",
+            background: "#ffffff",
+            padding: "5px 16px",
+            borderRadius: "30px",
+            boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
+            border: "1px solid rgba(197, 160, 89, 0.25)",
+            marginBottom: "8px"
           }}
         >
-          <button
-            type="button"
-            onClick={() => setActiveTab("all")}
+          <span style={{ color: "#c5a059", fontSize: "0.85rem" }}>✦</span>
+          <span
             style={{
-              padding: "5px 14px",
-              borderRadius: "20px",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "0.74rem",
-              fontWeight: activeTab === "all" ? "800" : "600",
-              background: activeTab === "all" ? "#ffffff" : "transparent",
-              color: activeTab === "all" ? "var(--color-text-dark)" : "var(--color-text-muted)",
-              boxShadow: activeTab === "all" ? "0 2px 8px rgba(0,0,0,0.08)" : "none",
-              transition: "all 0.2s ease"
+              fontSize: "0.72rem",
+              fontWeight: "750",
+              letterSpacing: "1.5px",
+              textTransform: "uppercase",
+              color: "#333333"
             }}
           >
-            All Pieces ({COATS_DATA.length})
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("prince-coat")}
-            style={{
-              padding: "5px 14px",
-              borderRadius: "20px",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "0.74rem",
-              fontWeight: activeTab === "prince-coat" ? "800" : "600",
-              background: activeTab === "prince-coat" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "transparent",
-              color: activeTab === "prince-coat" ? "#ffffff" : "var(--color-text-muted)",
-              boxShadow: activeTab === "prince-coat" ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
-              transition: "all 0.2s ease"
-            }}
-          >
-            Prince Coats — Rs. 4,000 (4)
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab("waistcoat")}
-            style={{
-              padding: "5px 14px",
-              borderRadius: "20px",
-              border: "none",
-              cursor: "pointer",
-              fontSize: "0.74rem",
-              fontWeight: activeTab === "waistcoat" ? "800" : "600",
-              background: activeTab === "waistcoat" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "transparent",
-              color: activeTab === "waistcoat" ? "#ffffff" : "var(--color-text-muted)",
-              boxShadow: activeTab === "waistcoat" ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
-              transition: "all 0.2s ease"
-            }}
-          >
-            Classic Waistcoats — Rs. 3,000 (3)
-          </button>
+            3D Virtual Atelier • Interactive Hanging Rack
+          </span>
+          <span style={{ color: "#c5a059", fontSize: "0.85rem" }}>✦</span>
         </div>
+        <p style={{ margin: "2px 0 0", fontSize: "0.82rem", color: "#666666" }}>
+          Explore fabrics, dynamic color tags & 3D rotating front/back views directly on the rail
+        </p>
       </div>
 
-      {/* 1. VIRTUAL HANGING RACK: THIN METALLIC RAIL (SCALED & COMPACT) */}
-      <div style={{ position: "relative", width: "100%", marginBottom: "24px", padding: "8px 0" }}>
-        {/* THIN HORIZONTAL METALLIC RAIL */}
+      {/* METALLIC HANGING ROD / RAIL ACROSS CANVAS */}
+      <div
+        style={{
+          position: "relative",
+          width: "92%",
+          maxWidth: "880px",
+          margin: "0 auto 12px",
+          height: "14px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
+        }}
+      >
+        {/* Left Wall Bracket */}
         <div
           style={{
             position: "absolute",
-            top: "18px",
-            left: "0",
-            right: "0",
-            height: "2.5px",
-            background: "linear-gradient(90deg, rgba(197, 160, 89, 0.1) 0%, #c5a059 15%, #ffd700 50%, #c5a059 85%, rgba(197, 160, 89, 0.1) 100%)",
-            boxShadow: "0 1px 3px rgba(0,0,0,0.15)",
-            zIndex: 1
+            left: 0,
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: "16px",
+            height: "26px",
+            background: "linear-gradient(180deg, #999 0%, #bbb 50%, #666 100%)",
+            borderRadius: "4px",
+            boxShadow: "0 4px 8px rgba(0,0,0,0.25)"
           }}
         />
-
-        {/* HANGING COATS ROW (COMPACT, TRANSPARENT OBJECTS) */}
+        {/* Metallic Rod */}
         <div
-          ref={rackScrollRef}
           style={{
-            display: "flex",
-            gap: "14px",
-            overflowX: "auto",
-            padding: "6px 8px 12px",
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-            WebkitOverflowScrolling: "touch",
-            position: "relative",
-            zIndex: 2
+            width: "100%",
+            height: "8px",
+            background: "linear-gradient(180deg, #dcdcdc 0%, #ffffff 35%, #b5b5b5 70%, #7e7e7e 100%)",
+            borderRadius: "4px",
+            boxShadow: "0 6px 14px rgba(0,0,0,0.18), inset 0 1px 1px rgba(255,255,255,0.9)"
+          }}
+        />
+        {/* Right Wall Bracket */}
+        <div
+          style={{
+            position: "absolute",
+            right: 0,
+            top: "50%",
+            transform: "translateY(-50%)",
+            width: "16px",
+            height: "26px",
+            background: "linear-gradient(180deg, #999 0%, #bbb 50%, #666 100%)",
+            borderRadius: "4px",
+            boxShadow: "0 4px 8px rgba(0,0,0,0.25)"
+          }}
+        />
+      </div>
+
+      {/* MODE TOGGLE: SLIDING RAIL / CENTER STAGE FOCUS */}
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px", gap: "10px" }}>
+        <button
+          onClick={() => setIsRackOverview(!isRackOverview)}
+          style={{
+            background: isRackOverview ? "#18181b" : "#ffffff",
+            color: isRackOverview ? "#ffffff" : "#444444",
+            border: "1px solid rgba(0,0,0,0.1)",
+            padding: "5px 14px",
+            borderRadius: "20px",
+            fontSize: "0.74rem",
+            fontWeight: "700",
+            cursor: "pointer",
+            boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+            transition: "all 0.25s ease"
           }}
         >
-          {rackItems.map((item) => {
-            const isSelected = item.id === activeId;
+          {isRackOverview ? "Focus Selected Garment ✕" : "⇄ Browse Full Rail (All 7 Clothes)"}
+        </button>
+      </div>
+
+      {/* CONDITIONAL DISPLAY: FULL RAIL BROWSE OR CENTER FOCUS STAGE */}
+      {isRackOverview ? (
+        /* HORIZONTAL RACK OVERVIEW: ALL CLOTHES HANGING ON THE RAIL */
+        <div
+          style={{
+            display: "flex",
+            alignItems: "flex-start",
+            justifyContent: "flex-start",
+            gap: "14px",
+            overflowX: "auto",
+            padding: "16px 12px 30px",
+            scrollbarWidth: "thin",
+            WebkitOverflowScrolling: "touch"
+          }}
+        >
+          {COATS_DATA.map((item, idx) => {
+            const isCurrent = idx === selectedIndex;
             return (
               <div
                 key={item.id}
-                data-id={item.id}
-                onClick={() => handleSelectProduct(item)}
+                onClick={() => handleSelect(idx)}
                 style={{
-                  flexShrink: 0,
-                  width: "88px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
                   cursor: "pointer",
-                  textAlign: "center",
-                  position: "relative",
-                  transition: "transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)",
-                  transform: isSelected ? "translateY(-5px) scale(1.05)" : "translateY(0) scale(1)"
+                  flex: "0 0 110px",
+                  transition: "transform 0.25s ease",
+                  transform: isCurrent ? "translateY(-6px) scale(1.06)" : "translateY(0) scale(1)",
+                  userSelect: "none"
                 }}
-                title={`Click to inspect ${item.title}`}
               >
-                {/* METALLIC BRASS HOOK ON THE LINE */}
-                <div style={{ display: "flex", justifyContent: "center", position: "relative", height: "16px" }}>
-                  <div
-                    style={{
-                      width: "12px",
-                      height: "14px",
-                      border: isSelected ? "2.5px solid #d4af37" : "2px solid #a8833e",
-                      borderBottom: "none",
-                      borderRadius: "8px 8px 0 0",
-                      background: "transparent",
-                      boxShadow: isSelected ? "0 0 8px rgba(212, 175, 55, 0.7)" : "none",
-                      transition: "all 0.2s ease"
-                    }}
-                  />
+                {/* Hanger Hook & Bar */}
+                <div style={{ position: "relative", width: "48px", height: "30px", marginBottom: "2px" }}>
+                  <svg width="48" height="30" viewBox="0 0 48 30" fill="none">
+                    <path
+                      d="M24 2 C28 2, 30 6, 28 10 C26 13, 24 14, 24 16"
+                      stroke="#888888"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M4 27 L24 16 L44 27 Z"
+                      fill="#ba8d5d"
+                      stroke="#8c6239"
+                      strokeWidth="1.2"
+                    />
+                  </svg>
                 </div>
 
-                {/* WOODEN HANGER TOP BAR */}
+                {/* Garment Thumbnail Hanging */}
                 <div
                   style={{
-                    width: "58px",
-                    height: "4px",
-                    margin: "0 auto 3px",
-                    background: "linear-gradient(180deg, #8B5A2B 0%, #5C3A21 100%)",
-                    borderRadius: "4px",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.25)"
-                  }}
-                />
-
-                {/* FLOATING COAT CUTOUT OBJECT (NO BOX, NO CARD) */}
-                <div
-                  style={{
-                    width: "100%",
-                    aspectRatio: "1 / 1",
+                    width: "100px",
+                    aspectRatio: "1 / 1.15",
                     borderRadius: "10px",
                     overflow: "hidden",
-                    position: "relative",
-                    filter: isSelected
-                      ? "drop-shadow(0 8px 18px rgba(197, 160, 89, 0.45))"
-                      : "drop-shadow(0 3px 8px rgba(0,0,0,0.12))",
-                    transform: isSelected ? "scale(1.02)" : "scale(0.96)",
-                    transition: "all 0.3s ease"
+                    border: isCurrent ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.08)",
+                    boxShadow: isCurrent ? "0 10px 22px rgba(197, 160, 89, 0.4)" : "0 4px 10px rgba(0,0,0,0.06)",
+                    background: "#ffffff",
+                    position: "relative"
                   }}
                 >
                   <img
                     src={item.image}
                     alt={item.title}
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block"
-                    }}
-                    loading="eager"
-                    onError={(e) => {
-                      e.currentTarget.src = "/assets/logo.jpg";
-                    }}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                   />
-
-                  {/* FLOATING MINI PRICE BADGE */}
                   <div
                     style={{
                       position: "absolute",
                       bottom: "3px",
                       left: "50%",
                       transform: "translateX(-50%)",
-                      background: isSelected
-                        ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)"
-                        : "rgba(20, 16, 22, 0.8)",
+                      background: isCurrent ? "#c5a059" : "rgba(0,0,0,0.65)",
                       color: "#ffffff",
-                      fontSize: "0.56rem",
+                      fontSize: "0.58rem",
                       fontWeight: "800",
-                      padding: "1px 5px",
-                      borderRadius: "8px",
-                      whiteSpace: "nowrap",
-                      letterSpacing: "0.3px",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
+                      padding: "1px 6px",
+                      borderRadius: "6px",
+                      whiteSpace: "nowrap"
                     }}
                   >
                     Rs. {item.price.toLocaleString()}
                   </div>
                 </div>
-
-                {/* COLOR NAME & SELECTION DOT */}
-                <div style={{ marginTop: "3px", display: "flex", alignItems: "center", justifyContent: "center", gap: "3px" }}>
-                  <span
-                    style={{
-                      width: "7px",
-                      height: "7px",
-                      borderRadius: "50%",
-                      background: item.colorHex,
-                      border: `1px solid ${item.colorBorder}`,
-                      display: "inline-block"
-                    }}
-                  />
-                  <span
-                    style={{
-                      fontSize: "0.64rem",
-                      fontWeight: isSelected ? "800" : "600",
-                      color: isSelected ? "var(--color-accent-dark)" : "var(--color-text-dark)",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    {item.colorName.split(" ")[0]}
-                  </span>
-                </div>
+                <span
+                  style={{
+                    marginTop: "6px",
+                    fontSize: "0.68rem",
+                    fontWeight: isCurrent ? "800" : "600",
+                    color: isCurrent ? "#c5a059" : "#333333",
+                    textAlign: "center",
+                    lineHeight: "1.2"
+                  }}
+                >
+                  {item.colorName}
+                </span>
               </div>
             );
           })}
         </div>
-      </div>
-
-      {/* 2. IMMERSIVE 3D CENTER CANVAS: SCALED-DOWN HERO COAT (NO CARDS, NO BOXES) */}
-      <div
-        className="immersive-canvas-stage"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "minmax(250px, 310px) 1fr",
-          gap: "24px",
-          alignItems: "center"
-        }}
-      >
-        {/* LEFT COLUMN: REAL 3D ROTATION & FLIP HERO OBJECT */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
-          {/* HANGER SUSPENDED IN AIR */}
-          <div style={{ position: "relative", width: "120px", height: "22px", display: "flex", justifyContent: "center", alignItems: "flex-end", marginBottom: "-5px", zIndex: 10 }}>
-            {/* Curved Brass Hook */}
-            <div
-              style={{
-                position: "absolute",
-                top: "-8px",
-                width: "16px",
-                height: "17px",
-                border: "2px solid #d4af37",
-                borderBottom: "none",
-                borderRadius: "10px 10px 0 0",
-                boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
-              }}
-            />
-            {/* Wooden Hanger Bar */}
-            <div
-              style={{
-                width: "105px",
-                height: "6px",
-                background: "linear-gradient(180deg, #8B5A2B 0%, #5C3A21 100%)",
-                borderRadius: "5px",
-                boxShadow: "0 2px 5px rgba(0,0,0,0.2)"
-              }}
-            />
-          </div>
-
-          {/* REAL 3D PERSPECTIVE ROTATION CONTAINER (COMPACT 310PX) */}
-          <div
-            onClick={() => handleToggleFlip(viewSide === "front" ? "back" : "front")}
+      ) : (
+        /* CENTER STAGE: EXACT REPLICA OF THE REFERENCE VIDEO */
+        <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+          
+          {/* FLOATING PREV / NEXT ARROWS (LIKE VIDEO 00:12) */}
+          <button
+            onClick={handlePrev}
+            aria-label="Previous garment on rack"
             style={{
-              perspective: "1200px",
-              width: "100%",
-              maxWidth: "300px",
-              aspectRatio: "1 / 1",
-              position: "relative",
+              position: "absolute",
+              left: "4px",
+              top: "40%",
+              transform: "translateY(-50%)",
+              width: "44px",
+              height: "44px",
+              borderRadius: "50%",
+              background: "#ffffff",
+              border: "1px solid rgba(0,0,0,0.1)",
+              color: "#18181b",
+              fontSize: "1.5rem",
+              fontWeight: "300",
               cursor: "pointer",
-              transform: isZooming ? "scale(0.96)" : "scale(1)",
-              transition: "transform 0.3s ease"
+              boxShadow: "0 6px 16px rgba(0,0,0,0.08)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 30,
+              transition: "transform 0.2s ease"
             }}
-            title="Click coat to flip 3D view"
+            title="Previous coat on rail"
           >
-            {/* 3D ROTATING ELEMENT (PERSISTENT 3D ROTATEY) */}
-            <div
-              style={{
-                width: "100%",
-                height: "100%",
-                position: "relative",
-                transformStyle: "preserve-3d",
-                WebkitTransformStyle: "preserve-3d",
-                transition: "transform 0.85s cubic-bezier(0.34, 1.25, 0.64, 1)",
-                transform: `rotateY(${rotationDeg}deg)`
-              }}
-            >
-              {/* FRONT VIEW (FLOATING OBJECT WITH SHADOW) */}
-              <div
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  backfaceVisibility: "hidden",
-                  WebkitBackfaceVisibility: "hidden",
-                  borderRadius: "16px",
-                  overflow: "hidden",
-                  filter: "drop-shadow(0 20px 35px rgba(0,0,0,0.16))"
-                }}
-              >
-                <img
-                  src={activeProduct.image}
-                  alt={`${activeProduct.title} - Front View`}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                    objectFit: "cover",
-                    display: "block"
-                  }}
-                  loading="eager"
-                  onError={(e) => {
-                    e.currentTarget.src = "/assets/logo.jpg";
-                  }}
-                />
+            ‹
+          </button>
 
-                {/* Subtle Front Pill */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "10px",
-                    left: "10px",
-                    background: "rgba(20, 16, 22, 0.75)",
-                    backdropFilter: "blur(6px)",
-                    WebkitBackdropFilter: "blur(6px)",
-                    color: "#ffffff",
-                    fontSize: "0.64rem",
-                    fontWeight: "800",
-                    padding: "3px 8px",
-                    borderRadius: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px",
-                    letterSpacing: "0.5px"
-                  }}
-                >
-                  <span style={{ color: "#d4af37" }}>✦</span> FRONT VIEW
-                </div>
+          <button
+            onClick={handleNext}
+            aria-label="Next garment on rack"
+            style={{
+              position: "absolute",
+              right: "4px",
+              top: "40%",
+              transform: "translateY(-50%)",
+              width: "44px",
+              height: "44px",
+              borderRadius: "50%",
+              background: "#ffffff",
+              border: "1px solid rgba(0,0,0,0.1)",
+              color: "#18181b",
+              fontSize: "1.5rem",
+              fontWeight: "300",
+              cursor: "pointer",
+              boxShadow: "0 6px 16px rgba(0,0,0,0.08)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 30,
+              transition: "transform 0.2s ease"
+            }}
+            title="Next coat on rail"
+          >
+            ›
+          </button>
 
-                <div
-                  style={{
-                    position: "absolute",
-                    bottom: "8px",
-                    right: "10px",
-                    fontSize: "0.64rem",
-                    fontWeight: "750",
-                    color: "rgba(255, 255, 255, 0.85)",
-                    textShadow: "0 1px 3px rgba(0,0,0,0.8)"
-                  }}
-                >
-                  zargul.net
-                </div>
+          {/* MAIN STAGE: WOODEN HANGER + GARMENT + HANGING CRAFT COLOR TAGS */}
+          <div
+            style={{
+              position: "relative",
+              width: "100%",
+              maxWidth: "480px",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "0 10px"
+            }}
+          >
+            {/* CENTRAL HANGING GARMENT WRAPPER */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
+              
+              {/* WOODEN CLOTHES HANGER (HOOKS TO THE RAIL) */}
+              <div style={{ position: "relative", width: "80px", height: "42px", zIndex: 12 }}>
+                <svg width="80" height="42" viewBox="0 0 80 42" fill="none">
+                  {/* Metal Hook Loop around rail */}
+                  <path
+                    d="M40 2 C46 2, 50 8, 47 14 C44 19, 40 20, 40 24"
+                    stroke="#94a3b8"
+                    strokeWidth="3.2"
+                    strokeLinecap="round"
+                  />
+                  {/* Contoured Wooden Hanger Bar */}
+                  <path
+                    d="M8 38 L40 24 L72 38 C72 40, 68 41, 40 37 C12 41, 8 40, 8 38 Z"
+                    fill="#b98a58"
+                    stroke="#8c5f2b"
+                    strokeWidth="1.5"
+                  />
+                  {/* Brass Pivot Cap */}
+                  <circle cx="40" cy="24" r="3" fill="#d4af37" />
+                </svg>
               </div>
 
-              {/* BACK VIEW (TAILORED REVERSE WITH BUCKLE) */}
+              {/* 3D FLIPPABLE GARMENT CONTAINER (PERSPECTIVE & PRESERVE-3D) */}
               <div
                 style={{
-                  position: "absolute",
-                  inset: 0,
-                  width: "100%",
-                  height: "100%",
-                  backfaceVisibility: "hidden",
-                  WebkitBackfaceVisibility: "hidden",
-                  transform: "rotateY(180deg)",
-                  borderRadius: "16px",
-                  overflow: "hidden",
-                  background: activeProduct.backTheme.base,
-                  filter: "drop-shadow(0 20px 35px rgba(0,0,0,0.22))",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "20px 18px 16px",
-                  boxSizing: "border-box"
+                  position: "relative",
+                  width: "280px",
+                  height: "330px",
+                  perspective: "1200px",
+                  WebkitPerspective: "1200px",
+                  marginTop: "-6px",
+                  zIndex: 10
                 }}
               >
-                {/* Back Collar Arch */}
                 <div
                   style={{
-                    width: "100px",
-                    height: "14px",
-                    borderRadius: "0 0 50px 50px",
-                    background: activeProduct.backTheme.accent,
-                    borderBottom: `2px solid ${activeProduct.backTheme.stitching}`,
-                    boxShadow: "0 3px 6px rgba(0,0,0,0.3)"
-                  }}
-                />
-
-                <div
-                  style={{
-                    background: "rgba(0, 0, 0, 0.45)",
-                    backdropFilter: "blur(6px)",
-                    WebkitBackdropFilter: "blur(6px)",
-                    color: "#ffffff",
-                    fontSize: "0.64rem",
-                    fontWeight: "800",
-                    padding: "3px 8px",
-                    borderRadius: "20px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "4px"
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                    transformStyle: "preserve-3d",
+                    WebkitTransformStyle: "preserve-3d",
+                    transform: viewAngle === "back" ? "rotateY(180deg)" : "rotateY(0deg)",
+                    transition: "transform 0.8s cubic-bezier(0.2, 0.85, 0.25, 1)"
                   }}
                 >
-                  <span style={{ color: "#d4af37" }}>⟳</span> TAILORED BACK VIEW
-                </div>
-
-                {/* TAILORED SEAMS & CREST */}
-                <div style={{ textAlign: "center", width: "100%" }}>
-                  {/* Vertical Darts */}
-                  <div style={{ display: "flex", justifyContent: "space-around", width: "75%", margin: "0 auto 12px" }}>
-                    <div style={{ width: "1px", height: "90px", background: activeProduct.backTheme.stitching }} />
-                    <div style={{ width: "1px", height: "115px", background: activeProduct.backTheme.stitching }} />
-                    <div style={{ width: "1px", height: "90px", background: activeProduct.backTheme.stitching }} />
-                  </div>
-
-                  {/* EMBROIDERED ZARGUL CREST */}
+                  {/* FRONT FACE (HIGH RES ATELIER PHOTO) */}
                   <div
                     style={{
-                      display: "inline-block",
-                      border: "1px solid rgba(197, 160, 89, 0.4)",
-                      padding: "6px 14px",
-                      borderRadius: "10px",
-                      background: "rgba(0,0,0,0.25)",
-                      marginBottom: "14px"
+                      position: "absolute",
+                      inset: 0,
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      borderRadius: "18px",
+                      overflow: "hidden",
+                      boxShadow: "0 22px 40px rgba(0,0,0,0.18), 0 8px 16px rgba(0,0,0,0.08)",
+                      background: "#ffffff"
                     }}
                   >
-                    <span style={{ color: "#d4af37", fontSize: "0.85rem", display: "block" }}>👑</span>
-                    <span style={{ fontFamily: "var(--font-display)", fontSize: "0.72rem", fontWeight: "800", color: "#fef08a", letterSpacing: "1px", display: "block" }}>
-                      ZARGUL ATELIER
-                    </span>
-                    <span style={{ fontSize: "0.58rem", color: activeProduct.backTheme.textColor, opacity: 0.85 }}>
-                      Bespoke Tailoring • Swat Valley
-                    </span>
-                  </div>
-
-                  {/* WAIST CINCH STRAP WITH METALLIC BUCKLE */}
-                  <div
-                    style={{
-                      width: "82%",
-                      margin: "0 auto",
-                      height: "16px",
-                      background: activeProduct.backTheme.accent,
-                      borderTop: `1px solid ${activeProduct.backTheme.stitching}`,
-                      borderBottom: `1px solid ${activeProduct.backTheme.stitching}`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      boxShadow: "0 2px 5px rgba(0,0,0,0.25)"
-                    }}
-                  >
+                    <img
+                      src={activeItem.image}
+                      alt={activeItem.title}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        display: "block"
+                      }}
+                      loading="eager"
+                      onError={(e) => {
+                        e.currentTarget.src = "/assets/logo.jpg";
+                      }}
+                    />
+                    {/* Watermark in corner */}
                     <div
                       style={{
-                        width: "24px",
-                        height: "22px",
-                        background: activeProduct.backTheme.buckle,
-                        borderRadius: "4px",
-                        border: `1.5px solid ${activeProduct.backTheme.buckleBorder}`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center"
+                        position: "absolute",
+                        bottom: "8px",
+                        right: "12px",
+                        background: "rgba(0,0,0,0.6)",
+                        color: "#ffffff",
+                        padding: "2px 8px",
+                        borderRadius: "8px",
+                        fontSize: "0.62rem",
+                        fontWeight: "700",
+                        letterSpacing: "0.5px"
                       }}
                     >
-                      <div style={{ width: "10px", height: "8px", background: activeProduct.backTheme.base, borderRadius: "2px" }} />
+                      zargul.net
+                    </div>
+                  </div>
+
+                  {/* BACK FACE (TAILORED BACK VIEW WITH CINCH BUCKLE & SATIN SILK LINING) */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      backfaceVisibility: "hidden",
+                      WebkitBackfaceVisibility: "hidden",
+                      transform: "rotateY(180deg)",
+                      borderRadius: "18px",
+                      overflow: "hidden",
+                      boxShadow: "0 22px 40px rgba(0,0,0,0.18), 0 8px 16px rgba(0,0,0,0.08)",
+                      background: `linear-gradient(180deg, ${activeItem.backTheme.base} 0%, ${activeItem.backTheme.lining} 100%)`,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "space-between",
+                      padding: "24px 20px 20px",
+                      color: activeItem.backTheme.textColor,
+                      border: "1px solid rgba(255,255,255,0.1)"
+                    }}
+                  >
+                    {/* Inner Neck Label */}
+                    <div style={{ textAlign: "center", borderBottom: `1px dashed ${activeItem.backTheme.stitching}`, paddingBottom: "12px" }}>
+                      <div style={{ fontSize: "0.68rem", letterSpacing: "2px", fontWeight: "800", color: "#d4af37" }}>
+                        ZARGUL BESPOKE ATELIER
+                      </div>
+                      <div style={{ fontSize: "0.62rem", opacity: 0.8, marginTop: "2px" }}>
+                        Hand-Crafted in Pakistan • Size {selectedSize}
+                      </div>
+                    </div>
+
+                    {/* Center Back Dart & Tailoring */}
+                    <div style={{ textAlign: "center", padding: "16px 0" }}>
+                      <div
+                        style={{
+                          width: "2px",
+                          height: "60px",
+                          margin: "0 auto",
+                          background: `linear-gradient(180deg, ${activeItem.backTheme.stitching} 0%, transparent 100%)`
+                        }}
+                      />
+                      <span style={{ fontSize: "0.64rem", opacity: 0.75, letterSpacing: "1px", textTransform: "uppercase" }}>
+                        Precision Contoured Spine
+                      </span>
+                    </div>
+
+                    {/* Adjustable Waist Cinch Buckle (Classic Vest / Prince Coat Back) */}
+                    <div
+                      style={{
+                        background: "rgba(255,255,255,0.05)",
+                        padding: "10px 14px",
+                        borderRadius: "10px",
+                        border: `1px solid ${activeItem.backTheme.stitching}`,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between"
+                      }}
+                    >
+                      <span style={{ fontSize: "0.62rem", fontWeight: "700" }}>Waist Cinch Buckle</span>
+                      <div
+                        style={{
+                          width: "24px",
+                          height: "16px",
+                          borderRadius: "4px",
+                          background: activeItem.backTheme.buckle,
+                          boxShadow: "0 2px 6px rgba(0,0,0,0.3)"
+                        }}
+                      />
                     </div>
                   </div>
                 </div>
-
-                <div style={{ width: "100%", display: "flex", justifyContent: "space-between", alignItems: "flex-end", fontSize: "0.62rem", color: activeProduct.backTheme.textColor, opacity: 0.8 }}>
-                  <span>Tailored Vented Hem</span>
-                  <span style={{ fontWeight: "750" }}>zargul.net</span>
-                </div>
               </div>
+
+              {/* FLOOR AMBIENT OVAL SHADOW UNDER GARMENT */}
+              <div
+                style={{
+                  width: "180px",
+                  height: "20px",
+                  borderRadius: "50%",
+                  background: "radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, transparent 70%)",
+                  filter: "blur(4px)",
+                  marginTop: "10px"
+                }}
+              />
             </div>
-          </div>
 
-          {/* FLOATING 3D ROTATION BUTTONS (MINIMAL, NO BOX) */}
-          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "14px" }}>
-            {/* FRONT BUTTON */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleToggleFlip("front");
-              }}
+            {/* HANGING CRAFT SWATCH TAGS ON STRING (EXACT LIKE VIDEO 00:06 - 00:08) */}
+            <div
               style={{
-                display: "inline-flex",
+                position: "absolute",
+                right: "10px",
+                top: "30px",
+                display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                gap: "4px",
-                padding: "6px 14px",
-                borderRadius: "20px",
-                border: "none",
-                cursor: "pointer",
-                fontSize: "0.74rem",
-                fontWeight: viewSide === "front" ? "800" : "600",
-                background: viewSide === "front" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "rgba(0,0,0,0.06)",
-                color: viewSide === "front" ? "#ffffff" : "var(--color-text-dark)",
-                boxShadow: viewSide === "front" ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
-                transition: "all 0.2s ease"
+                gap: "14px",
+                zIndex: 25
               }}
             >
-              <span>✦</span> FRONT
-            </button>
+              <div style={{ fontSize: "0.6rem", fontWeight: "800", letterSpacing: "1px", color: "#666666", textTransform: "uppercase" }}>
+                Colors
+              </div>
 
-            {/* BACK BUTTON */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleToggleFlip("back");
-              }}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "4px",
-                padding: "6px 14px",
-                borderRadius: "20px",
-                border: "none",
-                cursor: "pointer",
-                fontSize: "0.74rem",
-                fontWeight: viewSide === "back" ? "800" : "600",
-                background: viewSide === "back" ? "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)" : "rgba(0,0,0,0.06)",
-                color: viewSide === "back" ? "#ffffff" : "var(--color-text-dark)",
-                boxShadow: viewSide === "back" ? "0 2px 8px rgba(197, 160, 89, 0.35)" : "none",
-                transition: "all 0.2s ease"
-              }}
-            >
-              <span>⟳</span> BACK
-            </button>
-
-            {/* 360 SPIN BUTTON */}
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                handleFullSpin();
-              }}
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "4px",
-                padding: "6px 12px",
-                borderRadius: "20px",
-                border: "1px solid rgba(0,0,0,0.12)",
-                cursor: "pointer",
-                fontSize: "0.72rem",
-                fontWeight: "700",
-                background: "#ffffff",
-                color: "var(--color-text-dark)",
-                transition: "all 0.2s ease"
-              }}
-              title="Spin coat 360 degrees"
-            >
-              <span>🔄</span> 360° Spin
-            </button>
-          </div>
-          <span style={{ fontSize: "0.66rem", color: "var(--color-text-muted)", marginTop: "4px" }}>
-            Tap garment or click buttons for 3D rotation
-          </span>
-        </div>
-
-        {/* RIGHT COLUMN: IMMERSIVE DETAILS, COLOR SWATCHES & BUY CONTROLS */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {/* CATEGORY & RATING ROW */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <span
-              style={{
-                fontSize: "0.74rem",
-                fontWeight: "800",
-                letterSpacing: "0.5px",
-                color: "var(--color-accent-dark)",
-                textTransform: "uppercase"
-              }}
-            >
-              ✦ {activeProduct.typeLabel}
-            </span>
-            <div style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "0.74rem", color: "#f5a623", fontWeight: "700" }}>
-              <span>★</span>
-              <span>{activeProduct.rating}</span>
-              <span style={{ color: "var(--color-text-muted)", fontWeight: "500", fontSize: "0.68rem" }}>
-                ({activeProduct.reviews} reviews)
-              </span>
-            </div>
-          </div>
-
-          {/* TITLE & COLORWAY */}
-          <div>
-            <h3
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.45rem",
-                fontWeight: "800",
-                color: "var(--color-text-dark)",
-                margin: "0 0 4px",
-                lineHeight: "1.25"
-              }}
-            >
-              {activeProduct.title}
-            </h3>
-            <span style={{ fontSize: "0.78rem", color: "var(--color-text-muted)" }}>
-              Color: <strong style={{ color: "var(--color-text-dark)" }}>{activeProduct.colorName}</strong>
-            </span>
-          </div>
-
-          {/* INTERACTIVE COLOR SWATCHES (DYNAMIC CHANGE IN 3D) */}
-          <div style={{ padding: "6px 0" }}>
-            <span style={{ display: "block", fontSize: "0.74rem", fontWeight: "800", color: "var(--color-text-dark)", marginBottom: "8px" }}>
-              🎨 Select Color Swatch:
-            </span>
-            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-              {colorSwatches.map((swatch) => {
-                const isSelectedSwatch = swatch.id === activeId;
+              {currentGarmentGroup.map((garment) => {
+                const isTagActive = garment.id === activeItem.id;
                 return (
-                  <button
-                    key={swatch.id}
-                    type="button"
-                    onClick={() => handleSelectProduct(swatch)}
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "6px",
-                      padding: "5px 12px",
-                      borderRadius: "20px",
-                      border: isSelectedSwatch ? "2px solid #d4af37" : "1px solid rgba(0,0,0,0.12)",
-                      background: isSelectedSwatch ? "#ffffff" : "rgba(255,255,255,0.7)",
-                      boxShadow: isSelectedSwatch ? "0 2px 8px rgba(212, 175, 55, 0.3)" : "none",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease"
+                  <div
+                    key={garment.id}
+                    onClick={() => {
+                      const newIdx = COATS_DATA.findIndex(c => c.id === garment.id);
+                      if (newIdx !== -1) handleSelect(newIdx);
                     }}
-                    title={`Switch to ${swatch.colorName}`}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      cursor: "pointer",
+                      transform: isTagActive ? "scale(1.08)" : "scale(0.95)",
+                      transition: "all 0.25s ease"
+                    }}
+                    title={`Switch to ${garment.colorName}`}
                   >
-                    <span
+                    {/* Hanging String from top */}
+                    <div
                       style={{
-                        width: "12px",
-                        height: "12px",
-                        borderRadius: "50%",
-                        background: swatch.colorHex,
-                        border: `1px solid ${swatch.colorBorder}`,
-                        flexShrink: 0
+                        width: "1.5px",
+                        height: "18px",
+                        background: "#a1a1aa",
+                        marginBottom: "-1px"
                       }}
                     />
-                    <span style={{ fontSize: "0.72rem", fontWeight: isSelectedSwatch ? "800" : "600", color: "var(--color-text-dark)" }}>
-                      {swatch.swatchName}
-                    </span>
-                  </button>
+                    {/* Cardboard Hangtag */}
+                    <div
+                      style={{
+                        width: "36px",
+                        padding: "8px 4px 6px",
+                        borderRadius: "4px",
+                        background: garment.tagColor,
+                        color: garment.tagTextColor,
+                        boxShadow: isTagActive
+                          ? "0 8px 18px rgba(0,0,0,0.3), 0 0 0 2px #d4af37"
+                          : "0 4px 10px rgba(0,0,0,0.15)",
+                        textAlign: "center",
+                        position: "relative"
+                      }}
+                    >
+                      {/* String Hole Eyelet */}
+                      <div
+                        style={{
+                          width: "5px",
+                          height: "5px",
+                          borderRadius: "50%",
+                          background: "#ffffff",
+                          border: "1px solid #777",
+                          margin: "0 auto 4px"
+                        }}
+                      />
+                      {/* Color Block */}
+                      <div
+                        style={{
+                          width: "20px",
+                          height: "20px",
+                          borderRadius: "3px",
+                          background: garment.colorHex,
+                          margin: "0 auto 4px",
+                          border: "1px solid rgba(255,255,255,0.4)"
+                        }}
+                      />
+                      <span
+                        style={{
+                          fontSize: "0.5rem",
+                          fontWeight: "800",
+                          lineHeight: "1.1",
+                          display: "block",
+                          wordBreak: "break-word"
+                        }}
+                      >
+                        {garment.colorName.split(" ")[0]}
+                      </span>
+                    </div>
+                  </div>
                 );
               })}
             </div>
           </div>
 
-          {/* STRICT PRICING DISPLAY */}
-          <div style={{ display: "flex", alignItems: "baseline", gap: "10px", margin: "2px 0" }}>
-            <span
+          {/* BELOW GARMENT CONTROLS (TITLE, 3D FRONT/BACK TOGGLE, PRICING, & BUY BUTTONS) */}
+          <div
+            style={{
+              width: "100%",
+              maxWidth: "560px",
+              marginTop: "16px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              textAlign: "center",
+              zIndex: 20
+            }}
+          >
+            {/* PRODUCT TITLE (BOLD MODERN CLEAN - LIKE REFERENCE VIDEO) */}
+            <h3
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "1.7rem",
-                fontWeight: "900",
-                color: "var(--color-text-dark)",
-                letterSpacing: "-0.5px"
+                fontSize: "1.18rem",
+                fontWeight: "800",
+                letterSpacing: "0.8px",
+                textTransform: "uppercase",
+                color: "#18181b",
+                margin: "0 0 4px"
               }}
             >
-              Rs. {activeProduct.price.toLocaleString()}
-            </span>
-            <span
-              style={{
-                fontSize: "0.95rem",
-                color: "var(--color-text-muted)",
-                textDecoration: "line-through"
-              }}
-            >
-              Rs. {activeProduct.originalPrice.toLocaleString()}
-            </span>
-            <span
-              style={{
-                fontSize: "0.72rem",
-                fontWeight: "750",
-                color: "#16a34a",
-                background: "rgba(22, 163, 74, 0.1)",
-                padding: "2px 8px",
-                borderRadius: "6px"
-              }}
-            >
-              Save Rs. {(activeProduct.originalPrice - activeProduct.price).toLocaleString()}
-            </span>
-          </div>
+              {activeItem.title}
+            </h3>
 
-          {/* KEY SPECS */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
-            {activeProduct.features.map((feat, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: "5px", fontSize: "0.72rem", color: "var(--color-text-dark)" }}>
-                <span style={{ color: "var(--color-accent-dark)", fontWeight: "800" }}>✓</span>
-                <span>{feat}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* SIZE & QUANTITY SELECTORS */}
-          <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", marginTop: "4px" }}>
-            {/* Size */}
-            <div style={{ flex: "1 1 180px" }}>
-              <label style={{ display: "block", fontSize: "0.72rem", fontWeight: "750", color: "var(--color-text-dark)", marginBottom: "4px" }}>
-                Select Size:
-              </label>
-              <div style={{ display: "flex", gap: "5px" }}>
-                {["Small (S)", "Medium (M)", "Large (L)", "Extra Large (XL)"].map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => setSelectedSize(s)}
-                    style={{
-                      flex: 1,
-                      padding: "6px 2px",
-                      borderRadius: "8px",
-                      border: selectedSize === s ? "2px solid #d4af37" : "1px solid rgba(0,0,0,0.12)",
-                      background: selectedSize === s ? "linear-gradient(135deg, #fff7fa 0%, #faedf3 100%)" : "#ffffff",
-                      color: selectedSize === s ? "var(--color-accent-dark)" : "var(--color-text-dark)",
-                      fontSize: "0.68rem",
-                      fontWeight: selectedSize === s ? "800" : "600",
-                      cursor: "pointer",
-                      whiteSpace: "nowrap"
-                    }}
-                  >
-                    {s.split(" ")[0]}
-                  </button>
-                ))}
-              </div>
+            {/* STRICT PRICE DISPLAY */}
+            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
+              <span style={{ fontSize: "1.35rem", fontWeight: "900", color: "#c5a059" }}>
+                Rs. {activeItem.price.toLocaleString()}
+              </span>
+              <span style={{ fontSize: "0.88rem", color: "#9ca3af", textDecoration: "line-through" }}>
+                Rs. {activeItem.originalPrice.toLocaleString()}
+              </span>
+              <span
+                style={{
+                  background: "#fee2e2",
+                  color: "#dc2626",
+                  fontSize: "0.7rem",
+                  fontWeight: "800",
+                  padding: "2px 8px",
+                  borderRadius: "12px"
+                }}
+              >
+                SAVE 20%
+              </span>
             </div>
 
-            {/* Quantity */}
-            <div style={{ flex: "0 0 95px" }}>
-              <label style={{ display: "block", fontSize: "0.72rem", fontWeight: "750", color: "var(--color-text-dark)", marginBottom: "4px" }}>
-                Qty:
-              </label>
+            {/* FRONT / BACK VIEW TOGGLE PILLS (EXACT LIKE VIDEO 00:09-00:11) */}
+            <div
+              style={{
+                display: "inline-flex",
+                background: "#ebebed",
+                padding: "3px",
+                borderRadius: "30px",
+                marginBottom: "18px",
+                boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)"
+              }}
+            >
+              <button
+                onClick={() => setViewAngle("front")}
+                style={{
+                  background: viewAngle === "front" ? "#18181b" : "transparent",
+                  color: viewAngle === "front" ? "#ffffff" : "#52525b",
+                  border: "none",
+                  padding: "6px 20px",
+                  borderRadius: "24px",
+                  fontSize: "0.78rem",
+                  fontWeight: "800",
+                  letterSpacing: "1px",
+                  cursor: "pointer",
+                  transition: "all 0.25s ease"
+                }}
+              >
+                FRONT
+              </button>
+              <button
+                onClick={() => setViewAngle("back")}
+                style={{
+                  background: viewAngle === "back" ? "#18181b" : "transparent",
+                  color: viewAngle === "back" ? "#ffffff" : "#52525b",
+                  border: "none",
+                  padding: "6px 20px",
+                  borderRadius: "24px",
+                  fontSize: "0.78rem",
+                  fontWeight: "800",
+                  letterSpacing: "1px",
+                  cursor: "pointer",
+                  transition: "all 0.25s ease"
+                }}
+              >
+                BACK (3D FLIP)
+              </button>
+            </div>
+
+            {/* SIZE SELECTOR */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px", flexWrap: "wrap", justifyContent: "center" }}>
+              <span style={{ fontSize: "0.76rem", fontWeight: "750", color: "#555" }}>Select Size:</span>
+              {["36", "38", "40", "42", "44", "46"].map((sz) => (
+                <button
+                  key={sz}
+                  onClick={() => setSelectedSize(sz)}
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "10px",
+                    border: selectedSize === sz ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.12)",
+                    background: selectedSize === sz ? "#18181b" : "#ffffff",
+                    color: selectedSize === sz ? "#ffffff" : "#333333",
+                    fontSize: "0.82rem",
+                    fontWeight: "800",
+                    cursor: "pointer",
+                    transition: "all 0.2s ease"
+                  }}
+                >
+                  {sz}
+                </button>
+              ))}
+            </div>
+
+            {/* QUANTITY + BUY NOW + WHATSAPP BUTTONS */}
+            <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", justifyContent: "center", width: "100%" }}>
+              {/* Quantity Selector */}
               <div
                 style={{
-                  display: "flex",
+                  display: "inline-flex",
                   alignItems: "center",
-                  justifyContent: "space-between",
-                  background: "#f4f1f5",
-                  borderRadius: "8px",
-                  padding: "3px 8px",
-                  border: "1px solid rgba(0,0,0,0.08)"
+                  background: "#ffffff",
+                  border: "1px solid rgba(0,0,0,0.12)",
+                  borderRadius: "16px",
+                  padding: "4px 8px",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.04)"
                 }}
               >
                 <button
-                  type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: "0.95rem",
-                    fontWeight: "800",
-                    color: "var(--color-text-dark)",
-                    padding: "0 4px"
-                  }}
+                  style={{ border: "none", background: "transparent", fontSize: "1.1rem", padding: "0 8px", cursor: "pointer", fontWeight: "700" }}
                 >
-                  -
+                  −
                 </button>
-                <span style={{ fontSize: "0.82rem", fontWeight: "800", color: "var(--color-text-dark)" }}>
+                <span style={{ fontSize: "0.88rem", fontWeight: "800", minWidth: "24px", textAlign: "center" }}>
                   {quantity}
                 </span>
                 <button
-                  type="button"
                   onClick={() => setQuantity(quantity + 1)}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                    fontSize: "0.95rem",
-                    fontWeight: "800",
-                    color: "var(--color-text-dark)",
-                    padding: "0 4px"
-                  }}
+                  style={{ border: "none", background: "transparent", fontSize: "1.1rem", padding: "0 8px", cursor: "pointer", fontWeight: "700" }}
                 >
                   +
                 </button>
               </div>
+
+              {/* BUY NOW BUTTON */}
+              <button
+                onClick={handleAddToCart}
+                style={{
+                  flex: "1 1 180px",
+                  maxWidth: "240px",
+                  padding: "12px 20px",
+                  borderRadius: "16px",
+                  background: addedAnimation ? "#10b981" : "linear-gradient(135deg, #18181b 0%, #27272a 100%)",
+                  color: "#ffffff",
+                  border: "none",
+                  fontSize: "0.85rem",
+                  fontWeight: "800",
+                  letterSpacing: "0.5px",
+                  cursor: "pointer",
+                  boxShadow: "0 8px 20px rgba(0,0,0,0.18)",
+                  transition: "all 0.25s ease"
+                }}
+              >
+                {addedAnimation ? "✓ Added to Bag!" : `✦ BUY NOW • Rs. ${(activeItem.price * quantity).toLocaleString()}`}
+              </button>
+
+              {/* WHATSAPP ORDER BUTTON */}
+              <a
+                href={`https://wa.me/923339194200?text=${whatsappMessage}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  padding: "12px 18px",
+                  borderRadius: "16px",
+                  background: "#25D366",
+                  color: "#ffffff",
+                  fontSize: "0.82rem",
+                  fontWeight: "800",
+                  textDecoration: "none",
+                  boxShadow: "0 8px 18px rgba(37, 211, 102, 0.35)",
+                  transition: "transform 0.2s ease"
+                }}
+              >
+                <span>💬</span>
+                <span>Order via WhatsApp</span>
+              </a>
             </div>
           </div>
-
-          {/* DUAL ACTION BUTTONS: BUY NOW & WHATSAPP ORDER */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "6px" }}>
-            <button
-              type="button"
-              onClick={handleBuyNow}
-              className="clay-btn accent"
-              style={{
-                width: "100%",
-                padding: "11px 12px",
-                borderRadius: "12px",
-                fontSize: "0.82rem",
-                fontWeight: "800",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                background: "linear-gradient(135deg, #c5a059 0%, #a8833e 100%)",
-                color: "#ffffff",
-                border: "none",
-                cursor: "pointer",
-                boxShadow: "0 4px 14px rgba(197, 160, 89, 0.35)",
-                whiteSpace: "nowrap"
-              }}
-            >
-              <span>⚡</span> BUY NOW
-            </button>
-
-            <button
-              type="button"
-              onClick={handleWhatsAppOrder}
-              style={{
-                width: "100%",
-                padding: "11px 12px",
-                borderRadius: "12px",
-                fontSize: "0.82rem",
-                fontWeight: "800",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: "6px",
-                background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)",
-                color: "#ffffff",
-                border: "none",
-                cursor: "pointer",
-                boxShadow: "0 4px 14px rgba(37, 211, 102, 0.3)",
-                whiteSpace: "nowrap"
-              }}
-            >
-              <span>💬</span> Order via WhatsApp
-            </button>
-          </div>
-
-          {/* FOOTER SPECS LINK */}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "2px" }}>
-            <span style={{ fontSize: "0.68rem", color: "var(--color-text-muted)" }}>
-              🚚 Free Delivery &amp; Doorstep Parcel Inspection Across Pakistan
-            </span>
-            <Link
-              href={`/product/${activeProduct.id}`}
-              style={{
-                fontSize: "0.72rem",
-                fontWeight: "750",
-                color: "var(--color-accent-dark)",
-                textDecoration: "none",
-                whiteSpace: "nowrap"
-              }}
-            >
-              Full Details →
-            </Link>
-          </div>
         </div>
-      </div>
-    </section>
+      )}
+    </div>
   );
 }
