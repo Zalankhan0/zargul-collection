@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
-import Link from "next/link";
+import React, { useState } from "react";
 import { useStore } from "@/context/StoreContext";
 
 // ALL COATS & WAISTCOATS FOR THE ATELIER HANGING RACK
@@ -210,10 +209,8 @@ export default function VirtualRackViewer() {
   const [isRackOverview, setIsRackOverview] = useState(false);
 
   const activeItem = COATS_DATA[selectedIndex];
-  const isPrinceCoat = activeItem.type === "prince-coat";
   const currentGarmentGroup = COATS_DATA.filter(item => item.type === activeItem.type);
 
-  // Reset angle to front when selecting different garment
   const handleSelect = (idx) => {
     setSelectedIndex(idx);
     setViewAngle("front");
@@ -249,20 +246,22 @@ export default function VirtualRackViewer() {
 
   return (
     <div
+      className="virtual-rack-container"
       style={{
         position: "relative",
         width: "100%",
-        maxWidth: "1100px",
+        maxWidth: "1050px",
         margin: "0 auto 36px",
-        background: "radial-gradient(ellipse at 50% 30%, #ffffff 0%, #faf8fa 60%, #f4eff5 100%)",
-        borderRadius: "28px",
-        boxShadow: "0 15px 45px rgba(20, 16, 22, 0.05), inset 0 1px 0 rgba(255,255,255,0.9)",
-        padding: "30px 16px 36px",
-        overflow: "hidden"
+        background: "radial-gradient(ellipse at 50% 25%, #ffffff 0%, #faf8fa 65%, #f4eff5 100%)",
+        borderRadius: "24px",
+        boxShadow: "0 10px 30px rgba(20, 16, 22, 0.05), inset 0 1px 0 rgba(255,255,255,0.9)",
+        padding: "24px 14px 30px",
+        overflow: "hidden", // STRICT NO OVERFLOW
+        boxSizing: "border-box"
       }}
     >
       {/* ATELIER TOP HEADER */}
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
+      <div style={{ textAlign: "center", marginBottom: "16px" }}>
         <div
           style={{
             display: "inline-flex",
@@ -273,7 +272,7 @@ export default function VirtualRackViewer() {
             borderRadius: "30px",
             boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
             border: "1px solid rgba(197, 160, 89, 0.25)",
-            marginBottom: "8px"
+            marginBottom: "6px"
           }}
         >
           <span style={{ color: "#c5a059", fontSize: "0.85rem" }}>✦</span>
@@ -281,7 +280,7 @@ export default function VirtualRackViewer() {
             style={{
               fontSize: "0.72rem",
               fontWeight: "750",
-              letterSpacing: "1.5px",
+              letterSpacing: "1.2px",
               textTransform: "uppercase",
               color: "#333333"
             }}
@@ -290,66 +289,61 @@ export default function VirtualRackViewer() {
           </span>
           <span style={{ color: "#c5a059", fontSize: "0.85rem" }}>✦</span>
         </div>
-        <p style={{ margin: "2px 0 0", fontSize: "0.82rem", color: "#666666" }}>
-          Explore fabrics, dynamic color tags & 3D rotating front/back views directly on the rail
+        <p style={{ margin: "2px 0 0", fontSize: "0.8rem", color: "#666666" }}>
+          Explore fabrics, color tags &amp; 3D rotating front/back views on the rail
         </p>
       </div>
 
-      {/* METALLIC HANGING ROD / RAIL ACROSS CANVAS */}
+      {/* METALLIC HANGING ROD / RAIL */}
       <div
         style={{
           position: "relative",
-          width: "92%",
-          maxWidth: "880px",
+          width: "90%",
+          maxWidth: "700px",
           margin: "0 auto 12px",
-          height: "14px",
+          height: "12px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center"
         }}
       >
-        {/* Left Wall Bracket */}
         <div
           style={{
             position: "absolute",
             left: 0,
             top: "50%",
             transform: "translateY(-50%)",
-            width: "16px",
-            height: "26px",
+            width: "12px",
+            height: "22px",
             background: "linear-gradient(180deg, #999 0%, #bbb 50%, #666 100%)",
-            borderRadius: "4px",
-            boxShadow: "0 4px 8px rgba(0,0,0,0.25)"
+            borderRadius: "4px"
           }}
         />
-        {/* Metallic Rod */}
         <div
           style={{
             width: "100%",
-            height: "8px",
+            height: "6px",
             background: "linear-gradient(180deg, #dcdcdc 0%, #ffffff 35%, #b5b5b5 70%, #7e7e7e 100%)",
-            borderRadius: "4px",
-            boxShadow: "0 6px 14px rgba(0,0,0,0.18), inset 0 1px 1px rgba(255,255,255,0.9)"
+            borderRadius: "3px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.15)"
           }}
         />
-        {/* Right Wall Bracket */}
         <div
           style={{
             position: "absolute",
             right: 0,
             top: "50%",
             transform: "translateY(-50%)",
-            width: "16px",
-            height: "26px",
+            width: "12px",
+            height: "22px",
             background: "linear-gradient(180deg, #999 0%, #bbb 50%, #666 100%)",
-            borderRadius: "4px",
-            boxShadow: "0 4px 8px rgba(0,0,0,0.25)"
+            borderRadius: "4px"
           }}
         />
       </div>
 
-      {/* MODE TOGGLE: SLIDING RAIL / CENTER STAGE FOCUS */}
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: "16px", gap: "10px" }}>
+      {/* MODE TOGGLE */}
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "14px" }}>
         <button
           onClick={() => setIsRackOverview(!isRackOverview)}
           style={{
@@ -358,30 +352,29 @@ export default function VirtualRackViewer() {
             border: "1px solid rgba(0,0,0,0.1)",
             padding: "5px 14px",
             borderRadius: "20px",
-            fontSize: "0.74rem",
+            fontSize: "0.72rem",
             fontWeight: "700",
             cursor: "pointer",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-            transition: "all 0.25s ease"
+            boxShadow: "0 2px 6px rgba(0,0,0,0.04)"
           }}
         >
           {isRackOverview ? "Focus Selected Garment ✕" : "⇄ Browse Full Rail (All 7 Clothes)"}
         </button>
       </div>
 
-      {/* CONDITIONAL DISPLAY: FULL RAIL BROWSE OR CENTER FOCUS STAGE */}
       {isRackOverview ? (
-        /* HORIZONTAL RACK OVERVIEW: ALL CLOTHES HANGING ON THE RAIL */
+        /* HORIZONTAL RACK OVERVIEW */
         <div
           style={{
             display: "flex",
             alignItems: "flex-start",
-            justifyContent: "flex-start",
-            gap: "14px",
+            gap: "10px",
             overflowX: "auto",
-            padding: "16px 12px 30px",
-            scrollbarWidth: "thin",
-            WebkitOverflowScrolling: "touch"
+            padding: "12px 6px 20px",
+            scrollbarWidth: "none",
+            WebkitOverflowScrolling: "touch",
+            width: "100%",
+            boxSizing: "border-box"
           }}
         >
           {COATS_DATA.map((item, idx) => {
@@ -395,357 +388,266 @@ export default function VirtualRackViewer() {
                   flexDirection: "column",
                   alignItems: "center",
                   cursor: "pointer",
-                  flex: "0 0 110px",
-                  transition: "transform 0.25s ease",
-                  transform: isCurrent ? "translateY(-6px) scale(1.06)" : "translateY(0) scale(1)",
+                  flex: "0 0 90px",
+                  transition: "transform 0.2s ease",
+                  transform: isCurrent ? "translateY(-4px) scale(1.04)" : "translateY(0) scale(1)",
                   userSelect: "none"
                 }}
               >
-                {/* Hanger Hook & Bar */}
-                <div style={{ position: "relative", width: "48px", height: "30px", marginBottom: "2px" }}>
-                  <svg width="48" height="30" viewBox="0 0 48 30" fill="none">
-                    <path
-                      d="M24 2 C28 2, 30 6, 28 10 C26 13, 24 14, 24 16"
-                      stroke="#888888"
-                      strokeWidth="2.2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M4 27 L24 16 L44 27 Z"
-                      fill="#ba8d5d"
-                      stroke="#8c6239"
-                      strokeWidth="1.2"
-                    />
+                {/* Hanger */}
+                <div style={{ position: "relative", width: "40px", height: "24px", marginBottom: "2px" }}>
+                  <svg width="40" height="24" viewBox="0 0 48 30" fill="none">
+                    <path d="M24 2 C28 2, 30 6, 28 10 C26 13, 24 14, 24 16" stroke="#888888" strokeWidth="2.4" strokeLinecap="round" />
+                    <path d="M4 27 L24 16 L44 27 Z" fill="#ba8d5d" stroke="#8c6239" strokeWidth="1.2" />
                   </svg>
                 </div>
-
-                {/* Garment Thumbnail Hanging */}
+                {/* Thumbnail */}
                 <div
                   style={{
-                    width: "100px",
+                    width: "82px",
                     aspectRatio: "1 / 1.15",
                     borderRadius: "10px",
                     overflow: "hidden",
                     border: isCurrent ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.08)",
-                    boxShadow: isCurrent ? "0 10px 22px rgba(197, 160, 89, 0.4)" : "0 4px 10px rgba(0,0,0,0.06)",
+                    boxShadow: isCurrent ? "0 8px 18px rgba(197, 160, 89, 0.4)" : "0 3px 8px rgba(0,0,0,0.06)",
                     background: "#ffffff",
                     position: "relative"
                   }}
                 >
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                  />
+                  <img src={item.image} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} loading="lazy" />
                   <div
                     style={{
                       position: "absolute",
-                      bottom: "3px",
+                      bottom: "2px",
                       left: "50%",
                       transform: "translateX(-50%)",
                       background: isCurrent ? "#c5a059" : "rgba(0,0,0,0.65)",
                       color: "#ffffff",
-                      fontSize: "0.58rem",
+                      fontSize: "0.52rem",
                       fontWeight: "800",
-                      padding: "1px 6px",
-                      borderRadius: "6px",
+                      padding: "1px 5px",
+                      borderRadius: "5px",
                       whiteSpace: "nowrap"
                     }}
                   >
                     Rs. {item.price.toLocaleString()}
                   </div>
                 </div>
-                <span
-                  style={{
-                    marginTop: "6px",
-                    fontSize: "0.68rem",
-                    fontWeight: isCurrent ? "800" : "600",
-                    color: isCurrent ? "#c5a059" : "#333333",
-                    textAlign: "center",
-                    lineHeight: "1.2"
-                  }}
-                >
-                  {item.colorName}
+                <span style={{ marginTop: "4px", fontSize: "0.64rem", fontWeight: isCurrent ? "800" : "600", color: isCurrent ? "#c5a059" : "#333", textAlign: "center" }}>
+                  {item.colorName.split(" ")[0]}
                 </span>
               </div>
             );
           })}
         </div>
       ) : (
-        /* CENTER STAGE: EXACT REPLICA OF THE REFERENCE VIDEO */
-        <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+        /* CENTER STAGE: EXACT REPLICA OF REFERENCE VIDEO */
+        <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", boxSizing: "border-box" }}>
           
-          {/* FLOATING PREV / NEXT ARROWS (LIKE VIDEO 00:12) */}
+          {/* FLOATING PREV / NEXT ARROWS */}
           <button
             onClick={handlePrev}
-            aria-label="Previous garment on rack"
+            aria-label="Previous garment"
             style={{
               position: "absolute",
-              left: "4px",
-              top: "40%",
+              left: "0px",
+              top: "35%",
               transform: "translateY(-50%)",
-              width: "44px",
-              height: "44px",
+              width: "38px",
+              height: "38px",
               borderRadius: "50%",
               background: "#ffffff",
               border: "1px solid rgba(0,0,0,0.1)",
               color: "#18181b",
-              fontSize: "1.5rem",
-              fontWeight: "300",
+              fontSize: "1.3rem",
               cursor: "pointer",
-              boxShadow: "0 6px 16px rgba(0,0,0,0.08)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              zIndex: 30,
-              transition: "transform 0.2s ease"
+              zIndex: 30
             }}
-            title="Previous coat on rail"
           >
             ‹
           </button>
 
           <button
             onClick={handleNext}
-            aria-label="Next garment on rack"
+            aria-label="Next garment"
             style={{
               position: "absolute",
-              right: "4px",
-              top: "40%",
+              right: "0px",
+              top: "35%",
               transform: "translateY(-50%)",
-              width: "44px",
-              height: "44px",
+              width: "38px",
+              height: "38px",
               borderRadius: "50%",
               background: "#ffffff",
               border: "1px solid rgba(0,0,0,0.1)",
               color: "#18181b",
-              fontSize: "1.5rem",
-              fontWeight: "300",
+              fontSize: "1.3rem",
               cursor: "pointer",
-              boxShadow: "0 6px 16px rgba(0,0,0,0.08)",
+              boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              zIndex: 30,
-              transition: "transform 0.2s ease"
+              zIndex: 30
             }}
-            title="Next coat on rail"
           >
             ›
           </button>
 
-          {/* MAIN STAGE: WOODEN HANGER + GARMENT + HANGING CRAFT COLOR TAGS */}
-          <div
-            style={{
-              position: "relative",
-              width: "100%",
-              maxWidth: "480px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: "0 10px"
-            }}
-          >
-            {/* CENTRAL HANGING GARMENT WRAPPER */}
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}>
-              
-              {/* WOODEN CLOTHES HANGER (HOOKS TO THE RAIL) */}
-              <div style={{ position: "relative", width: "80px", height: "42px", zIndex: 12 }}>
-                <svg width="80" height="42" viewBox="0 0 80 42" fill="none">
-                  {/* Metal Hook Loop around rail */}
-                  <path
-                    d="M40 2 C46 2, 50 8, 47 14 C44 19, 40 20, 40 24"
-                    stroke="#94a3b8"
-                    strokeWidth="3.2"
-                    strokeLinecap="round"
-                  />
-                  {/* Contoured Wooden Hanger Bar */}
-                  <path
-                    d="M8 38 L40 24 L72 38 C72 40, 68 41, 40 37 C12 41, 8 40, 8 38 Z"
-                    fill="#b98a58"
-                    stroke="#8c5f2b"
-                    strokeWidth="1.5"
-                  />
-                  {/* Brass Pivot Cap */}
-                  <circle cx="40" cy="24" r="3" fill="#d4af37" />
-                </svg>
-              </div>
+          {/* MAIN STAGE: WOODEN HANGER + 3D FLIP GARMENT */}
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", width: "100%", maxWidth: "340px", boxSizing: "border-box" }}>
+            
+            {/* Wooden Hanger */}
+            <div style={{ position: "relative", width: "70px", height: "36px", zIndex: 12 }}>
+              <svg width="70" height="36" viewBox="0 0 80 42" fill="none">
+                <path d="M40 2 C46 2, 50 8, 47 14 C44 19, 40 20, 40 24" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
+                <path d="M8 38 L40 24 L72 38 C72 40, 68 41, 40 37 C12 41, 8 40, 8 38 Z" fill="#b98a58" stroke="#8c5f2b" strokeWidth="1.5" />
+                <circle cx="40" cy="24" r="3" fill="#d4af37" />
+              </svg>
+            </div>
 
-              {/* 3D FLIPPABLE GARMENT CONTAINER (PERSPECTIVE & PRESERVE-3D) */}
+            {/* 3D Flippable Garment */}
+            <div
+              style={{
+                position: "relative",
+                width: "240px",
+                height: "280px",
+                perspective: "1000px",
+                WebkitPerspective: "1000px",
+                marginTop: "-4px",
+                zIndex: 10
+              }}
+            >
               <div
                 style={{
                   position: "relative",
-                  width: "280px",
-                  height: "330px",
-                  perspective: "1200px",
-                  WebkitPerspective: "1200px",
-                  marginTop: "-6px",
-                  zIndex: 10
+                  width: "100%",
+                  height: "100%",
+                  transformStyle: "preserve-3d",
+                  WebkitTransformStyle: "preserve-3d",
+                  transform: viewAngle === "back" ? "rotateY(180deg)" : "rotateY(0deg)",
+                  transition: "transform 0.75s cubic-bezier(0.2, 0.85, 0.25, 1)"
                 }}
               >
+                {/* FRONT FACE */}
                 <div
                   style={{
-                    position: "relative",
-                    width: "100%",
-                    height: "100%",
-                    transformStyle: "preserve-3d",
-                    WebkitTransformStyle: "preserve-3d",
-                    transform: viewAngle === "back" ? "rotateY(180deg)" : "rotateY(0deg)",
-                    transition: "transform 0.8s cubic-bezier(0.2, 0.85, 0.25, 1)"
+                    position: "absolute",
+                    inset: 0,
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                    borderRadius: "16px",
+                    overflow: "hidden",
+                    boxShadow: "0 18px 36px rgba(0,0,0,0.15)",
+                    background: "#ffffff"
                   }}
                 >
-                  {/* FRONT FACE (HIGH RES ATELIER PHOTO) */}
+                  <img
+                    src={activeItem.image}
+                    alt={activeItem.title}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    loading="eager"
+                  />
                   <div
                     style={{
                       position: "absolute",
-                      inset: 0,
-                      backfaceVisibility: "hidden",
-                      WebkitBackfaceVisibility: "hidden",
-                      borderRadius: "18px",
-                      overflow: "hidden",
-                      boxShadow: "0 22px 40px rgba(0,0,0,0.18), 0 8px 16px rgba(0,0,0,0.08)",
-                      background: "#ffffff"
+                      bottom: "8px",
+                      right: "10px",
+                      background: "rgba(0,0,0,0.6)",
+                      color: "#ffffff",
+                      padding: "2px 7px",
+                      borderRadius: "6px",
+                      fontSize: "0.58rem",
+                      fontWeight: "700"
                     }}
                   >
-                    <img
-                      src={activeItem.image}
-                      alt={activeItem.title}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        display: "block"
-                      }}
-                      loading="eager"
-                      onError={(e) => {
-                        e.currentTarget.src = "/assets/logo.jpg";
-                      }}
-                    />
-                    {/* Watermark in corner */}
-                    <div
-                      style={{
-                        position: "absolute",
-                        bottom: "8px",
-                        right: "12px",
-                        background: "rgba(0,0,0,0.6)",
-                        color: "#ffffff",
-                        padding: "2px 8px",
-                        borderRadius: "8px",
-                        fontSize: "0.62rem",
-                        fontWeight: "700",
-                        letterSpacing: "0.5px"
-                      }}
-                    >
-                      zargul.net
+                    zargul.net
+                  </div>
+                </div>
+
+                {/* BACK FACE */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    backfaceVisibility: "hidden",
+                    WebkitBackfaceVisibility: "hidden",
+                    transform: "rotateY(180deg)",
+                    borderRadius: "16px",
+                    overflow: "hidden",
+                    boxShadow: "0 18px 36px rgba(0,0,0,0.15)",
+                    background: `linear-gradient(180deg, ${activeItem.backTheme.base} 0%, ${activeItem.backTheme.lining} 100%)`,
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    padding: "20px 16px",
+                    color: activeItem.backTheme.textColor,
+                    border: "1px solid rgba(255,255,255,0.1)"
+                  }}
+                >
+                  <div style={{ textAlign: "center", borderBottom: `1px dashed ${activeItem.backTheme.stitching}`, paddingBottom: "10px" }}>
+                    <div style={{ fontSize: "0.64rem", letterSpacing: "1.5px", fontWeight: "800", color: "#d4af37" }}>
+                      ZARGUL BESPOKE ATELIER
+                    </div>
+                    <div style={{ fontSize: "0.58rem", opacity: 0.8, marginTop: "2px" }}>
+                      Handcrafted in Pakistan • Size {selectedSize}
                     </div>
                   </div>
 
-                  {/* BACK FACE (TAILORED BACK VIEW WITH CINCH BUCKLE & SATIN SILK LINING) */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      backfaceVisibility: "hidden",
-                      WebkitBackfaceVisibility: "hidden",
-                      transform: "rotateY(180deg)",
-                      borderRadius: "18px",
-                      overflow: "hidden",
-                      boxShadow: "0 22px 40px rgba(0,0,0,0.18), 0 8px 16px rgba(0,0,0,0.08)",
-                      background: `linear-gradient(180deg, ${activeItem.backTheme.base} 0%, ${activeItem.backTheme.lining} 100%)`,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      padding: "24px 20px 20px",
-                      color: activeItem.backTheme.textColor,
-                      border: "1px solid rgba(255,255,255,0.1)"
-                    }}
-                  >
-                    {/* Inner Neck Label */}
-                    <div style={{ textAlign: "center", borderBottom: `1px dashed ${activeItem.backTheme.stitching}`, paddingBottom: "12px" }}>
-                      <div style={{ fontSize: "0.68rem", letterSpacing: "2px", fontWeight: "800", color: "#d4af37" }}>
-                        ZARGUL BESPOKE ATELIER
-                      </div>
-                      <div style={{ fontSize: "0.62rem", opacity: 0.8, marginTop: "2px" }}>
-                        Hand-Crafted in Pakistan • Size {selectedSize}
-                      </div>
-                    </div>
-
-                    {/* Center Back Dart & Tailoring */}
-                    <div style={{ textAlign: "center", padding: "16px 0" }}>
-                      <div
-                        style={{
-                          width: "2px",
-                          height: "60px",
-                          margin: "0 auto",
-                          background: `linear-gradient(180deg, ${activeItem.backTheme.stitching} 0%, transparent 100%)`
-                        }}
-                      />
-                      <span style={{ fontSize: "0.64rem", opacity: 0.75, letterSpacing: "1px", textTransform: "uppercase" }}>
-                        Precision Contoured Spine
-                      </span>
-                    </div>
-
-                    {/* Adjustable Waist Cinch Buckle (Classic Vest / Prince Coat Back) */}
+                  <div style={{ textAlign: "center", padding: "12px 0" }}>
                     <div
                       style={{
-                        background: "rgba(255,255,255,0.05)",
-                        padding: "10px 14px",
-                        borderRadius: "10px",
-                        border: `1px solid ${activeItem.backTheme.stitching}`,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between"
+                        width: "2px",
+                        height: "45px",
+                        margin: "0 auto",
+                        background: `linear-gradient(180deg, ${activeItem.backTheme.stitching} 0%, transparent 100%)`
                       }}
-                    >
-                      <span style={{ fontSize: "0.62rem", fontWeight: "700" }}>Waist Cinch Buckle</span>
-                      <div
-                        style={{
-                          width: "24px",
-                          height: "16px",
-                          borderRadius: "4px",
-                          background: activeItem.backTheme.buckle,
-                          boxShadow: "0 2px 6px rgba(0,0,0,0.3)"
-                        }}
-                      />
-                    </div>
+                    />
+                    <span style={{ fontSize: "0.6rem", opacity: 0.75, letterSpacing: "1px", textTransform: "uppercase" }}>
+                      Precision Spine Seam
+                    </span>
+                  </div>
+
+                  <div
+                    style={{
+                      background: "rgba(255,255,255,0.06)",
+                      padding: "8px 12px",
+                      borderRadius: "8px",
+                      border: `1px solid ${activeItem.backTheme.stitching}`,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between"
+                    }}
+                  >
+                    <span style={{ fontSize: "0.6rem", fontWeight: "700" }}>Waist Cinch Buckle</span>
+                    <div style={{ width: "20px", height: "14px", borderRadius: "3px", background: activeItem.backTheme.buckle }} />
                   </div>
                 </div>
               </div>
-
-              {/* FLOOR AMBIENT OVAL SHADOW UNDER GARMENT */}
-              <div
-                style={{
-                  width: "180px",
-                  height: "20px",
-                  borderRadius: "50%",
-                  background: "radial-gradient(ellipse at center, rgba(0,0,0,0.25) 0%, transparent 70%)",
-                  filter: "blur(4px)",
-                  marginTop: "10px"
-                }}
-              />
             </div>
 
-            {/* HANGING CRAFT SWATCH TAGS ON STRING (EXACT LIKE VIDEO 00:06 - 00:08) */}
+            {/* Floor Shadow */}
             <div
               style={{
-                position: "absolute",
-                right: "10px",
-                top: "30px",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "14px",
-                zIndex: 25
+                width: "150px",
+                height: "16px",
+                borderRadius: "50%",
+                background: "radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, transparent 70%)",
+                filter: "blur(3px)",
+                marginTop: "8px"
               }}
-            >
-              <div style={{ fontSize: "0.6rem", fontWeight: "800", letterSpacing: "1px", color: "#666666", textTransform: "uppercase" }}>
-                Colors
-              </div>
+            />
 
+            {/* HANGING CRAFT COLOR SWATCH TAGS (RESPONSIVE ROW - NEVER OVERFLOWS) */}
+            <div style={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", marginTop: "12px" }}>
+              <span style={{ fontSize: "0.66rem", fontWeight: "800", color: "#666", marginRight: "2px" }}>Colors:</span>
               {currentGarmentGroup.map((garment) => {
                 const isTagActive = garment.id === activeItem.id;
                 return (
-                  <div
+                  <button
                     key={garment.id}
                     onClick={() => {
                       const newIdx = COATS_DATA.findIndex(c => c.id === garment.id);
@@ -753,98 +655,54 @@ export default function VirtualRackViewer() {
                     }}
                     style={{
                       display: "flex",
-                      flexDirection: "column",
                       alignItems: "center",
+                      gap: "5px",
+                      padding: "4px 8px",
+                      borderRadius: "14px",
+                      background: isTagActive ? "#18181b" : "#ffffff",
+                      color: isTagActive ? "#ffffff" : "#333",
+                      border: isTagActive ? "1px solid #d4af37" : "1px solid rgba(0,0,0,0.1)",
                       cursor: "pointer",
-                      transform: isTagActive ? "scale(1.08)" : "scale(0.95)",
-                      transition: "all 0.25s ease"
+                      fontSize: "0.64rem",
+                      fontWeight: "750",
+                      boxShadow: isTagActive ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+                      transition: "all 0.2s ease"
                     }}
-                    title={`Switch to ${garment.colorName}`}
                   >
-                    {/* Hanging String from top */}
                     <div
                       style={{
-                        width: "1.5px",
-                        height: "18px",
-                        background: "#a1a1aa",
-                        marginBottom: "-1px"
+                        width: "12px",
+                        height: "12px",
+                        borderRadius: "50%",
+                        background: garment.colorHex,
+                        border: "1px solid rgba(255,255,255,0.6)"
                       }}
                     />
-                    {/* Cardboard Hangtag */}
-                    <div
-                      style={{
-                        width: "36px",
-                        padding: "8px 4px 6px",
-                        borderRadius: "4px",
-                        background: garment.tagColor,
-                        color: garment.tagTextColor,
-                        boxShadow: isTagActive
-                          ? "0 8px 18px rgba(0,0,0,0.3), 0 0 0 2px #d4af37"
-                          : "0 4px 10px rgba(0,0,0,0.15)",
-                        textAlign: "center",
-                        position: "relative"
-                      }}
-                    >
-                      {/* String Hole Eyelet */}
-                      <div
-                        style={{
-                          width: "5px",
-                          height: "5px",
-                          borderRadius: "50%",
-                          background: "#ffffff",
-                          border: "1px solid #777",
-                          margin: "0 auto 4px"
-                        }}
-                      />
-                      {/* Color Block */}
-                      <div
-                        style={{
-                          width: "20px",
-                          height: "20px",
-                          borderRadius: "3px",
-                          background: garment.colorHex,
-                          margin: "0 auto 4px",
-                          border: "1px solid rgba(255,255,255,0.4)"
-                        }}
-                      />
-                      <span
-                        style={{
-                          fontSize: "0.5rem",
-                          fontWeight: "800",
-                          lineHeight: "1.1",
-                          display: "block",
-                          wordBreak: "break-word"
-                        }}
-                      >
-                        {garment.colorName.split(" ")[0]}
-                      </span>
-                    </div>
-                  </div>
+                    <span>{garment.colorName.split(" ")[0]}</span>
+                  </button>
                 );
               })}
             </div>
           </div>
 
-          {/* BELOW GARMENT CONTROLS (TITLE, 3D FRONT/BACK TOGGLE, PRICING, & BUY BUTTONS) */}
+          {/* CONTROLS BELOW: TITLE, 3D FRONT/BACK TOGGLE, STRICT PRICING & ACTIONS */}
           <div
             style={{
               width: "100%",
-              maxWidth: "560px",
-              marginTop: "16px",
+              maxWidth: "500px",
+              marginTop: "14px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
-              zIndex: 20
+              boxSizing: "border-box"
             }}
           >
-            {/* PRODUCT TITLE (BOLD MODERN CLEAN - LIKE REFERENCE VIDEO) */}
             <h3
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "1.18rem",
+                fontSize: "1.1rem",
                 fontWeight: "800",
-                letterSpacing: "0.8px",
                 textTransform: "uppercase",
                 color: "#18181b",
                 margin: "0 0 4px"
@@ -853,37 +711,27 @@ export default function VirtualRackViewer() {
               {activeItem.title}
             </h3>
 
-            {/* STRICT PRICE DISPLAY */}
-            <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "14px" }}>
-              <span style={{ fontSize: "1.35rem", fontWeight: "900", color: "#c5a059" }}>
+            {/* Strict Price */}
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
+              <span style={{ fontSize: "1.3rem", fontWeight: "900", color: "#c5a059" }}>
                 Rs. {activeItem.price.toLocaleString()}
               </span>
-              <span style={{ fontSize: "0.88rem", color: "#9ca3af", textDecoration: "line-through" }}>
+              <span style={{ fontSize: "0.85rem", color: "#9ca3af", textDecoration: "line-through" }}>
                 Rs. {activeItem.originalPrice.toLocaleString()}
               </span>
-              <span
-                style={{
-                  background: "#fee2e2",
-                  color: "#dc2626",
-                  fontSize: "0.7rem",
-                  fontWeight: "800",
-                  padding: "2px 8px",
-                  borderRadius: "12px"
-                }}
-              >
+              <span style={{ background: "#fee2e2", color: "#dc2626", fontSize: "0.66rem", fontWeight: "800", padding: "1px 6px", borderRadius: "8px" }}>
                 SAVE 20%
               </span>
             </div>
 
-            {/* FRONT / BACK VIEW TOGGLE PILLS (EXACT LIKE VIDEO 00:09-00:11) */}
+            {/* FRONT / BACK 3D TOGGLE */}
             <div
               style={{
                 display: "inline-flex",
                 background: "#ebebed",
                 padding: "3px",
                 borderRadius: "30px",
-                marginBottom: "18px",
-                boxShadow: "inset 0 1px 3px rgba(0,0,0,0.1)"
+                marginBottom: "14px"
               }}
             >
               <button
@@ -892,13 +740,12 @@ export default function VirtualRackViewer() {
                   background: viewAngle === "front" ? "#18181b" : "transparent",
                   color: viewAngle === "front" ? "#ffffff" : "#52525b",
                   border: "none",
-                  padding: "6px 20px",
-                  borderRadius: "24px",
-                  fontSize: "0.78rem",
+                  padding: "5px 16px",
+                  borderRadius: "20px",
+                  fontSize: "0.74rem",
                   fontWeight: "800",
-                  letterSpacing: "1px",
                   cursor: "pointer",
-                  transition: "all 0.25s ease"
+                  transition: "all 0.2s ease"
                 }}
               >
                 FRONT
@@ -909,37 +756,36 @@ export default function VirtualRackViewer() {
                   background: viewAngle === "back" ? "#18181b" : "transparent",
                   color: viewAngle === "back" ? "#ffffff" : "#52525b",
                   border: "none",
-                  padding: "6px 20px",
-                  borderRadius: "24px",
-                  fontSize: "0.78rem",
+                  padding: "5px 16px",
+                  borderRadius: "20px",
+                  fontSize: "0.74rem",
                   fontWeight: "800",
-                  letterSpacing: "1px",
                   cursor: "pointer",
-                  transition: "all 0.25s ease"
+                  transition: "all 0.2s ease"
                 }}
               >
                 BACK (3D FLIP)
               </button>
             </div>
 
-            {/* SIZE SELECTOR */}
-            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px", flexWrap: "wrap", justifyContent: "center" }}>
-              <span style={{ fontSize: "0.76rem", fontWeight: "750", color: "#555" }}>Select Size:</span>
+            {/* Size Selector */}
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "14px", flexWrap: "wrap", justifyContent: "center" }}>
+              <span style={{ fontSize: "0.74rem", fontWeight: "750", color: "#555" }}>Size:</span>
               {["36", "38", "40", "42", "44", "46"].map((sz) => (
                 <button
                   key={sz}
                   onClick={() => setSelectedSize(sz)}
                   style={{
-                    width: "36px",
-                    height: "36px",
-                    borderRadius: "10px",
+                    width: "34px",
+                    height: "32px",
+                    borderRadius: "8px",
                     border: selectedSize === sz ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.12)",
                     background: selectedSize === sz ? "#18181b" : "#ffffff",
                     color: selectedSize === sz ? "#ffffff" : "#333333",
-                    fontSize: "0.82rem",
+                    fontSize: "0.78rem",
                     fontWeight: "800",
                     cursor: "pointer",
-                    transition: "all 0.2s ease"
+                    transition: "all 0.15s ease"
                   }}
                 >
                   {sz}
@@ -947,60 +793,55 @@ export default function VirtualRackViewer() {
               ))}
             </div>
 
-            {/* QUANTITY + BUY NOW + WHATSAPP BUTTONS */}
-            <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap", justifyContent: "center", width: "100%" }}>
-              {/* Quantity Selector */}
+            {/* Action Buttons */}
+            <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap", justifyContent: "center", width: "100%" }}>
               <div
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   background: "#ffffff",
                   border: "1px solid rgba(0,0,0,0.12)",
-                  borderRadius: "16px",
-                  padding: "4px 8px",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.04)"
+                  borderRadius: "14px",
+                  padding: "3px 6px"
                 }}
               >
                 <button
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  style={{ border: "none", background: "transparent", fontSize: "1.1rem", padding: "0 8px", cursor: "pointer", fontWeight: "700" }}
+                  style={{ border: "none", background: "transparent", fontSize: "1rem", padding: "0 6px", cursor: "pointer", fontWeight: "700" }}
                 >
                   −
                 </button>
-                <span style={{ fontSize: "0.88rem", fontWeight: "800", minWidth: "24px", textAlign: "center" }}>
+                <span style={{ fontSize: "0.85rem", fontWeight: "800", minWidth: "22px", textAlign: "center" }}>
                   {quantity}
                 </span>
                 <button
                   onClick={() => setQuantity(quantity + 1)}
-                  style={{ border: "none", background: "transparent", fontSize: "1.1rem", padding: "0 8px", cursor: "pointer", fontWeight: "700" }}
+                  style={{ border: "none", background: "transparent", fontSize: "1rem", padding: "0 6px", cursor: "pointer", fontWeight: "700" }}
                 >
                   +
                 </button>
               </div>
 
-              {/* BUY NOW BUTTON */}
               <button
                 onClick={handleAddToCart}
                 style={{
-                  flex: "1 1 180px",
-                  maxWidth: "240px",
-                  padding: "12px 20px",
-                  borderRadius: "16px",
+                  flex: "1 1 150px",
+                  maxWidth: "220px",
+                  padding: "11px 16px",
+                  borderRadius: "14px",
                   background: addedAnimation ? "#10b981" : "linear-gradient(135deg, #18181b 0%, #27272a 100%)",
                   color: "#ffffff",
                   border: "none",
-                  fontSize: "0.85rem",
+                  fontSize: "0.82rem",
                   fontWeight: "800",
-                  letterSpacing: "0.5px",
                   cursor: "pointer",
-                  boxShadow: "0 8px 20px rgba(0,0,0,0.18)",
-                  transition: "all 0.25s ease"
+                  boxShadow: "0 6px 16px rgba(0,0,0,0.16)",
+                  transition: "all 0.2s ease"
                 }}
               >
                 {addedAnimation ? "✓ Added to Bag!" : `✦ BUY NOW • Rs. ${(activeItem.price * quantity).toLocaleString()}`}
               </button>
 
-              {/* WHATSAPP ORDER BUTTON */}
               <a
                 href={`https://wa.me/923339194200?text=${whatsappMessage}`}
                 target="_blank"
@@ -1008,20 +849,19 @@ export default function VirtualRackViewer() {
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
-                  gap: "6px",
-                  padding: "12px 18px",
-                  borderRadius: "16px",
+                  gap: "5px",
+                  padding: "11px 16px",
+                  borderRadius: "14px",
                   background: "#25D366",
                   color: "#ffffff",
-                  fontSize: "0.82rem",
+                  fontSize: "0.8rem",
                   fontWeight: "800",
                   textDecoration: "none",
-                  boxShadow: "0 8px 18px rgba(37, 211, 102, 0.35)",
-                  transition: "transform 0.2s ease"
+                  boxShadow: "0 6px 16px rgba(37, 211, 102, 0.3)"
                 }}
               >
                 <span>💬</span>
-                <span>Order via WhatsApp</span>
+                <span>WhatsApp</span>
               </a>
             </div>
           </div>
