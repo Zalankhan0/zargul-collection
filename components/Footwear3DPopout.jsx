@@ -189,8 +189,8 @@ const FOOTWEAR_DATA = [
 export default function Footwear3DPopout() {
   const { addToCart } = useStore();
   const [selectedShoeIndex, setSelectedShoeIndex] = useState(0);
-  const [isLevitating, setIsLevitating] = useState(true);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [isPopout, setIsPopout] = useState(true);
+  const [tilt, setTilt] = useState({ x: 10, y: -6 });
   const [selectedSize, setSelectedSize] = useState("42");
   const [quantity, setQuantity] = useState(1);
   const [addedToast, setAddedToast] = useState(false);
@@ -198,7 +198,7 @@ export default function Footwear3DPopout() {
 
   const activeShoe = FOOTWEAR_DATA[selectedShoeIndex];
 
-  // Subtle interactive tilt that never overflows viewport
+  // Dynamic 3D tilt tracking with smooth gyro response
   const handleMouseMove = (e) => {
     if (!stageRef.current) return;
     const rect = stageRef.current.getBoundingClientRect();
@@ -206,13 +206,26 @@ export default function Footwear3DPopout() {
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    const rotateY = ((x - centerX) / centerX) * 12;
-    const rotateX = -((y - centerY) / centerY) * 12;
+    const rotateY = ((x - centerX) / centerX) * 16;
+    const rotateX = -((y - centerY) / centerY) * 16;
     setTilt({ x: rotateX, y: rotateY });
   };
 
   const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
+    setTilt({ x: 10, y: -6 });
+  };
+
+  const handleTouchMove = (e) => {
+    if (!stageRef.current || !e.touches[0]) return;
+    const touch = e.touches[0];
+    const rect = stageRef.current.getBoundingClientRect();
+    const x = touch.clientX - rect.left;
+    const y = touch.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateY = ((x - centerX) / centerX) * 14;
+    const rotateX = -((y - centerY) / centerY) * 14;
+    setTilt({ x: rotateX, y: rotateY });
   };
 
   const handleAddToCart = () => {
@@ -242,8 +255,8 @@ export default function Footwear3DPopout() {
         background: "radial-gradient(ellipse at 50% 20%, #ffffff 0%, #faf8fb 65%, #f4edf5 100%)",
         borderRadius: "24px",
         boxShadow: "0 10px 30px rgba(20, 16, 22, 0.05), inset 0 1px 0 rgba(255,255,255,0.9)",
-        padding: "24px 16px 30px",
-        overflow: "hidden", // STRICT NO OVERFLOW
+        padding: "24px 16px 32px",
+        overflow: "visible", /* REQUIRED FOR 3D POP-OUT BREAKOUT */
         boxSizing: "border-box"
       }}
     >
@@ -262,7 +275,7 @@ export default function Footwear3DPopout() {
             marginBottom: "6px"
           }}
         >
-          <span style={{ color: "#c5a059", fontSize: "0.85rem" }}>✦</span>
+          <span style={{ color: "#c5a059", fontSize: "0.85rem" }}>⚡</span>
           <span
             style={{
               fontSize: "0.72rem",
@@ -272,12 +285,12 @@ export default function Footwear3DPopout() {
               color: "#18181b"
             }}
           >
-            Footwear Atelier • 3D Floating Studio
+            Real 3D Pop-Out • Breaking Out of Bounds
           </span>
-          <span style={{ color: "#c5a059", fontSize: "0.85rem" }}>✦</span>
+          <span style={{ color: "#c5a059", fontSize: "0.85rem" }}>⚡</span>
         </div>
         <p style={{ margin: "2px 0 0", fontSize: "0.8rem", color: "#666666" }}>
-          Tap any shoe to view smooth levitation &amp; dynamic shadow depth
+          Click or hover shoe to engage realistic CSS 3D pop-out leap
         </p>
       </div>
 
@@ -302,7 +315,7 @@ export default function Footwear3DPopout() {
               key={shoe.id}
               onClick={() => {
                 setSelectedShoeIndex(idx);
-                setIsLevitating(true);
+                setIsPopout(true);
               }}
               style={{
                 display: "flex",
@@ -337,9 +350,6 @@ export default function Footwear3DPopout() {
                   alt={shoe.title}
                   style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                   loading="lazy"
-                  onError={(e) => {
-                    e.currentTarget.src = "/assets/logo.jpg";
-                  }}
                 />
                 <div
                   style={{
@@ -379,122 +389,158 @@ export default function Footwear3DPopout() {
         })}
       </div>
 
-      {/* 3D POP-OUT STAGE CONTAINER */}
+      {/* 3D POP-OUT STAGE CONTAINER (OVERFLOW VISIBLE) */}
       <div
         className="popout-stage-container"
         style={{
           display: "grid",
-          gridTemplateColumns: "minmax(260px, 340px) 1fr",
+          gridTemplateColumns: "minmax(280px, 360px) 1fr",
           gap: "28px",
           alignItems: "center",
           width: "100%",
+          overflow: "visible", /* BREAKS OUT OF CONTAINER */
           boxSizing: "border-box"
         }}
       >
-        {/* LEFT COLUMN: THE REFINED 3D FLOATING / LEVITATION CANVAS */}
+        {/* LEFT COLUMN: THE REAL 3D POP-OUT OPTICAL ILLUSION CANVAS */}
         <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
             width: "100%",
+            overflow: "visible",
             boxSizing: "border-box"
           }}
         >
-          {/* THE STAGE WRAPPER */}
+          {/* THE STEREOSCOPIC POP-OUT STAGE */}
           <div
             ref={stageRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            onClick={() => setIsLevitating(!isLevitating)}
+            onTouchMove={handleTouchMove}
+            onClick={() => setIsPopout(!isPopout)}
             style={{
               position: "relative",
               width: "100%",
-              maxWidth: "320px",
+              maxWidth: "340px",
               aspectRatio: "1 / 1",
+              perspective: "1000px", /* EXACT SPECIFICATION */
+              WebkitPerspective: "1000px",
               cursor: "pointer",
               userSelect: "none",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               boxSizing: "border-box",
-              overflow: "hidden",
+              overflow: "visible", /* NO CLIPPING */
               borderRadius: "20px",
               background: "radial-gradient(circle at 50% 50%, #ffffff 0%, #f6f1f7 100%)",
-              border: "1px solid rgba(197, 160, 89, 0.2)",
-              padding: "16px"
+              border: "1px solid rgba(197, 160, 89, 0.25)",
+              boxShadow: "inset 0 4px 16px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04)"
             }}
-            title="Click to toggle floating levitation"
+            title="Click or drag to toggle 3D Pop-Out leap"
           >
-            {/* FLOATING SHADOW BENEATH SHOE */}
+            {/* RECESSED 3D BACKGROUND PEDESTAL PAD */}
             <div
               style={{
                 position: "absolute",
-                bottom: "22px",
-                width: "65%",
-                height: "22px",
-                borderRadius: "50%",
-                background: isLevitating
-                  ? "radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.1) 50%, transparent 75%)"
-                  : "radial-gradient(ellipse at center, rgba(0,0,0,0.18) 0%, transparent 70%)",
-                filter: isLevitating ? "blur(7px)" : "blur(3px)",
-                transform: isLevitating ? "scale(1.22) translateY(6px)" : "scale(1)",
-                transition: "all 0.4s ease",
-                pointerEvents: "none"
+                inset: "16px",
+                borderRadius: "16px",
+                border: "1px dashed rgba(197, 160, 89, 0.35)",
+                pointerEvents: "none",
+                transform: "translateZ(0px)"
               }}
             />
 
-            {/* THE LEVITATING / FLOATING SHOE IMAGE */}
+            {/* DYNAMIC EXPANDING FLOOR SHADOW */}
             <div
               style={{
-                width: "78%",
+                position: "absolute",
+                bottom: "16px",
+                width: "70%",
+                height: "26px",
+                borderRadius: "50%",
+                background: isPopout
+                  ? "radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.18) 50%, transparent 75%)"
+                  : "radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, transparent 70%)",
+                filter: isPopout ? "blur(9px)" : "blur(3px)",
+                transform: isPopout ? "scale(1.35) translateY(12px)" : "scale(1)",
+                transition: "all 0.4s ease",
+                pointerEvents: "none",
+                zIndex: 2
+              }}
+            />
+
+            {/* THE POPPING-OUT SHOE (PHYSICALLY BREAKS OUT OF THE CONTAINER) */}
+            <div
+              style={{
+                width: "82%",
                 aspectRatio: "1 / 1",
                 position: "relative",
+                overflow: "visible",
+                transformStyle: "preserve-3d",
+                WebkitTransformStyle: "preserve-3d",
+                /* STRICT SPECIFICATION: transform: translateZ(80px) scale(1.1) with dynamic tilt */
+                transform: isPopout
+                  ? `perspective(1000px) translateZ(80px) scale(1.1) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`
+                  : "perspective(1000px) translateZ(0px) scale(1) rotateX(0deg) rotateY(0deg)",
+                /* STRICT SPECIFICATION: dynamic drop-shadow separating shoe from background */
+                filter: isPopout
+                  ? "drop-shadow(0 32px 42px rgba(0, 0, 0, 0.7)) drop-shadow(0 14px 20px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 28px rgba(197, 160, 89, 0.35))"
+                  : "drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15))",
                 transition: "transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s ease",
-                transform: isLevitating
-                  ? `scale(1.22) translateY(-14px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`
-                  : `scale(1) translateY(0px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-                filter: isLevitating
-                  ? "drop-shadow(0 20px 28px rgba(0, 0, 0, 0.4)) drop-shadow(0 8px 12px rgba(197, 160, 89, 0.3))"
-                  : "drop-shadow(0 6px 12px rgba(0, 0, 0, 0.15))",
-                zIndex: 10
+                zIndex: 30
               }}
             >
               <img
                 src={activeShoe.image}
-                alt={activeShoe.title}
+                alt={`${activeShoe.title} - 3D Pop-Out`}
                 style={{
                   width: "100%",
                   height: "100%",
-                  objectFit: "cover",
+                  objectFit: "contain",
                   display: "block",
                   borderRadius: "14px"
                 }}
                 loading="eager"
-                onError={(e) => {
-                  e.currentTarget.src = "/assets/logo.jpg";
-                }}
               />
+
+              {isPopout && (
+                <div
+                  style={{
+                    position: "absolute",
+                    top: "-10px",
+                    right: "-10px",
+                    background: "linear-gradient(135deg, #c5a059 0%, #99742e 100%)",
+                    color: "#ffffff",
+                    fontSize: "0.6rem",
+                    fontWeight: "900",
+                    padding: "3px 9px",
+                    borderRadius: "12px",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.3)",
+                    letterSpacing: "0.5px"
+                  }}
+                >
+                  ✦ 3D LEAP
+                </div>
+              )}
             </div>
 
-            {/* Floating Status Pill */}
+            {/* Toggle Status Label */}
             <div
               style={{
                 position: "absolute",
-                top: "12px",
+                bottom: "8px",
                 left: "12px",
-                background: "rgba(255, 255, 255, 0.85)",
-                backdropFilter: "blur(4px)",
-                border: "1px solid rgba(197, 160, 89, 0.3)",
-                color: "#18181b",
                 fontSize: "0.58rem",
                 fontWeight: "800",
-                padding: "2px 8px",
-                borderRadius: "10px",
-                letterSpacing: "0.5px"
+                color: isPopout ? "#c5a059" : "#888",
+                letterSpacing: "0.5px",
+                zIndex: 10
               }}
             >
-              {isLevitating ? "✦ Levitation Active" : "Tap to Float"}
+              {isPopout ? "⚡ 3D Pop-Out Active" : "Tap to Engage Pop-Out"}
             </div>
           </div>
         </div>
@@ -547,7 +593,7 @@ export default function Footwear3DPopout() {
             {activeShoe.title}
           </h2>
 
-          {/* Strict Price Display */}
+          {/* Strict Price Display (Formal Shoes Rs. 5,999, Loafers Rs. 4,999) */}
           <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <span style={{ fontSize: "1.45rem", fontWeight: "900", color: "#c5a059" }}>
               Rs. {activeShoe.price.toLocaleString()}
@@ -599,9 +645,8 @@ export default function Footwear3DPopout() {
             </div>
           </div>
 
-          {/* ACTION BUTTONS */}
+          {/* ACTION BUTTONS (QUANTITY, BUY NOW, WHATSAPP) */}
           <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap", marginTop: "4px" }}>
-            {/* Quantity */}
             <div
               style={{
                 display: "inline-flex",
@@ -629,7 +674,6 @@ export default function Footwear3DPopout() {
               </button>
             </div>
 
-            {/* BUY NOW */}
             <button
               onClick={handleAddToCart}
               style={{
@@ -649,7 +693,6 @@ export default function Footwear3DPopout() {
               {addedToast ? "✓ Added to Bag!" : `✦ BUY NOW • Rs. ${(activeShoe.price * quantity).toLocaleString()}`}
             </button>
 
-            {/* WHATSAPP ORDER */}
             <a
               href={`https://wa.me/923339194200?text=${whatsappMessage}`}
               target="_blank"
