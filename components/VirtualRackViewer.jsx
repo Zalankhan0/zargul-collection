@@ -143,7 +143,7 @@ const COATS_DATA = [
 ];
 
 export default function VirtualRackViewer() {
-  const { addToCart } = useStore();
+  const { addToCart, isVaultUnlocked } = useStore();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [viewAngle, setViewAngle] = useState("front"); // 'front' | 'back'
   const [selectedSize, setSelectedSize] = useState("40");
@@ -183,8 +183,12 @@ export default function VirtualRackViewer() {
     setTimeout(() => setAddedAnimation(false), 2200);
   };
 
+  const vaultLine = isVaultUnlocked
+    ? `\n🎁 VIP VAULT REWARD: +1 FREE 30ml Luxury Perfume Applied (Secret Code: 7860 Verified)`
+    : "";
+
   const whatsappMessage = encodeURIComponent(
-    `Assalam-o-Alaikum Zargul Collection!\nI want to order:\n• Product: ${activeItem.title}\n• Category: ${activeItem.typeLabel}\n• Size: ${selectedSize}\n• Price: Rs. ${activeItem.price.toLocaleString()}\n• Quantity: ${quantity}\nPlease confirm my delivery details.`
+    `Assalam-o-Alaikum Zargul Collection!\nI want to order:\n• Product: ${activeItem.title}\n• Category: ${activeItem.typeLabel}\n• Size: ${selectedSize}\n• Price: Rs. ${activeItem.price.toLocaleString()}\n• Quantity: ${quantity}${vaultLine}\nPlease confirm my delivery details.`
   );
 
   return (
