@@ -2,171 +2,137 @@
 
 import React, { useState } from "react";
 import { useStore } from "@/context/StoreContext";
+import { INITIAL_PRODUCTS } from "@/lib/data";
 
-// 5 BASE SHALWAR KAMEEZ SUIT COLORS
+// 5 BASE SHALWAR KAMEEZ SUIT COLORS WITH REALISTIC FABRIC TEXTURES & STITCH DETAILS
 const SUIT_COLORS = [
-  { id: "white", name: "Pure White", hex: "#FFFFFF", text: "#18181b", border: "#d4d4d8", desc: "Crisp Pure Cotton White" },
-  { id: "boski", name: "Royal Boski / Cream", hex: "#F4E6C3", text: "#18181b", border: "#d6c39a", desc: "Authentic Silk Boski Drape" },
-  { id: "black", name: "Jet Black", hex: "#141414", text: "#ffffff", border: "#3f3f46", desc: "Deep Formal Midnight Black" },
-  { id: "navy", name: "Deep Navy Blue", hex: "#1B263B", text: "#ffffff", border: "#334155", desc: "Royal Marine Midnight Navy" },
-  { id: "charcoal", name: "Charcoal Grey", hex: "#373A40", text: "#ffffff", border: "#52525b", desc: "Executive Slate Charcoal" }
-];
-
-// ZARGUL OVERWEAR ITEMS (PRINCE COATS, WAISTCOATS & SHAWLS)
-const OVERWEAR_ITEMS = [
-  // PRINCE COATS (Rs. 4,000)
   {
-    id: 401,
-    title: "Midnight Black Prince Coat",
-    type: "Prince Coat",
-    price: 4000,
-    image: "/assets/coats/midnight_black_prince_coat_4000.webp",
-    color: "Midnight Black"
+    id: "white",
+    name: "Pure White",
+    hex: "#FFFFFF",
+    desc: "Crisp Pure Cotton White",
+    bgGradient: "linear-gradient(145deg, #ffffff 0%, #f4f4f6 55%, #e5e5e8 100%)",
+    collarGradient: "linear-gradient(180deg, #ffffff 0%, #ededf1 100%)",
+    sleeveGradient: "linear-gradient(135deg, #ffffff 0%, #f1f1f4 50%, #e2e2e6 100%)",
+    stitchColor: "#cbd5e1",
+    buttonColor: "#e2e8f0",
+    textColor: "#18181b",
+    border: "#d4d4d8",
+    shadow: "rgba(0,0,0,0.12)"
   },
   {
-    id: 403,
-    title: "Classic Brown Prince Coat",
-    type: "Prince Coat",
-    price: 4000,
-    image: "/assets/coats/classic_brown_prince_coat_4000.webp",
-    color: "Classic Brown"
+    id: "boski",
+    name: "Royal Boski / Cream",
+    hex: "#F4E6C3",
+    desc: "Authentic Silk Boski Drape",
+    bgGradient: "linear-gradient(145deg, #fffbf0 0%, #f5e7c4 50%, #e7d29f 100%)",
+    collarGradient: "linear-gradient(180deg, #fff8e7 0%, #edd8a8 100%)",
+    sleeveGradient: "linear-gradient(135deg, #fff8e7 0%, #f2dfb6 50%, #e3cb94 100%)",
+    stitchColor: "#c9a962",
+    buttonColor: "#d4af37",
+    textColor: "#18181b",
+    border: "#d6c39a",
+    shadow: "rgba(197, 160, 89, 0.25)"
   },
   {
-    id: 402,
-    title: "Silver Grey Luxury Coat",
-    type: "Prince Coat",
-    price: 4000,
-    image: "/assets/coats/silver_grey_waistcoat_4000.webp",
-    color: "Silver Grey"
+    id: "black",
+    name: "Jet Black",
+    hex: "#141414",
+    desc: "Deep Formal Midnight Black",
+    bgGradient: "linear-gradient(145deg, #27272a 0%, #18181b 50%, #09090b 100%)",
+    collarGradient: "linear-gradient(180deg, #2c2c30 0%, #141416 100%)",
+    sleeveGradient: "linear-gradient(135deg, #2d2d31 0%, #1a1a1d 50%, #101012 100%)",
+    stitchColor: "#3f3f46",
+    buttonColor: "#52525b",
+    textColor: "#ffffff",
+    border: "#3f3f46",
+    shadow: "rgba(0,0,0,0.4)"
   },
   {
-    id: 404,
-    title: "Beige Royal Prince Coat",
-    type: "Prince Coat",
-    price: 4000,
-    image: "/assets/coats/beige_royal_waistcoat_4000.webp",
-    color: "Royal Beige"
-  },
-
-  // CLASSIC WAISTCOATS (Rs. 3,000)
-  {
-    id: 405,
-    title: "Charcoal Black Waistcoat",
-    type: "Classic Waistcoat",
-    price: 3000,
-    image: "/assets/coats/classic_charcoal_black_waistcoat_3000.webp",
-    color: "Charcoal Black"
+    id: "navy",
+    name: "Deep Navy Blue",
+    hex: "#1B263B",
+    desc: "Royal Marine Midnight Navy",
+    bgGradient: "linear-gradient(145deg, #223352 0%, #1b263b 50%, #101826 100%)",
+    collarGradient: "linear-gradient(180deg, #273a5e 0%, #162033 100%)",
+    sleeveGradient: "linear-gradient(135deg, #273b5f 0%, #1c273e 50%, #121927 100%)",
+    stitchColor: "#2e4a78",
+    buttonColor: "#3b82f6",
+    textColor: "#ffffff",
+    border: "#334155",
+    shadow: "rgba(15, 23, 42, 0.4)"
   },
   {
-    id: 406,
-    title: "Pearl Grey Classic Waistcoat",
-    type: "Classic Waistcoat",
-    price: 3000,
-    image: "/assets/coats/pearl_grey_classic_waistcoat_3000.webp",
-    color: "Pearl Grey"
-  },
-  {
-    id: 407,
-    title: "Midnight Blue Waistcoat",
-    type: "Classic Waistcoat",
-    price: 3000,
-    image: "/assets/coats/midnight_blue_classic_waistcoat_3000.webp",
-    color: "Midnight Blue"
-  },
-
-  // SWATI SHAWLS (Rs. 2,500 - 3,000)
-  {
-    id: 301,
-    title: "Slate Grey Swati Shawl",
-    type: "Swati Shawl",
-    price: 3000,
-    image: "/assets/shawls/slate_grey_shawl_3000.jpg",
-    color: "Slate Grey"
-  },
-  {
-    id: 303,
-    title: "Midnight Black Swati Shawl",
-    type: "Swati Shawl",
-    price: 2500,
-    image: "/assets/shawls/midnight_black_shawl_2500.jpg",
-    color: "Midnight Black"
-  },
-  {
-    id: 302,
-    title: "Royal Maroon Swati Shawl",
-    type: "Swati Shawl",
-    price: 2500,
-    image: "/assets/shawls/royal_maroon_shawl_2500.jpg",
-    color: "Royal Maroon"
-  }
-];
-
-// FOOTWEAR OPTIONS
-const FOOTWEAR_ITEMS = [
-  {
-    id: 501,
-    title: "Black Leather Chelsea Boots",
-    type: "Chelsea Boots",
-    price: 5999,
-    image: "/assets/shoes/black_chelsea_boots_5999.webp"
-  },
-  {
-    id: 502,
-    title: "Glossy Black Derby Shoes",
-    type: "Formal Derby",
-    price: 5999,
-    image: "/assets/shoes/glossy_black_derby_shoes_5999.webp"
-  },
-  {
-    id: 503,
-    title: "Royal Oxblood Formal Shoes",
-    type: "Formal Shoes",
-    price: 5999,
-    image: "/assets/shoes/royal_oxblood_formal_shoes_5999.webp"
-  },
-  {
-    id: 701,
-    title: "Camel Tan Suede Loafer",
-    type: "Loro Piana Style",
-    price: 4999,
-    image: "/assets/loafers/camel_tan_suede_loafer_4999.webp"
-  },
-  {
-    id: 702,
-    title: "Chocolate Brown Suede Loafer",
-    type: "Loro Piana Style",
-    price: 4999,
-    image: "/assets/loafers/chocolate_brown_suede_loafer_4999.webp"
-  },
-  {
-    id: 11,
-    title: "Royal Maroon Peshawari Chappal",
-    type: "Peshawari Chappal",
-    price: 4500,
-    image: "/assets/chappal/royal_maroon_glossy_chappal_4500.jpg"
-  },
-  {
-    id: 12,
-    title: "Charcoal Matte Black Chappal",
-    type: "Peshawari Chappal",
-    price: 4500,
-    image: "/assets/chappal/charcoal_matte_black_chappal_4500.jpg"
+    id: "charcoal",
+    name: "Charcoal Grey",
+    hex: "#373A40",
+    desc: "Executive Slate Charcoal",
+    bgGradient: "linear-gradient(145deg, #484c55 0%, #373a40 50%, #25272c 100%)",
+    collarGradient: "linear-gradient(180deg, #4f545e 0%, #2e3136 100%)",
+    sleeveGradient: "linear-gradient(135deg, #515661 0%, #383c44 50%, #292c31 100%)",
+    stitchColor: "#5b606c",
+    buttonColor: "#71717a",
+    textColor: "#ffffff",
+    border: "#52525b",
+    shadow: "rgba(0,0,0,0.3)"
   }
 ];
 
 export default function KhanLookStudio() {
-  const { addToCart, isVaultUnlocked } = useStore();
+  const { products, addToCart, isVaultUnlocked } = useStore();
+
+  // Dynamically load real products from shop inventory
+  const allProducts = Array.isArray(products) && products.length > 0 ? products : INITIAL_PRODUCTS;
+
+  // Real Overwear items (Prince Coats, Waistcoats & Swati Shawls)
+  const realOverwear = allProducts.filter((p) => p.category === "Coats" || p.category === "Shawls");
+
+  // Real Footwear items (Peshawari Chappals & Footwear / Boots / Derby / Loafers)
+  const realFootwear = allProducts.filter(
+    (p) => p.category === "Footwear" || p.category === "Peshawari Chappals"
+  );
+
+  // States
   const [selectedSuit, setSelectedSuit] = useState(SUIT_COLORS[0]); // default White
-  const [selectedOverwear, setSelectedOverwear] = useState(OVERWEAR_ITEMS[0]); // default Midnight Black Prince Coat
-  const [selectedFootwear, setSelectedFootwear] = useState(FOOTWEAR_ITEMS[0]); // default Chelsea Boots
+  const [selectedOverwear, setSelectedOverwear] = useState(realOverwear[0] || INITIAL_PRODUCTS[0]);
+  const [selectedFootwear, setSelectedFootwear] = useState(realFootwear[0] || INITIAL_PRODUCTS[1]);
+  const [overwearFilter, setOverwearFilter] = useState("all"); // 'all' | 'coats' | 'waistcoats' | 'shawls'
+  const [footwearFilter, setFootwearFilter] = useState("all"); // 'all' | 'chappals' | 'shoes' | 'loafers'
   const [addedAnimation, setAddedAnimation] = useState(false);
 
-  const totalLookPrice = selectedOverwear.price + selectedFootwear.price;
+  // Filtered lists for carousels
+  const filteredOverwear = realOverwear.filter((p) => {
+    if (overwearFilter === "coats") return p.category === "Coats" && p.price === 4000;
+    if (overwearFilter === "waistcoats") return p.category === "Coats" && p.price === 3000;
+    if (overwearFilter === "shawls") return p.category === "Shawls";
+    return true;
+  });
+
+  const filteredFootwear = realFootwear.filter((p) => {
+    if (footwearFilter === "chappals") return p.category === "Peshawari Chappals";
+    if (footwearFilter === "shoes") return p.category === "Footwear" && (p.title.includes("Boots") || p.title.includes("Shoes"));
+    if (footwearFilter === "loafers") return p.category === "Footwear" && p.title.includes("Loafer");
+    return true;
+  });
+
+  // Carousel navigation for large footwear showcase
+  const currentFootwearIndex = filteredFootwear.findIndex((f) => f.id === selectedFootwear?.id);
+  const handlePrevFootwear = () => {
+    if (filteredFootwear.length === 0) return;
+    const nextIdx = (currentFootwearIndex - 1 + filteredFootwear.length) % filteredFootwear.length;
+    setSelectedFootwear(filteredFootwear[nextIdx]);
+  };
+  const handleNextFootwear = () => {
+    if (filteredFootwear.length === 0) return;
+    const nextIdx = (currentFootwearIndex + 1) % filteredFootwear.length;
+    setSelectedFootwear(filteredFootwear[nextIdx]);
+  };
+
+  const totalLookPrice = (selectedOverwear?.price || 0) + (selectedFootwear?.price || 0);
 
   const handleBuyThisLook = () => {
-    // Add both Overwear & Footwear to cart
-    addToCart(selectedOverwear, `Suit Match: ${selectedSuit.name}`, 0, 1);
-    addToCart(selectedFootwear, `Suit Match: ${selectedSuit.name}`, 0, 1);
+    if (selectedOverwear) addToCart(selectedOverwear, `Suit Match: ${selectedSuit.name}`, 0, 1);
+    if (selectedFootwear) addToCart(selectedFootwear, `Suit Match: ${selectedSuit.name}`, 0, 1);
     setAddedAnimation(true);
     setTimeout(() => setAddedAnimation(false), 2200);
   };
@@ -176,19 +142,19 @@ export default function KhanLookStudio() {
     : "";
 
   const whatsappMessage = encodeURIComponent(
-    `Assalam-o-Alaikum Zargul Collection!\nI designed my Khan Look on the Live Studio:\n• Base Shalwar Kameez: ${selectedSuit.name} (${selectedSuit.desc})\n• Overwear: ${selectedOverwear.title} (Rs. ${selectedOverwear.price.toLocaleString()})\n• Footwear: ${selectedFootwear.title} (Rs. ${selectedFootwear.price.toLocaleString()})\n• Total Look Price: Rs. ${totalLookPrice.toLocaleString()}${vaultLine}\nPlease confirm dispatch details!`
+    `Assalam-o-Alaikum Zargul Collection!\nI designed my 3-Piece Luxury Khan Look:\n• Base Shalwar Kameez: ${selectedSuit.name} (${selectedSuit.desc})\n• Overwear: ${selectedOverwear?.title} (Rs. ${(selectedOverwear?.price || 0).toLocaleString()})\n• Footwear: ${selectedFootwear?.title} (Rs. ${(selectedFootwear?.price || 0).toLocaleString()})\n• Total Look Price: Rs. ${totalLookPrice.toLocaleString()} (Cash on Delivery)${vaultLine}\nPlease confirm dispatch details!`
   );
 
   return (
     <div
       style={{
         width: "100%",
-        maxWidth: "1100px",
+        maxWidth: "1150px",
         margin: "0 auto",
         background: "linear-gradient(180deg, #ffffff 0%, #faf8fa 100%)",
         borderRadius: "24px",
-        border: "1.5px solid rgba(197, 160, 89, 0.3)",
-        boxShadow: "0 12px 35px rgba(20, 16, 22, 0.05)",
+        border: "1.5px solid rgba(197, 160, 89, 0.35)",
+        boxShadow: "0 14px 40px rgba(20, 16, 22, 0.08)",
         padding: "24px 16px 30px",
         boxSizing: "border-box",
         overflow: "hidden"
@@ -210,7 +176,7 @@ export default function KhanLookStudio() {
         >
           <span style={{ color: "#d4af37", fontSize: "0.85rem" }}>✦</span>
           <span style={{ fontSize: "0.72rem", fontWeight: "800", letterSpacing: "1.5px", color: "#fef08a", textTransform: "uppercase" }}>
-            Khan Look Studio • Live Color Matcher
+            Khan Look Studio • 3-Piece Luxury Lookbook
           </span>
           <span style={{ color: "#d4af37", fontSize: "0.85rem" }}>✦</span>
         </div>
@@ -226,14 +192,14 @@ export default function KhanLookStudio() {
           Apne Shalwar Kameez Ka Rang Select Karein
         </h2>
         <p style={{ margin: 0, fontSize: "0.82rem", color: "#666666" }}>
-          Select your base suit color and swipe through Zargul waistcoats, coats, shawls &amp; footwear for the perfect Khan Look
+          Select your suit color to see real stitched Kurta sleeves &amp; collar paired with your choice of Coat and HD Footwear.
         </p>
       </div>
 
       {/* 1. BASE SUIT COLOR SELECTOR BUTTONS */}
-      <div style={{ marginBottom: "20px" }}>
-        <div style={{ fontSize: "0.74rem", fontWeight: "800", color: "#444", textTransform: "uppercase", letterSpacing: "0.8px", textAlign: "center", marginBottom: "8px" }}>
-          Step 1: Choose Your Base Shalwar Kameez:
+      <div style={{ marginBottom: "22px" }}>
+        <div style={{ fontSize: "0.74rem", fontWeight: "800", color: "#444", textTransform: "uppercase", letterSpacing: "0.8px", textAlign: "center", marginBottom: "10px" }}>
+          Step 1: Choose Base Shalwar Kameez Color:
         </div>
         <div
           style={{
@@ -254,7 +220,7 @@ export default function KhanLookStudio() {
                   display: "flex",
                   alignItems: "center",
                   gap: "7px",
-                  padding: "7px 14px",
+                  padding: "8px 14px",
                   borderRadius: "20px",
                   background: isSelected ? "#18181b" : "#ffffff",
                   color: isSelected ? "#ffffff" : "#27272a",
@@ -268,8 +234,8 @@ export default function KhanLookStudio() {
               >
                 <div
                   style={{
-                    width: "14px",
-                    height: "14px",
+                    width: "15px",
+                    height: "15px",
                     borderRadius: "50%",
                     background: suit.hex,
                     border: `1.5px solid ${suit.border}`,
@@ -283,329 +249,610 @@ export default function KhanLookStudio() {
         </div>
       </div>
 
-      {/* 2. STUDIO STAGE PREVIEW (TORSO + OVERWEAR + FOOTWEAR) */}
+      {/* 2. MAIN 3-PIECE LUXURY LOOKBOOK SHOWCASE (KURTA TORSO + LARGE HD FOOTWEAR CARD) */}
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(290px, 1fr))",
           gap: "24px",
-          alignItems: "center",
-          background: "#ffffff",
-          borderRadius: "20px",
-          padding: "20px 16px",
-          border: "1px solid rgba(0,0,0,0.06)",
-          boxShadow: "inset 0 2px 10px rgba(0,0,0,0.02)",
-          marginBottom: "22px"
+          alignItems: "stretch",
+          marginBottom: "24px"
         }}
       >
-        {/* LEFT COLUMN: LIVE VISUAL TORSO COMPOSITION */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        {/* PANEL A: REALISTIC STITCHED KURTA FABRIC CARD WITH SLEEVES & COLLAR */}
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: "22px",
+            border: "1px solid rgba(0,0,0,0.08)",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.04)",
+            padding: "16px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginBottom: "10px" }}>
+            <span style={{ fontSize: "0.72rem", fontWeight: "800", color: "#888", textTransform: "uppercase", letterSpacing: "1px" }}>
+              Kurta &amp; Overwear Fit
+            </span>
+            <span style={{ fontSize: "0.72rem", fontWeight: "800", color: "#c5a059" }}>
+              {selectedSuit.name}
+            </span>
+          </div>
+
+          {/* REALISTIC TAILORED KURTA CANVAS */}
           <div
             style={{
               position: "relative",
-              width: "240px",
-              height: "290px",
-              borderRadius: "18px",
-              background: "radial-gradient(circle at 50% 30%, #fefcfb 0%, #f4eef5 100%)",
-              border: "1px solid rgba(197, 160, 89, 0.2)",
+              width: "100%",
+              maxWidth: "340px",
+              height: "380px",
+              borderRadius: "20px",
+              background: "radial-gradient(circle at 50% 30%, #ffffff 0%, #f4f4f7 100%)",
+              border: "1.5px solid rgba(197, 160, 89, 0.3)",
+              boxShadow: "inset 0 2px 10px rgba(0,0,0,0.02), 0 8px 20px rgba(0,0,0,0.05)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              overflow: "hidden",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.06)"
+              overflow: "hidden"
             }}
           >
-            {/* BASE SHALWAR KAMEEZ LAYER (SVG VECTOR TORSO) */}
+            {/* 1. VISIBLE MANDARIN / NEHRU KURTA COLLAR (BAN / GALA) */}
             <div
               style={{
                 position: "absolute",
-                inset: 0,
+                top: "12px",
+                left: "50%",
+                transform: "translateX(-50%)",
+                width: "120px",
+                height: "36px",
+                background: selectedSuit.collarGradient,
+                borderRadius: "18px 18px 6px 6px",
+                border: `1.5px solid ${selectedSuit.stitchColor}`,
+                borderBottom: `2.5px dashed ${selectedSuit.stitchColor}`,
+                boxShadow: `0 3px 8px ${selectedSuit.shadow}`,
+                zIndex: 6,
                 display: "flex",
+                flexDirection: "column",
                 alignItems: "center",
-                justifyContent: "center",
-                transition: "background-color 0.4s ease"
+                justifyContent: "flex-end",
+                paddingBottom: "2px",
+                boxSizing: "border-box"
               }}
             >
-              <svg width="200" height="260" viewBox="0 0 200 260" fill="none">
-                {/* Kameez Shoulders & Body */}
-                <path
-                  d="M40 50 L100 32 L160 50 L175 120 L165 250 L35 250 L25 120 Z"
-                  fill={selectedSuit.hex}
-                  stroke={selectedSuit.border}
-                  strokeWidth="1.5"
-                />
-                {/* Traditional Mandarin Ban Collar */}
-                <path
-                  d="M75 35 C75 22, 125 22, 125 35 L120 48 C120 38, 80 38, 80 48 Z"
-                  fill={selectedSuit.hex}
-                  stroke={selectedSuit.border}
-                  strokeWidth="1.5"
-                />
-                {/* Front Button Placket (Patti) */}
-                <path
-                  d="M94 48 L106 48 L106 140 L94 140 Z"
-                  fill="rgba(0,0,0,0.04)"
-                  stroke={selectedSuit.border}
-                  strokeWidth="1"
-                />
-                {/* Buttons on Placket */}
-                <circle cx="100" cy="62" r="2.5" fill={selectedSuit.text === "#ffffff" ? "#888" : "#aaa"} />
-                <circle cx="100" cy="85" r="2.5" fill={selectedSuit.text === "#ffffff" ? "#888" : "#aaa"} />
-                <circle cx="100" cy="108" r="2.5" fill={selectedSuit.text === "#ffffff" ? "#888" : "#aaa"} />
-                <circle cx="100" cy="130" r="2.5" fill={selectedSuit.text === "#ffffff" ? "#888" : "#aaa"} />
-                {/* Chest Pocket Outline */}
-                <path
-                  d="M50 78 L78 78 L78 110 C78 114, 50 114, 50 110 Z"
-                  fill="none"
-                  stroke={selectedSuit.border}
-                  strokeWidth="1"
-                  strokeDasharray="2 2"
-                />
-              </svg>
+              {/* Placket neck slit & buttons */}
+              <div style={{ width: "22px", height: "18px", borderLeft: `1.5px dashed ${selectedSuit.stitchColor}`, borderRight: `1.5px dashed ${selectedSuit.stitchColor}`, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div style={{ width: "5px", height: "5px", borderRadius: "50%", background: selectedSuit.buttonColor, boxShadow: "0 1px 2px rgba(0,0,0,0.2)" }} />
+              </div>
             </div>
 
-            {/* OVERLAID ZARGUL PRODUCT PHOTO (COAT / WAISTCOAT / SHAWL) */}
+            {/* 2. LEFT KURTA SLEEVE (REALISTIC FABRIC WITH CUFF) */}
             <div
               style={{
                 position: "absolute",
-                inset: 0,
+                top: "32px",
+                left: "12px",
+                width: "55px",
+                height: "320px",
+                background: selectedSuit.sleeveGradient,
+                borderRadius: "18px 0 0 16px",
+                transform: "rotate(4deg)",
+                transformOrigin: "top right",
+                boxShadow: `-6px 10px 20px ${selectedSuit.shadow}`,
+                borderLeft: `1.5px dashed ${selectedSuit.stitchColor}`,
+                borderBottom: `2.5px solid ${selectedSuit.stitchColor}`,
+                zIndex: 4,
+                overflow: "hidden"
+              }}
+            >
+              {/* Stitched Cuff (Kaaf) at wrist */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  right: "0",
+                  height: "28px",
+                  background: selectedSuit.collarGradient,
+                  borderTop: `1.5px dashed ${selectedSuit.stitchColor}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: selectedSuit.buttonColor }} />
+              </div>
+            </div>
+
+            {/* 3. RIGHT KURTA SLEEVE (REALISTIC FABRIC WITH CUFF) */}
+            <div
+              style={{
+                position: "absolute",
+                top: "32px",
+                right: "12px",
+                width: "55px",
+                height: "320px",
+                background: selectedSuit.sleeveGradient,
+                borderRadius: "0 18px 16px 0",
+                transform: "rotate(-4deg)",
+                transformOrigin: "top left",
+                boxShadow: `6px 10px 20px ${selectedSuit.shadow}`,
+                borderRight: `1.5px dashed ${selectedSuit.stitchColor}`,
+                borderBottom: `2.5px solid ${selectedSuit.stitchColor}`,
+                zIndex: 4,
+                overflow: "hidden"
+              }}
+            >
+              {/* Stitched Cuff (Kaaf) at wrist */}
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: "0",
+                  left: "0",
+                  right: "0",
+                  height: "28px",
+                  background: selectedSuit.collarGradient,
+                  borderTop: `1.5px dashed ${selectedSuit.stitchColor}`,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}
+              >
+                <div style={{ width: "4px", height: "4px", borderRadius: "50%", background: selectedSuit.buttonColor }} />
+              </div>
+            </div>
+
+            {/* 4. CENTER COAT / WAISTCOAT (CLEANLY CENTERED OVER TORSO) */}
+            <div
+              style={{
+                position: "relative",
+                zIndex: 10,
+                width: "250px",
+                height: "310px",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                zIndex: 10,
-                filter: "drop-shadow(0 12px 18px rgba(0,0,0,0.22))"
+                justifyContent: "center"
               }}
             >
               <img
-                src={selectedOverwear.image}
-                alt={selectedOverwear.title}
+                src={selectedOverwear?.image}
+                alt={selectedOverwear?.title}
                 style={{
-                  width: "82%",
-                  height: "82%",
+                  width: "100%",
+                  height: "100%",
                   objectFit: "contain",
-                  display: "block",
+                  filter: "drop-shadow(0 14px 24px rgba(0,0,0,0.32))",
                   transition: "all 0.3s ease"
                 }}
               />
             </div>
 
-            {/* Suit Label Badge on Preview */}
+            {/* Price Badge on Canvas */}
             <div
               style={{
                 position: "absolute",
-                bottom: "8px",
-                left: "50%",
-                transform: "translateX(-50%)",
-                background: "rgba(24, 24, 27, 0.85)",
-                backdropFilter: "blur(4px)",
-                color: "#ffffff",
-                fontSize: "0.62rem",
-                fontWeight: "750",
-                padding: "3px 10px",
+                bottom: "10px",
+                right: "12px",
+                background: "rgba(24, 24, 27, 0.9)",
+                color: "#fef08a",
+                padding: "4px 10px",
                 borderRadius: "12px",
-                whiteSpace: "nowrap",
-                zIndex: 20
+                fontSize: "0.68rem",
+                fontWeight: "800",
+                zIndex: 12,
+                boxShadow: "0 2px 8px rgba(0,0,0,0.2)"
               }}
             >
-              {selectedSuit.name} + {selectedOverwear.color}
+              Rs. {(selectedOverwear?.price || 0).toLocaleString()}
             </div>
           </div>
 
-          {/* MATCHING FOOTWEAR CHOSEN PREVIEW */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              marginTop: "12px",
-              background: "#faf8fa",
-              padding: "6px 14px",
-              borderRadius: "14px",
-              border: "1px solid rgba(0,0,0,0.06)"
-            }}
-          >
-            <img
-              src={selectedFootwear.image}
-              alt={selectedFootwear.title}
-              style={{ width: "42px", height: "42px", objectFit: "contain", borderRadius: "8px" }}
-            />
-            <div>
-              <div style={{ fontSize: "0.64rem", color: "#888", fontWeight: "700" }}>Matched Footwear:</div>
-              <div style={{ fontSize: "0.75rem", fontWeight: "800", color: "#18181b" }}>
-                {selectedFootwear.title} (Rs. {selectedFootwear.price.toLocaleString()})
-              </div>
+          <div style={{ marginTop: "10px", textAlign: "center" }}>
+            <div style={{ fontSize: "0.82rem", fontWeight: "800", color: "#18181b" }}>
+              {selectedOverwear?.title}
+            </div>
+            <div style={{ fontSize: "0.7rem", color: "#666" }}>
+              Tailored fit draped directly over {selectedSuit.name} Kurta
             </div>
           </div>
         </div>
 
-        {/* RIGHT COLUMN: SELECTORS & SUMMARY */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-          {/* OVERWEAR HORIZONTAL CAROUSEL */}
-          <div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-              <span style={{ fontSize: "0.74rem", fontWeight: "800", color: "#333", textTransform: "uppercase" }}>
-                Step 2: Choose Overwear (Coat / Waistcoat / Shawl):
-              </span>
-              <span style={{ fontSize: "0.72rem", color: "#c5a059", fontWeight: "800" }}>
-                Rs. {selectedOverwear.price.toLocaleString()}
-              </span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                gap: "8px",
-                overflowX: "auto",
-                paddingBottom: "8px",
-                scrollbarWidth: "none",
-                WebkitOverflowScrolling: "touch"
-              }}
-            >
-              {OVERWEAR_ITEMS.map((item) => {
-                const isSelected = item.id === selectedOverwear.id;
-                return (
-                  <div
-                    key={item.id}
-                    onClick={() => setSelectedOverwear(item)}
-                    style={{
-                      flex: "0 0 74px",
-                      cursor: "pointer",
-                      textAlign: "center",
-                      borderRadius: "12px",
-                      border: isSelected ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.1)",
-                      background: isSelected ? "rgba(197, 160, 89, 0.08)" : "#ffffff",
-                      padding: "4px",
-                      transition: "all 0.2s ease"
-                    }}
-                  >
-                    <div style={{ width: "100%", aspectRatio: "1 / 1", overflow: "hidden", borderRadius: "8px" }}>
-                      <img src={item.image} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-                    </div>
-                    <div style={{ fontSize: "0.58rem", fontWeight: "800", color: isSelected ? "#c5a059" : "#333", marginTop: "2px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                      {item.color}
-                    </div>
-                  </div>
-                );
-              })}
+        {/* PANEL B: LARGE HD FOOTWEAR SHOWCASE CARD (AT LEAST 220px x 220px) */}
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: "22px",
+            border: "1px solid rgba(0,0,0,0.08)",
+            boxShadow: "0 8px 24px rgba(0,0,0,0.04)",
+            padding: "16px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center"
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between", width: "100%", marginBottom: "10px", alignItems: "center" }}>
+            <span style={{ fontSize: "0.72rem", fontWeight: "800", color: "#888", textTransform: "uppercase", letterSpacing: "1px" }}>
+              HD Footwear Showcase
+            </span>
+            <div style={{ display: "flex", gap: "4px" }}>
+              {[
+                { key: "all", label: "All" },
+                { key: "chappals", label: "Chappals" },
+                { key: "shoes", label: "Boots" },
+                { key: "loafers", label: "Loafers" }
+              ].map((tb) => (
+                <button
+                  key={tb.key}
+                  onClick={() => setFootwearFilter(tb.key)}
+                  style={{
+                    padding: "3px 8px",
+                    borderRadius: "10px",
+                    fontSize: "0.64rem",
+                    fontWeight: "750",
+                    background: footwearFilter === tb.key ? "#18181b" : "#f4f4f5",
+                    color: footwearFilter === tb.key ? "#fef08a" : "#555",
+                    border: "none",
+                    cursor: "pointer"
+                  }}
+                >
+                  {tb.label}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* FOOTWEAR HORIZONTAL CAROUSEL */}
-          <div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-              <span style={{ fontSize: "0.74rem", fontWeight: "800", color: "#333", textTransform: "uppercase" }}>
-                Step 3: Choose Footwear (Shoes / Loafers / Chappal):
-              </span>
-              <span style={{ fontSize: "0.72rem", color: "#c5a059", fontWeight: "800" }}>
-                Rs. {selectedFootwear.price.toLocaleString()}
-              </span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                gap: "8px",
-                overflowX: "auto",
-                paddingBottom: "8px",
-                scrollbarWidth: "none",
-                WebkitOverflowScrolling: "touch"
-              }}
-            >
-              {FOOTWEAR_ITEMS.map((shoe) => {
-                const isSelected = shoe.id === selectedFootwear.id;
-                return (
-                  <div
-                    key={shoe.id}
-                    onClick={() => setSelectedFootwear(shoe)}
-                    style={{
-                      flex: "0 0 74px",
-                      cursor: "pointer",
-                      textAlign: "center",
-                      borderRadius: "12px",
-                      border: isSelected ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.1)",
-                      background: isSelected ? "rgba(197, 160, 89, 0.08)" : "#ffffff",
-                      padding: "4px",
-                      transition: "all 0.2s ease"
-                    }}
-                  >
-                    <div style={{ width: "100%", aspectRatio: "1 / 1", overflow: "hidden", borderRadius: "8px" }}>
-                      <img src={shoe.image} alt={shoe.title} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
-                    </div>
-                    <div style={{ fontSize: "0.58rem", fontWeight: "800", color: isSelected ? "#c5a059" : "#333", marginTop: "2px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                      Rs. {shoe.price.toLocaleString()}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* TOTAL & BUY BUTTONS */}
+          {/* LARGE 1:1 HD FOOTWEAR DISPLAY CARD (260px x 260px minimum) */}
           <div
             style={{
-              paddingTop: "10px",
-              borderTop: "1px solid rgba(0,0,0,0.08)",
+              position: "relative",
+              width: "100%",
+              maxWidth: "340px",
+              height: "280px",
+              borderRadius: "20px",
+              background: "radial-gradient(circle at 50% 50%, #ffffff 0%, #f4f4f6 100%)",
+              border: "1.5px solid rgba(197, 160, 89, 0.35)",
+              boxShadow: "0 10px 25px rgba(0,0,0,0.06)",
               display: "flex",
-              flexDirection: "column",
-              gap: "10px"
+              alignItems: "center",
+              justifyContent: "center",
+              overflow: "hidden"
             }}
           >
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-              <div>
-                <span style={{ fontSize: "0.75rem", color: "#666" }}>Complete Khan Look Total:</span>
-                <div style={{ fontSize: "1.35rem", fontWeight: "900", color: "#c5a059" }}>
-                  Rs. {totalLookPrice.toLocaleString()}
-                </div>
-              </div>
-              {isVaultUnlocked && (
-                <div style={{ fontSize: "0.68rem", fontWeight: "800", color: "#854d0e", background: "#fef08a", padding: "3px 8px", borderRadius: "8px" }}>
-                  🎁 +1 FREE 30ml Perfume Included
-                </div>
-              )}
+            {/* PREV BUTTON */}
+            <button
+              onClick={handlePrevFootwear}
+              aria-label="Previous footwear"
+              style={{
+                position: "absolute",
+                left: "8px",
+                width: "34px",
+                height: "34px",
+                borderRadius: "50%",
+                background: "rgba(24, 24, 27, 0.8)",
+                color: "#ffffff",
+                border: "1px solid rgba(255,255,255,0.2)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                zIndex: 10,
+                fontSize: "1rem",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.25)"
+              }}
+            >
+              ‹
+            </button>
+
+            {/* LARGE HD SHOE IMAGE */}
+            <div style={{ width: "82%", height: "82%", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <img
+                src={selectedFootwear?.image}
+                alt={selectedFootwear?.title}
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "contain",
+                  filter: "drop-shadow(0 15px 22px rgba(0,0,0,0.24))",
+                  transition: "transform 0.25s ease"
+                }}
+              />
             </div>
 
-            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+            {/* NEXT BUTTON */}
+            <button
+              onClick={handleNextFootwear}
+              aria-label="Next footwear"
+              style={{
+                position: "absolute",
+                right: "8px",
+                width: "34px",
+                height: "34px",
+                borderRadius: "50%",
+                background: "rgba(24, 24, 27, 0.8)",
+                color: "#ffffff",
+                border: "1px solid rgba(255,255,255,0.2)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                zIndex: 10,
+                fontSize: "1rem",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.25)"
+              }}
+            >
+              ›
+            </button>
+
+            {/* Top Category Tag */}
+            <div
+              style={{
+                position: "absolute",
+                top: "10px",
+                left: "12px",
+                background: "rgba(197, 160, 89, 0.2)",
+                color: "#8a6d2b",
+                border: "1px solid rgba(197, 160, 89, 0.4)",
+                padding: "3px 8px",
+                borderRadius: "8px",
+                fontSize: "0.65rem",
+                fontWeight: "800",
+                textTransform: "uppercase"
+              }}
+            >
+              {selectedFootwear?.category}
+            </div>
+
+            {/* Price Tag */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: "10px",
+                right: "12px",
+                background: "linear-gradient(135deg, #18181b 0%, #27272a 100%)",
+                color: "#fef08a",
+                padding: "4px 10px",
+                borderRadius: "12px",
+                fontSize: "0.72rem",
+                fontWeight: "800",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.2)"
+              }}
+            >
+              Rs. {(selectedFootwear?.price || 0).toLocaleString()}
+            </div>
+          </div>
+
+          {/* Footwear Title */}
+          <div style={{ marginTop: "10px", textAlign: "center", width: "100%" }}>
+            <div style={{ fontSize: "0.82rem", fontWeight: "800", color: "#18181b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+              {selectedFootwear?.title}
+            </div>
+            <div style={{ fontSize: "0.7rem", color: "#666" }}>
+              Tap arrows or choose from below for HD preview
+            </div>
+          </div>
+
+          {/* QUICK THUMBNAIL STRIP */}
+          <div
+            style={{
+              display: "flex",
+              gap: "8px",
+              overflowX: "auto",
+              width: "100%",
+              marginTop: "10px",
+              paddingBottom: "4px",
+              scrollbarWidth: "none"
+            }}
+          >
+            {filteredFootwear.map((item) => {
+              const isSelected = item.id === selectedFootwear?.id;
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => setSelectedFootwear(item)}
+                  style={{
+                    flex: "0 0 54px",
+                    height: "54px",
+                    borderRadius: "12px",
+                    border: isSelected ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.1)",
+                    background: isSelected ? "rgba(197, 160, 89, 0.15)" : "#ffffff",
+                    padding: "3px",
+                    cursor: "pointer",
+                    boxSizing: "border-box"
+                  }}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* 3. STEP 2: SELECT OVERWEAR CAROUSEL */}
+      <div style={{ marginBottom: "22px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px", marginBottom: "10px" }}>
+          <div style={{ fontSize: "0.74rem", fontWeight: "800", color: "#444", textTransform: "uppercase", letterSpacing: "0.8px" }}>
+            Step 2: Choose Overwear (Prince Coats, Waistcoats &amp; Shawls):
+          </div>
+          <div style={{ display: "flex", gap: "4px" }}>
+            {[
+              { key: "all", label: "All" },
+              { key: "coats", label: "Prince Coats (Rs. 4,000)" },
+              { key: "waistcoats", label: "Waistcoats (Rs. 3,000)" },
+              { key: "shawls", label: "Swati Shawls" }
+            ].map((tb) => (
               <button
-                onClick={handleBuyThisLook}
+                key={tb.key}
+                onClick={() => setOverwearFilter(tb.key)}
                 style={{
-                  flex: "1 1 140px",
-                  padding: "12px 16px",
-                  borderRadius: "14px",
-                  background: addedAnimation ? "#10b981" : "linear-gradient(135deg, #18181b 0%, #27272a 100%)",
-                  color: "#ffffff",
+                  padding: "3px 8px",
+                  borderRadius: "10px",
+                  fontSize: "0.64rem",
+                  fontWeight: "750",
+                  background: overwearFilter === tb.key ? "#18181b" : "#f4f4f5",
+                  color: overwearFilter === tb.key ? "#fef08a" : "#555",
                   border: "none",
-                  fontSize: "0.82rem",
-                  fontWeight: "800",
+                  cursor: "pointer"
+                }}
+              >
+                {tb.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            overflowX: "auto",
+            paddingBottom: "8px",
+            scrollbarWidth: "none",
+            WebkitOverflowScrolling: "touch"
+          }}
+        >
+          {filteredOverwear.map((item) => {
+            const isSelected = item.id === selectedOverwear?.id;
+            return (
+              <div
+                key={item.id}
+                onClick={() => setSelectedOverwear(item)}
+                style={{
+                  flex: "0 0 100px",
                   cursor: "pointer",
-                  boxShadow: "0 4px 14px rgba(0,0,0,0.18)",
+                  textAlign: "center",
+                  borderRadius: "14px",
+                  border: isSelected ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.08)",
+                  background: isSelected ? "rgba(197, 160, 89, 0.12)" : "#ffffff",
+                  padding: "6px",
+                  boxShadow: isSelected ? "0 4px 14px rgba(197, 160, 89, 0.3)" : "none",
                   transition: "all 0.2s ease"
                 }}
               >
-                {addedAnimation ? "✓ Added Both to Bag!" : "✦ BUY THIS LOOK"}
-              </button>
+                <div style={{ width: "100%", aspectRatio: "1 / 1", overflow: "hidden", borderRadius: "10px", background: "#f8f8f8" }}>
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    style={{ width: "100%", height: "100%", objectFit: "contain" }}
+                  />
+                </div>
+                <div style={{ fontSize: "0.62rem", fontWeight: "750", color: "#18181b", marginTop: "4px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  {item.title}
+                </div>
+                <div style={{ fontSize: "0.65rem", fontWeight: "800", color: isSelected ? "#8a6d2b" : "#c5a059" }}>
+                  Rs. {item.price.toLocaleString()}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
 
-              <a
-                href={`https://wa.me/923339194200?text=${whatsappMessage}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: "6px",
-                  padding: "12px 16px",
-                  borderRadius: "14px",
-                  background: "#25D366",
-                  color: "#ffffff",
-                  fontSize: "0.82rem",
-                  fontWeight: "800",
-                  textDecoration: "none",
-                  boxShadow: "0 4px 14px rgba(37, 211, 102, 0.3)"
-                }}
-              >
-                <span>💬</span>
-                <span>Order via WhatsApp</span>
-              </a>
+      {/* 4. LOOK SUMMARY & CTA BUTTONS */}
+      <div
+        style={{
+          background: "linear-gradient(135deg, #18181b 0%, #27272a 100%)",
+          borderRadius: "20px",
+          border: "1.5px solid rgba(212, 175, 55, 0.5)",
+          padding: "16px 20px",
+          color: "#ffffff",
+          boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
+        }}
+      >
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px", marginBottom: "14px" }}>
+          <div>
+            <div style={{ fontSize: "0.68rem", color: "#a1a1aa", textTransform: "uppercase", letterSpacing: "1px" }}>
+              Your Custom 3-Piece Lookbook Selection:
+            </div>
+            <div style={{ fontSize: "0.85rem", fontWeight: "750", color: "#fef08a", marginTop: "2px" }}>
+              {selectedSuit.name} Kurta + {selectedOverwear?.title} + {selectedFootwear?.title}
             </div>
           </div>
+
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontSize: "0.68rem", color: "#a1a1aa", textTransform: "uppercase", letterSpacing: "1px" }}>
+              Total Look Price:
+            </div>
+            <div style={{ fontSize: "1.35rem", fontWeight: "900", color: "#d4af37" }}>
+              Rs. {totalLookPrice.toLocaleString()}
+            </div>
+          </div>
+        </div>
+
+        {/* VAULT BONUS BADGE */}
+        {isVaultUnlocked && (
+          <div
+            style={{
+              padding: "7px 12px",
+              background: "rgba(212, 175, 55, 0.2)",
+              border: "1px solid rgba(212, 175, 55, 0.6)",
+              borderRadius: "10px",
+              fontSize: "0.72rem",
+              color: "#fef08a",
+              marginBottom: "14px",
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              fontWeight: "750"
+            }}
+          >
+            <span>🎁</span>
+            <span>SHAHI TIJORI PERK ACTIVE: +1 FREE 30ml Luxury Perfume will be dispatched with this look!</span>
+          </div>
+        )}
+
+        {/* BUTTONS */}
+        <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+          <button
+            onClick={handleBuyThisLook}
+            style={{
+              flex: "1 1 200px",
+              background: addedAnimation
+                ? "linear-gradient(135deg, #10b981 0%, #059669 100%)"
+                : "linear-gradient(135deg, #ffffff 0%, #e4e4e7 100%)",
+              color: addedAnimation ? "#ffffff" : "#18181b",
+              border: "none",
+              borderRadius: "14px",
+              padding: "13px 16px",
+              fontSize: "0.85rem",
+              fontWeight: "800",
+              cursor: "pointer",
+              boxShadow: "0 4px 15px rgba(0,0,0,0.3)",
+              transition: "all 0.2s ease"
+            }}
+          >
+            {addedAnimation ? "✓ Look Added to Bag!" : "BUY THIS LOOK (Add Both to Bag)"}
+          </button>
+
+          <a
+            href={`https://wa.me/923336712345?text=${whatsappMessage}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              flex: "1 1 200px",
+              background: "linear-gradient(135deg, #25D366 0%, #128C7E 100%)",
+              color: "#ffffff",
+              borderRadius: "14px",
+              padding: "13px 16px",
+              fontSize: "0.85rem",
+              fontWeight: "800",
+              textDecoration: "none",
+              textAlign: "center",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+              boxShadow: "0 4px 15px rgba(37, 211, 102, 0.35)",
+              cursor: "pointer"
+            }}
+          >
+            <span>💬 Order via WhatsApp (COD)</span>
+          </a>
         </div>
       </div>
     </div>
