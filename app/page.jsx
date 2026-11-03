@@ -6,6 +6,7 @@ import { useStore } from "@/context/StoreContext";
 import { INITIAL_PRODUCTS } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
+import VirtualRackViewer from "@/components/VirtualRackViewer";
 
 export default function HomePage() {
   const { products, storeConfig } = useStore();
@@ -192,6 +193,9 @@ export default function HomePage() {
           </Link>
         </div>
       </section>
+
+      {/* 3D VIRTUAL ATELIER: PRINCE COATS & CLASSIC WAISTCOATS HANGING RACK */}
+      <VirtualRackViewer />
 
       {/* COMPLETE LUXURY SHOWCASE GRID (ALL PRODUCTS) */}
       <section className="products-section" style={{ padding: "6px 4% 24px" }}>
