@@ -1735,6 +1735,10 @@ img {
     grid-template-columns: 1fr !important;
     gap: 22px !important;
   }
+  .popout-stage-container {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
 }
 
 
