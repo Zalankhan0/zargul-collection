@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { useStore } from "@/context/StoreContext";
 
-// ALL COATS & WAISTCOATS FOR THE ATELIER HANGING RACK
 const COATS_DATA = [
   // PRINCE COATS (Strictly Rs. 4,000)
   {
@@ -18,16 +17,8 @@ const COATS_DATA = [
     colorHex: "#141416",
     tagColor: "#1a1a1a",
     tagTextColor: "#f4f4f5",
-    swatchName: "Jet Black",
     image: "/assets/coats/midnight_black_prince_coat_4000.webp",
-    backTheme: {
-      base: "#161618",
-      accent: "#222226",
-      lining: "#0f0f11",
-      stitching: "rgba(197, 160, 89, 0.4)",
-      buckle: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
-      textColor: "#e4e4e7"
-    },
+    backImage: "/assets/coats/midnight_black_prince_coat_4000_back.jpg",
     tag: "ROYAL EDITION",
     rating: 5.0,
     reviews: 88,
@@ -45,16 +36,8 @@ const COATS_DATA = [
     colorHex: "#4a2e1e",
     tagColor: "#4a2e1e",
     tagTextColor: "#fde68a",
-    swatchName: "Espresso Brown",
     image: "/assets/coats/classic_brown_prince_coat_4000.webp",
-    backTheme: {
-      base: "#3b2214",
-      accent: "#4d2e1b",
-      lining: "#29160c",
-      stitching: "rgba(212, 175, 55, 0.45)",
-      buckle: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
-      textColor: "#fde68a"
-    },
+    backImage: "/assets/coats/classic_brown_prince_coat_4000_back.jpg",
     tag: "BESTSELLER",
     rating: 5.0,
     reviews: 76,
@@ -72,16 +55,8 @@ const COATS_DATA = [
     colorHex: "#8e99a8",
     tagColor: "#8e99a8",
     tagTextColor: "#ffffff",
-    swatchName: "Steel Grey",
     image: "/assets/coats/silver_grey_waistcoat_4000.webp",
-    backTheme: {
-      base: "#778393",
-      accent: "#8b97a7",
-      lining: "#545e6b",
-      stitching: "rgba(255, 255, 255, 0.5)",
-      buckle: "linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%)",
-      textColor: "#ffffff"
-    },
+    backImage: "/assets/coats/silver_grey_waistcoat_4000_back.jpg",
     tag: "POPULAR",
     rating: 4.9,
     reviews: 104,
@@ -99,16 +74,8 @@ const COATS_DATA = [
     colorHex: "#c9ae8c",
     tagColor: "#c9ae8c",
     tagTextColor: "#27272a",
-    swatchName: "Royal Beige",
     image: "/assets/coats/beige_royal_waistcoat_4000.webp",
-    backTheme: {
-      base: "#b39875",
-      accent: "#c4aa87",
-      lining: "#846d50",
-      stitching: "rgba(255, 255, 255, 0.55)",
-      buckle: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
-      textColor: "#ffffff"
-    },
+    backImage: "/assets/coats/beige_royal_waistcoat_4000_back.jpg",
     tag: "NEW ARRIVAL",
     rating: 4.9,
     reviews: 92,
@@ -128,16 +95,8 @@ const COATS_DATA = [
     colorHex: "#1c1c1f",
     tagColor: "#27272a",
     tagTextColor: "#f4f4f5",
-    swatchName: "Charcoal Jet",
     image: "/assets/coats/classic_charcoal_black_waistcoat_3000.webp",
-    backTheme: {
-      base: "#1a1a1c",
-      accent: "#26262a",
-      lining: "#101012",
-      stitching: "rgba(197, 160, 89, 0.4)",
-      buckle: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
-      textColor: "#e4e4e7"
-    },
+    backImage: "/assets/coats/classic_charcoal_black_waistcoat_3000_back.jpg",
     tag: "POPULAR",
     rating: 5.0,
     reviews: 68,
@@ -155,16 +114,8 @@ const COATS_DATA = [
     colorHex: "#b8c0cc",
     tagColor: "#cbd5e1",
     tagTextColor: "#1e293b",
-    swatchName: "Pearl Grey",
     image: "/assets/coats/pearl_grey_classic_waistcoat_3000.webp",
-    backTheme: {
-      base: "#9faab9",
-      accent: "#b5c0cf",
-      lining: "#737e8c",
-      stitching: "rgba(255, 255, 255, 0.55)",
-      buckle: "linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%)",
-      textColor: "#ffffff"
-    },
+    backImage: "/assets/coats/pearl_grey_classic_waistcoat_3000_back.jpg",
     tag: "BESTSELLER",
     rating: 4.9,
     reviews: 84,
@@ -182,16 +133,8 @@ const COATS_DATA = [
     colorHex: "#1a2538",
     tagColor: "#1e293b",
     tagTextColor: "#93c5fd",
-    swatchName: "Royal Navy",
     image: "/assets/coats/midnight_blue_classic_waistcoat_3000.webp",
-    backTheme: {
-      base: "#162030",
-      accent: "#22314a",
-      lining: "#101622",
-      stitching: "rgba(212, 175, 55, 0.45)",
-      buckle: "linear-gradient(135deg, #d4af37 0%, #aa7c11 100%)",
-      textColor: "#93c5fd"
-    },
+    backImage: "/assets/coats/midnight_blue_classic_waistcoat_3000_back.jpg",
     tag: "ROYAL NAVY",
     rating: 5.0,
     reviews: 95,
@@ -246,67 +189,33 @@ export default function VirtualRackViewer() {
 
   return (
     <div
-      className="virtual-rack-container"
       style={{
         position: "relative",
         width: "100%",
         maxWidth: "1050px",
         margin: "0 auto 36px",
-        background: "radial-gradient(ellipse at 50% 25%, #ffffff 0%, #faf8fa 65%, #f4eff5 100%)",
-        borderRadius: "24px",
-        boxShadow: "0 10px 30px rgba(20, 16, 22, 0.05), inset 0 1px 0 rgba(255,255,255,0.9)",
-        padding: "24px 14px 30px",
-        overflow: "hidden", // STRICT NO OVERFLOW
+        /* VIDEO ACCURATE: ZERO BOXES, ZERO CARDS, PURE CLEAN TRANSPARENT CANVAS */
+        background: "transparent",
+        boxShadow: "none",
+        border: "none",
+        padding: "16px 8px 30px",
         boxSizing: "border-box"
       }}
     >
-      {/* ATELIER TOP HEADER */}
-      <div style={{ textAlign: "center", marginBottom: "16px" }}>
-        <div
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "8px",
-            background: "#ffffff",
-            padding: "5px 16px",
-            borderRadius: "30px",
-            boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
-            border: "1px solid rgba(197, 160, 89, 0.25)",
-            marginBottom: "6px"
-          }}
-        >
-          <span style={{ color: "#c5a059", fontSize: "0.85rem" }}>✦</span>
-          <span
-            style={{
-              fontSize: "0.72rem",
-              fontWeight: "750",
-              letterSpacing: "1.2px",
-              textTransform: "uppercase",
-              color: "#333333"
-            }}
-          >
-            3D Virtual Atelier • Interactive Hanging Rack
-          </span>
-          <span style={{ color: "#c5a059", fontSize: "0.85rem" }}>✦</span>
-        </div>
-        <p style={{ margin: "2px 0 0", fontSize: "0.8rem", color: "#666666" }}>
-          Explore fabrics, color tags &amp; 3D rotating front/back views on the rail
-        </p>
-      </div>
-
-      {/* METALLIC HANGING ROD / RAIL */}
+      {/* HORIZONTAL SLEEK METALLIC BAR (EXACT REFERENCE VIDEO) */}
       <div
         style={{
           position: "relative",
-          width: "90%",
-          maxWidth: "700px",
-          margin: "0 auto 12px",
+          width: "92%",
+          maxWidth: "760px",
+          margin: "0 auto 8px",
           height: "12px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center"
         }}
       >
+        {/* Left Metal Mount */}
         <div
           style={{
             position: "absolute",
@@ -315,19 +224,22 @@ export default function VirtualRackViewer() {
             transform: "translateY(-50%)",
             width: "12px",
             height: "22px",
-            background: "linear-gradient(180deg, #999 0%, #bbb 50%, #666 100%)",
-            borderRadius: "4px"
+            background: "linear-gradient(180deg, #888 0%, #aaa 50%, #555 100%)",
+            borderRadius: "3px",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
           }}
         />
+        {/* Sleek Horizontal Steel Rail */}
         <div
           style={{
             width: "100%",
             height: "6px",
-            background: "linear-gradient(180deg, #dcdcdc 0%, #ffffff 35%, #b5b5b5 70%, #7e7e7e 100%)",
+            background: "linear-gradient(180deg, #d8d8d8 0%, #ffffff 40%, #b0b0b0 75%, #7a7a7a 100%)",
             borderRadius: "3px",
             boxShadow: "0 4px 10px rgba(0,0,0,0.15)"
           }}
         />
+        {/* Right Metal Mount */}
         <div
           style={{
             position: "absolute",
@@ -336,26 +248,27 @@ export default function VirtualRackViewer() {
             transform: "translateY(-50%)",
             width: "12px",
             height: "22px",
-            background: "linear-gradient(180deg, #999 0%, #bbb 50%, #666 100%)",
-            borderRadius: "4px"
+            background: "linear-gradient(180deg, #888 0%, #aaa 50%, #555 100%)",
+            borderRadius: "3px",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.2)"
           }}
         />
       </div>
 
-      {/* MODE TOGGLE */}
-      <div style={{ display: "flex", justifyContent: "center", marginBottom: "14px" }}>
+      {/* RAIL / STAGE TOGGLE BUTTON */}
+      <div style={{ display: "flex", justifyContent: "center", marginBottom: "12px" }}>
         <button
           onClick={() => setIsRackOverview(!isRackOverview)}
           style={{
-            background: isRackOverview ? "#18181b" : "#ffffff",
+            background: isRackOverview ? "#18181b" : "rgba(255,255,255,0.9)",
             color: isRackOverview ? "#ffffff" : "#444444",
-            border: "1px solid rgba(0,0,0,0.1)",
+            border: "1px solid rgba(0,0,0,0.12)",
             padding: "5px 14px",
             borderRadius: "20px",
             fontSize: "0.72rem",
-            fontWeight: "700",
+            fontWeight: "750",
             cursor: "pointer",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.04)"
+            boxShadow: "0 2px 6px rgba(0,0,0,0.05)"
           }}
         >
           {isRackOverview ? "Focus Selected Garment ✕" : "⇄ Browse Full Rail (All 7 Clothes)"}
@@ -363,14 +276,14 @@ export default function VirtualRackViewer() {
       </div>
 
       {isRackOverview ? (
-        /* HORIZONTAL RACK OVERVIEW */
+        /* HORIZONTAL RACK OVERVIEW: ALL CLOTHES HANGING ON THE RAIL */
         <div
           style={{
             display: "flex",
             alignItems: "flex-start",
-            gap: "10px",
+            gap: "12px",
             overflowX: "auto",
-            padding: "12px 6px 20px",
+            padding: "10px 4px 20px",
             scrollbarWidth: "none",
             WebkitOverflowScrolling: "touch",
             width: "100%",
@@ -388,7 +301,7 @@ export default function VirtualRackViewer() {
                   flexDirection: "column",
                   alignItems: "center",
                   cursor: "pointer",
-                  flex: "0 0 90px",
+                  flex: "0 0 88px",
                   transition: "transform 0.2s ease",
                   transform: isCurrent ? "translateY(-4px) scale(1.04)" : "translateY(0) scale(1)",
                   userSelect: "none"
@@ -397,7 +310,7 @@ export default function VirtualRackViewer() {
                 {/* Hanger */}
                 <div style={{ position: "relative", width: "40px", height: "24px", marginBottom: "2px" }}>
                   <svg width="40" height="24" viewBox="0 0 48 30" fill="none">
-                    <path d="M24 2 C28 2, 30 6, 28 10 C26 13, 24 14, 24 16" stroke="#888888" strokeWidth="2.4" strokeLinecap="round" />
+                    <path d="M24 2 C28 2, 30 6, 28 10 C26 13, 24 14, 24 16" stroke="#888" strokeWidth="2.4" strokeLinecap="round" />
                     <path d="M4 27 L24 16 L44 27 Z" fill="#ba8d5d" stroke="#8c6239" strokeWidth="1.2" />
                   </svg>
                 </div>
@@ -405,23 +318,23 @@ export default function VirtualRackViewer() {
                 <div
                   style={{
                     width: "82px",
-                    aspectRatio: "1 / 1.15",
-                    borderRadius: "10px",
+                    aspectRatio: "1 / 1.2",
+                    borderRadius: "12px",
                     overflow: "hidden",
                     border: isCurrent ? "2px solid #c5a059" : "1px solid rgba(0,0,0,0.08)",
                     boxShadow: isCurrent ? "0 8px 18px rgba(197, 160, 89, 0.4)" : "0 3px 8px rgba(0,0,0,0.06)",
-                    background: "#ffffff",
+                    background: "transparent",
                     position: "relative"
                   }}
                 >
-                  <img src={item.image} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} loading="lazy" />
+                  <img src={item.image} alt={item.title} style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }} loading="lazy" />
                   <div
                     style={{
                       position: "absolute",
                       bottom: "2px",
                       left: "50%",
                       transform: "translateX(-50%)",
-                      background: isCurrent ? "#c5a059" : "rgba(0,0,0,0.65)",
+                      background: isCurrent ? "#c5a059" : "rgba(0,0,0,0.7)",
                       color: "#ffffff",
                       fontSize: "0.52rem",
                       fontWeight: "800",
@@ -441,25 +354,25 @@ export default function VirtualRackViewer() {
           })}
         </div>
       ) : (
-        /* CENTER STAGE: EXACT REPLICA OF REFERENCE VIDEO */
+        /* CENTER STAGE: EXACT REPLICA OF THE REFERENCE VIDEO */
         <div style={{ position: "relative", width: "100%", display: "flex", flexDirection: "column", alignItems: "center", boxSizing: "border-box" }}>
           
-          {/* FLOATING PREV / NEXT ARROWS */}
+          {/* FLOATING PREV / NEXT ARROWS (LIKE VIDEO 00:12) */}
           <button
             onClick={handlePrev}
             aria-label="Previous garment"
             style={{
               position: "absolute",
-              left: "0px",
+              left: "4px",
               top: "35%",
               transform: "translateY(-50%)",
               width: "38px",
               height: "38px",
               borderRadius: "50%",
               background: "#ffffff",
-              border: "1px solid rgba(0,0,0,0.1)",
+              border: "1px solid rgba(0,0,0,0.12)",
               color: "#18181b",
-              fontSize: "1.3rem",
+              fontSize: "1.4rem",
               cursor: "pointer",
               boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
               display: "flex",
@@ -476,16 +389,16 @@ export default function VirtualRackViewer() {
             aria-label="Next garment"
             style={{
               position: "absolute",
-              right: "0px",
+              right: "4px",
               top: "35%",
               transform: "translateY(-50%)",
               width: "38px",
               height: "38px",
               borderRadius: "50%",
               background: "#ffffff",
-              border: "1px solid rgba(0,0,0,0.1)",
+              border: "1px solid rgba(0,0,0,0.12)",
               color: "#18181b",
-              fontSize: "1.3rem",
+              fontSize: "1.4rem",
               cursor: "pointer",
               boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
               display: "flex",
@@ -497,28 +410,29 @@ export default function VirtualRackViewer() {
             ›
           </button>
 
-          {/* MAIN STAGE: WOODEN HANGER + 3D FLIP GARMENT */}
+          {/* MAIN STAGE: WOODEN HANGER + HANGING GARMENT (PURE TRANSPARENT CANVAS) */}
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative", width: "100%", maxWidth: "340px", boxSizing: "border-box" }}>
             
-            {/* Wooden Hanger */}
-            <div style={{ position: "relative", width: "70px", height: "36px", zIndex: 12 }}>
-              <svg width="70" height="36" viewBox="0 0 80 42" fill="none">
-                <path d="M40 2 C46 2, 50 8, 47 14 C44 19, 40 20, 40 24" stroke="#94a3b8" strokeWidth="3" strokeLinecap="round" />
+            {/* Wooden Hanger Hooking on Steel Rail */}
+            <div style={{ position: "relative", width: "74px", height: "38px", zIndex: 12 }}>
+              <svg width="74" height="38" viewBox="0 0 80 42" fill="none">
+                <path d="M40 2 C46 2, 50 8, 47 14 C44 19, 40 20, 40 24" stroke="#888" strokeWidth="3" strokeLinecap="round" />
                 <path d="M8 38 L40 24 L72 38 C72 40, 68 41, 40 37 C12 41, 8 40, 8 38 Z" fill="#b98a58" stroke="#8c5f2b" strokeWidth="1.5" />
                 <circle cx="40" cy="24" r="3" fill="#d4af37" />
               </svg>
             </div>
 
-            {/* 3D Flippable Garment */}
+            {/* 3D FLIPPABLE GARMENT (ZERO BOXES, ZERO CARDS, PURE PRODUCT PHOTO) */}
             <div
               style={{
                 position: "relative",
-                width: "240px",
-                height: "280px",
+                width: "250px",
+                height: "290px",
                 perspective: "1000px",
                 WebkitPerspective: "1000px",
                 marginTop: "-4px",
-                zIndex: 10
+                zIndex: 10,
+                background: "transparent"
               }}
             >
               <div
@@ -529,33 +443,40 @@ export default function VirtualRackViewer() {
                   transformStyle: "preserve-3d",
                   WebkitTransformStyle: "preserve-3d",
                   transform: viewAngle === "back" ? "rotateY(180deg)" : "rotateY(0deg)",
-                  transition: "transform 0.75s cubic-bezier(0.2, 0.85, 0.25, 1)"
+                  transition: "transform 0.75s cubic-bezier(0.2, 0.85, 0.25, 1)",
+                  background: "transparent"
                 }}
               >
-                {/* FRONT FACE */}
+                {/* FRONT FACE PHOTO */}
                 <div
                   style={{
                     position: "absolute",
                     inset: 0,
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                    boxShadow: "0 18px 36px rgba(0,0,0,0.15)",
-                    background: "#ffffff"
+                    background: "transparent",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    filter: "drop-shadow(0 15px 25px rgba(0,0,0,0.18))"
                   }}
                 >
                   <img
                     src={activeItem.image}
                     alt={activeItem.title}
-                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                      display: "block"
+                    }}
                     loading="eager"
                   />
                   <div
                     style={{
                       position: "absolute",
                       bottom: "8px",
-                      right: "10px",
+                      right: "12px",
                       background: "rgba(0,0,0,0.6)",
                       color: "#ffffff",
                       padding: "2px 7px",
@@ -568,7 +489,7 @@ export default function VirtualRackViewer() {
                   </div>
                 </div>
 
-                {/* BACK FACE */}
+                {/* REAL BACK-VIEW PRODUCT PHOTOGRAPHY (NO BLACK BOX!) */}
                 <div
                   style={{
                     position: "absolute",
@@ -576,74 +497,58 @@ export default function VirtualRackViewer() {
                     backfaceVisibility: "hidden",
                     WebkitBackfaceVisibility: "hidden",
                     transform: "rotateY(180deg)",
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                    boxShadow: "0 18px 36px rgba(0,0,0,0.15)",
-                    background: `linear-gradient(180deg, ${activeItem.backTheme.base} 0%, ${activeItem.backTheme.lining} 100%)`,
+                    background: "transparent",
                     display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    padding: "20px 16px",
-                    color: activeItem.backTheme.textColor,
-                    border: "1px solid rgba(255,255,255,0.1)"
+                    alignItems: "center",
+                    justifyContent: "center",
+                    filter: "drop-shadow(0 15px 25px rgba(0,0,0,0.18))"
                   }}
                 >
-                  <div style={{ textAlign: "center", borderBottom: `1px dashed ${activeItem.backTheme.stitching}`, paddingBottom: "10px" }}>
-                    <div style={{ fontSize: "0.64rem", letterSpacing: "1.5px", fontWeight: "800", color: "#d4af37" }}>
-                      ZARGUL BESPOKE ATELIER
-                    </div>
-                    <div style={{ fontSize: "0.58rem", opacity: 0.8, marginTop: "2px" }}>
-                      Handcrafted in Pakistan • Size {selectedSize}
-                    </div>
-                  </div>
-
-                  <div style={{ textAlign: "center", padding: "12px 0" }}>
-                    <div
-                      style={{
-                        width: "2px",
-                        height: "45px",
-                        margin: "0 auto",
-                        background: `linear-gradient(180deg, ${activeItem.backTheme.stitching} 0%, transparent 100%)`
-                      }}
-                    />
-                    <span style={{ fontSize: "0.6rem", opacity: 0.75, letterSpacing: "1px", textTransform: "uppercase" }}>
-                      Precision Spine Seam
-                    </span>
-                  </div>
-
+                  <img
+                    src={activeItem.backImage}
+                    alt={`${activeItem.title} - Realistic Back View`}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "contain",
+                      display: "block"
+                    }}
+                    loading="eager"
+                  />
                   <div
                     style={{
-                      background: "rgba(255,255,255,0.06)",
-                      padding: "8px 12px",
-                      borderRadius: "8px",
-                      border: `1px solid ${activeItem.backTheme.stitching}`,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between"
+                      position: "absolute",
+                      bottom: "8px",
+                      right: "12px",
+                      background: "rgba(0,0,0,0.6)",
+                      color: "#ffffff",
+                      padding: "2px 7px",
+                      borderRadius: "6px",
+                      fontSize: "0.58rem",
+                      fontWeight: "700"
                     }}
                   >
-                    <span style={{ fontSize: "0.6rem", fontWeight: "700" }}>Waist Cinch Buckle</span>
-                    <div style={{ width: "20px", height: "14px", borderRadius: "3px", background: activeItem.backTheme.buckle }} />
+                    Back View • zargul.net
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Floor Shadow */}
+            {/* Natural Floor Shadow */}
             <div
               style={{
-                width: "150px",
+                width: "160px",
                 height: "16px",
                 borderRadius: "50%",
                 background: "radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, transparent 70%)",
-                filter: "blur(3px)",
-                marginTop: "8px"
+                filter: "blur(4px)",
+                marginTop: "6px"
               }}
             />
 
-            {/* HANGING CRAFT COLOR SWATCH TAGS (RESPONSIVE ROW - NEVER OVERFLOWS) */}
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", marginTop: "12px" }}>
-              <span style={{ fontSize: "0.66rem", fontWeight: "800", color: "#666", marginRight: "2px" }}>Colors:</span>
+            {/* DYNAMIC COLOR SWATCHES (LIKE VIDEO 00:06-00:08) */}
+            <div style={{ display: "flex", gap: "8px", alignItems: "center", justifyContent: "center", marginTop: "10px", flexWrap: "wrap" }}>
+              <span style={{ fontSize: "0.68rem", fontWeight: "800", color: "#666", marginRight: "2px" }}>Fabric Colors:</span>
               {currentGarmentGroup.map((garment) => {
                 const isTagActive = garment.id === activeItem.id;
                 return (
@@ -657,13 +562,13 @@ export default function VirtualRackViewer() {
                       display: "flex",
                       alignItems: "center",
                       gap: "5px",
-                      padding: "4px 8px",
+                      padding: "4px 10px",
                       borderRadius: "14px",
                       background: isTagActive ? "#18181b" : "#ffffff",
                       color: isTagActive ? "#ffffff" : "#333",
-                      border: isTagActive ? "1px solid #d4af37" : "1px solid rgba(0,0,0,0.1)",
+                      border: isTagActive ? "1.5px solid #d4af37" : "1px solid rgba(0,0,0,0.12)",
                       cursor: "pointer",
-                      fontSize: "0.64rem",
+                      fontSize: "0.66rem",
                       fontWeight: "750",
                       boxShadow: isTagActive ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
                       transition: "all 0.2s ease"
@@ -675,7 +580,7 @@ export default function VirtualRackViewer() {
                         height: "12px",
                         borderRadius: "50%",
                         background: garment.colorHex,
-                        border: "1px solid rgba(255,255,255,0.6)"
+                        border: "1px solid rgba(255,255,255,0.7)"
                       }}
                     />
                     <span>{garment.colorName.split(" ")[0]}</span>
@@ -685,11 +590,11 @@ export default function VirtualRackViewer() {
             </div>
           </div>
 
-          {/* CONTROLS BELOW: TITLE, 3D FRONT/BACK TOGGLE, STRICT PRICING & ACTIONS */}
+          {/* BELOW GARMENT CONTROLS: TITLE, FRONT/BACK 3D FLIP, PRICING & BUTTONS */}
           <div
             style={{
               width: "100%",
-              maxWidth: "500px",
+              maxWidth: "520px",
               marginTop: "14px",
               display: "flex",
               flexDirection: "column",
@@ -701,7 +606,7 @@ export default function VirtualRackViewer() {
             <h3
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: "1.1rem",
+                fontSize: "1.12rem",
                 fontWeight: "800",
                 textTransform: "uppercase",
                 color: "#18181b",
@@ -711,12 +616,12 @@ export default function VirtualRackViewer() {
               {activeItem.title}
             </h3>
 
-            {/* Strict Price */}
+            {/* STRICT PRICING (Prince Coats: Rs. 4,000, Waistcoats: Rs. 3,000) */}
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "10px" }}>
-              <span style={{ fontSize: "1.3rem", fontWeight: "900", color: "#c5a059" }}>
+              <span style={{ fontSize: "1.35rem", fontWeight: "900", color: "#c5a059" }}>
                 Rs. {activeItem.price.toLocaleString()}
               </span>
-              <span style={{ fontSize: "0.85rem", color: "#9ca3af", textDecoration: "line-through" }}>
+              <span style={{ fontSize: "0.88rem", color: "#9ca3af", textDecoration: "line-through" }}>
                 Rs. {activeItem.originalPrice.toLocaleString()}
               </span>
               <span style={{ background: "#fee2e2", color: "#dc2626", fontSize: "0.66rem", fontWeight: "800", padding: "1px 6px", borderRadius: "8px" }}>
@@ -724,14 +629,15 @@ export default function VirtualRackViewer() {
               </span>
             </div>
 
-            {/* FRONT / BACK 3D TOGGLE */}
+            {/* FRONT / BACK VIEW TOGGLE (EXACT LIKE VIDEO 00:09-00:11) */}
             <div
               style={{
                 display: "inline-flex",
                 background: "#ebebed",
                 padding: "3px",
                 borderRadius: "30px",
-                marginBottom: "14px"
+                marginBottom: "14px",
+                boxShadow: "inset 0 1px 3px rgba(0,0,0,0.08)"
               }}
             >
               <button
@@ -740,10 +646,11 @@ export default function VirtualRackViewer() {
                   background: viewAngle === "front" ? "#18181b" : "transparent",
                   color: viewAngle === "front" ? "#ffffff" : "#52525b",
                   border: "none",
-                  padding: "5px 16px",
+                  padding: "6px 18px",
                   borderRadius: "20px",
-                  fontSize: "0.74rem",
+                  fontSize: "0.76rem",
                   fontWeight: "800",
+                  letterSpacing: "0.5px",
                   cursor: "pointer",
                   transition: "all 0.2s ease"
                 }}
@@ -756,10 +663,11 @@ export default function VirtualRackViewer() {
                   background: viewAngle === "back" ? "#18181b" : "transparent",
                   color: viewAngle === "back" ? "#ffffff" : "#52525b",
                   border: "none",
-                  padding: "5px 16px",
+                  padding: "6px 18px",
                   borderRadius: "20px",
-                  fontSize: "0.74rem",
+                  fontSize: "0.76rem",
                   fontWeight: "800",
+                  letterSpacing: "0.5px",
                   cursor: "pointer",
                   transition: "all 0.2s ease"
                 }}
@@ -768,7 +676,7 @@ export default function VirtualRackViewer() {
               </button>
             </div>
 
-            {/* Size Selector */}
+            {/* SIZE SELECTOR */}
             <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "14px", flexWrap: "wrap", justifyContent: "center" }}>
               <span style={{ fontSize: "0.74rem", fontWeight: "750", color: "#555" }}>Size:</span>
               {["36", "38", "40", "42", "44", "46"].map((sz) => (
@@ -793,14 +701,14 @@ export default function VirtualRackViewer() {
               ))}
             </div>
 
-            {/* Action Buttons */}
+            {/* ACTION BUTTONS (QUANTITY, BUY NOW, WHATSAPP) */}
             <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap", justifyContent: "center", width: "100%" }}>
               <div
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
                   background: "#ffffff",
-                  border: "1px solid rgba(0,0,0,0.12)",
+                  border: "1px solid rgba(0,0,0,0.14)",
                   borderRadius: "14px",
                   padding: "3px 6px"
                 }}
