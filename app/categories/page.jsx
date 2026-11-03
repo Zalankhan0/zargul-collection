@@ -4,6 +4,7 @@ import React, { useState, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import ProductCard from "@/components/ProductCard";
+import VirtualRackViewer from "@/components/VirtualRackViewer";
 
 function CategoriesContent() {
   const searchParams = useSearchParams();
@@ -248,6 +249,13 @@ function CategoriesContent() {
           ))}
         </div>
       </div>
+
+      {/* Interactive 3D Virtual Rack when browsing Coats & Waistcoats */}
+      {activeCategory === "coats" && (
+        <div style={{ marginBottom: "28px" }}>
+          <VirtualRackViewer />
+        </div>
+      )}
 
       {/* Products Grid */}
       {filtered.length === 0 ? (
