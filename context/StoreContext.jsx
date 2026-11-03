@@ -61,10 +61,17 @@ export function StoreProvider({ children }) {
   const [isAdminOpen, setIsAdminOpen] = useState(false);
   const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [isVaultUnlocked, setIsVaultUnlocked] = useState(false);
+  const [isVaultModalOpen, setIsVaultModalOpen] = useState(false);
 
   // Initialize from safe storage on client
   useEffect(() => {
     try {
+      // 0. Secret Vault State
+      const vaultSaved = safeStorage.getItem("zargul_vault_unlocked");
+      if (vaultSaved === "true") {
+        setIsVaultUnlocked(true);
+      }
       // 1. Products - Always ensure all 62 INITIAL_PRODUCTS are present
       const localProducts = safeStorage.getItem("zargul_products");
       if (localProducts) {
@@ -214,6 +221,13 @@ export function StoreProvider({ children }) {
     setTimeout(() => {
       setToastMessage(null);
     }, 2200);
+  };
+
+  // Secret Royal Vault Helper
+  const unlockVault = () => {
+    safeStorage.setItem("zargul_vault_unlocked", "true");
+    setIsVaultUnlocked(true);
+    showToast("🎉 Shahi Tijori Unlocked! +1 FREE 30ml Perfume Active!");
   };
 
   // Cart Functions
@@ -374,7 +388,11 @@ export function StoreProvider({ children }) {
         totalWatches,
         deliveryFee,
         cartTotal,
-        totalCartCount
+        totalCartCount,
+        isVaultUnlocked,
+        unlockVault,
+        isVaultModalOpen,
+        setIsVaultModalOpen
       }}
     >
       {children}
