@@ -6,7 +6,6 @@ import { useStore } from "@/context/StoreContext";
 import { INITIAL_PRODUCTS } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
-import TikTokVipHub from "@/components/TikTokVipHub";
 
 export default function HomePage() {
   const { products, storeConfig } = useStore();
@@ -65,11 +64,6 @@ export default function HomePage() {
 
   return (
     <>
-      {/* TIKTOK VIRAL VIP HUB (KHAN LOOK STUDIO, SHAHI TIJORI, KHAN COMBO) */}
-      <div style={{ paddingTop: "14px" }}>
-        <TikTokVipHub />
-      </div>
-
       {/* COMPACT CATEGORIES GRID (2-3 COLS MOBILE, 4 COLS DESKTOP) */}
       <section style={{ padding: "14px 4% 18px", maxWidth: "1400px", margin: "0 auto" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
