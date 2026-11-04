@@ -4,6 +4,7 @@
 import React from "react";
 import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
+import ProductDiscountSpinner from "@/components/ProductDiscountSpinner";
 
 export default function ProductCard({ product, priority = false }) {
   const { addToCart } = useStore();
@@ -99,6 +100,15 @@ export default function ProductCard({ product, priority = false }) {
             Details →
           </Link>
         </div>
+
+        {/* VISIBLE "🎁 Spin for Discount" BUTTON */}
+        {!isSoldOut && (
+          <ProductDiscountSpinner
+            product={product}
+            currentUnitPrice={priceNum}
+            compact={true}
+          />
+        )}
 
         {/* Action Button: Opens Cart Drawer for Quantity Adjustment & WhatsApp Order */}
         {isSoldOut ? (
