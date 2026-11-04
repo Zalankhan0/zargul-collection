@@ -85,7 +85,7 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
       setTimeout(() => {
         unlockVault();
         setShowCelebration(true);
-      }, 900);
+      }, 700);
     } else {
       setErrorShake(true);
       setErrorMessage("Galat Secret Code! Watch our TikTok video for 7860.");
@@ -106,14 +106,14 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
       style={{
         position: "fixed",
         inset: 0,
-        zIndex: 9999,
-        background: "rgba(10, 8, 12, 0.85)",
-        backdropFilter: "blur(10px)",
-        WebkitBackdropFilter: "blur(10px)",
+        zIndex: 99999,
+        background: "rgba(10, 8, 12, 0.82)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "16px",
+        padding: "12px",
         overflowY: "auto"
       }}
       onClick={onClose}
@@ -123,210 +123,146 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
         style={{
           position: "relative",
           width: "100%",
-          maxWidth: "440px",
+          maxWidth: "375px",
+          maxHeight: "92vh",
+          overflowY: "auto",
           background: "linear-gradient(160deg, #18181b 0%, #09090b 100%)",
-          borderRadius: "26px",
-          border: "2px solid rgba(212, 175, 55, 0.65)",
-          boxShadow: "0 25px 60px rgba(0,0,0,0.85), 0 0 45px rgba(212, 175, 55, 0.35)",
-          padding: "26px 20px 22px",
+          borderRadius: "22px",
+          border: "2px solid rgba(212, 175, 55, 0.7)",
+          boxShadow: "0 20px 50px rgba(0,0,0,0.85), 0 0 35px rgba(212, 175, 55, 0.3)",
+          padding: "18px 16px 16px",
           color: "#ffffff",
           textAlign: "center",
-          boxSizing: "border-box",
-          overflow: "hidden"
+          boxSizing: "border-box"
         }}
       >
-        {/* Close Button */}
+        {/* HIGHLY VISIBLE "✖" (CLOSE) BUTTON AT TOP RIGHT */}
         <button
+          type="button"
           onClick={onClose}
+          aria-label="Close Shahi Tijori"
           style={{
             position: "absolute",
-            top: "14px",
-            right: "16px",
-            background: "rgba(255,255,255,0.08)",
-            border: "1px solid rgba(255,255,255,0.18)",
-            color: "#ffffff",
-            width: "32px",
-            height: "32px",
+            top: "10px",
+            right: "10px",
+            background: "#27272a",
+            border: "1.8px solid #d4af37",
+            color: "#fef08a",
+            width: "36px",
+            height: "36px",
             borderRadius: "50%",
-            fontSize: "1rem",
+            fontSize: "1.15rem",
+            fontWeight: "900",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            transition: "background 0.2s"
+            zIndex: 100,
+            boxShadow: "0 3px 10px rgba(0,0,0,0.7)",
+            transition: "transform 0.15s ease, background 0.15s ease",
+            lineHeight: 1
           }}
-          title="Close Shahi Tijori"
+          onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.92)")}
+          onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
         >
           ✕
         </button>
 
-        {/* VAULT DOOR HEADER */}
-        <div style={{ marginBottom: "14px" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "6px",
-              background: "linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.05) 100%)",
-              padding: "4px 14px",
-              borderRadius: "20px",
-              border: "1px solid rgba(212,175,55,0.45)",
-              marginBottom: "8px"
-            }}
-          >
-            <span style={{ fontSize: "0.85rem", color: "#d4af37" }}>✦</span>
-            <span style={{ fontSize: "0.7rem", fontWeight: "800", letterSpacing: "1.5px", color: "#fef08a", textTransform: "uppercase" }}>
-              TIKTOK VIP SECRET VAULT
-            </span>
-            <span style={{ fontSize: "0.85rem", color: "#d4af37" }}>✦</span>
-          </div>
-
-          <h2
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "1.45rem",
-              fontWeight: "900",
-              margin: "0 0 4px",
-              letterSpacing: "0.5px",
-              background: "linear-gradient(135deg, #fef08a 0%, #d4af37 50%, #aa7c11 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent"
-            }}
-          >
-            SHAHI TIJORI 🎁
-          </h2>
-          <p style={{ margin: 0, fontSize: "0.8rem", color: "#a1a1aa", lineHeight: "1.35" }}>
-            Enter the 4-digit Secret Code from our TikTok video to claim your royal reward!
-          </p>
-        </div>
-
-        {/* VAULT ANIMATED WHEEL DOOR */}
-        <div
-          style={{
-            position: "relative",
-            width: "120px",
-            height: "120px",
-            margin: "0 auto 16px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              borderRadius: "50%",
-              background: "radial-gradient(circle at 40% 40%, #3f3f46 0%, #18181b 80%)",
-              border: "3.5px solid #d4af37",
-              boxShadow: "0 8px 24px rgba(0,0,0,0.7), inset 0 2px 8px rgba(255,255,255,0.2)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transformOrigin: "center center",
-              transform: isOpeningDoor || showCelebration ? "rotate(180deg) scale(0.92)" : "rotate(0deg) scale(1)",
-              transition: "transform 0.9s cubic-bezier(0.34, 1.56, 0.64, 1)"
-            }}
-          >
-            <svg width="84" height="84" viewBox="0 0 100 100" fill="none">
-              <circle cx="50" cy="50" r="42" stroke="#d4af37" strokeWidth="2.5" strokeDasharray="6 4" />
-              <line x1="50" y1="8" x2="50" y2="92" stroke="#d4af37" strokeWidth="3" />
-              <line x1="8" y1="50" x2="92" y2="50" stroke="#d4af37" strokeWidth="3" />
-              <line x1="20" y1="20" x2="80" y2="80" stroke="#d4af37" strokeWidth="2" />
-              <line x1="20" y1="80" x2="80" y2="20" stroke="#d4af37" strokeWidth="2" />
-              <circle cx="50" cy="50" r="16" fill="#18181b" stroke="#fef08a" strokeWidth="3" />
-            </svg>
-            <div style={{ position: "absolute", fontSize: "1.3rem" }}>
-              {showCelebration ? "🔓" : "🔒"}
-            </div>
-          </div>
-        </div>
-
-        {/* CELEBRATION REWARD SHOWCASE ("AAPNE WIN KIYA!") */}
+        {/* ---------------- VIEW 1: CELEBRATION REWARD ("AAPNE WIN KIYA!") ---------------- */}
         {showCelebration ? (
-          <div
-            style={{
-              background: "linear-gradient(160deg, rgba(234, 179, 8, 0.12) 0%, rgba(202, 138, 4, 0.22) 100%)",
-              border: "1.8px solid #d4af37",
-              borderRadius: "20px",
-              padding: "16px 14px",
-              boxShadow: "0 10px 30px rgba(212, 175, 55, 0.25)",
-              animation: "vaultFadeIn 0.5s ease"
-            }}
-          >
-            {/* Grand Header */}
-            <div style={{ fontSize: "1.6rem", marginBottom: "4px" }}>🎉 👑 🎁</div>
+          <div style={{ animation: "vaultFadeIn 0.35s ease", paddingTop: "4px" }}>
+            {/* VIP BADGE */}
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "5px",
+                background: "linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.05) 100%)",
+                padding: "3px 12px",
+                borderRadius: "16px",
+                border: "1px solid rgba(212,175,55,0.45)",
+                marginBottom: "6px"
+              }}
+            >
+              <span style={{ fontSize: "0.75rem", color: "#d4af37" }}>✦</span>
+              <span style={{ fontSize: "0.64rem", fontWeight: "900", letterSpacing: "1px", color: "#fef08a", textTransform: "uppercase" }}>
+                Shahi Tijori Reward
+              </span>
+              <span style={{ fontSize: "0.75rem", color: "#d4af37" }}>✦</span>
+            </div>
+
+            {/* GRAND HEADER */}
             <h3
               style={{
-                fontSize: "1.35rem",
+                fontSize: "1.28rem",
                 fontWeight: "900",
                 color: "#fef08a",
-                margin: "0 0 6px",
-                letterSpacing: "0.5px",
-                textShadow: "0 2px 8px rgba(0,0,0,0.4)"
+                margin: "0 0 3px",
+                letterSpacing: "0.3px",
+                textShadow: "0 2px 8px rgba(0,0,0,0.5)"
               }}
             >
               🎉 AAPNE WIN KIYA! 🎉
             </h3>
 
-            {/* Clear Terms Note */}
+            {/* TERMS SUBTITLE */}
             <p
               style={{
-                fontSize: "0.88rem",
+                fontSize: "0.8rem",
                 fontWeight: "750",
                 color: "#ffffff",
-                lineHeight: "1.4",
-                margin: "0 0 14px",
-                padding: "0 6px"
+                lineHeight: "1.35",
+                margin: "0 0 10px",
+                padding: "0 4px"
               }}
             >
               Sirf koi bhi 1 item khareedein aur ye 30ml Perfume <span style={{ color: "#fef08a", textDecoration: "underline" }}>FREE</span> paayein!
             </p>
 
-            {/* HD 30ML PERFUME SHOWCASE CONTAINER */}
+            {/* COMPACT HD 30ML PERFUME SHOWCASE BOX */}
             <div
               style={{
                 position: "relative",
                 background: "linear-gradient(180deg, #27272a 0%, #18181b 100%)",
-                borderRadius: "16px",
+                borderRadius: "14px",
                 border: "1.5px solid rgba(212, 175, 55, 0.5)",
-                padding: "12px",
-                marginBottom: "14px",
+                padding: "8px",
+                marginBottom: "10px",
                 overflow: "hidden"
               }}
             >
-              {/* Luxury Gold Stamp */}
+              {/* Gold Ribbon Stamp */}
               <div
                 style={{
                   position: "absolute",
-                  top: "10px",
+                  top: "9px",
                   right: "-26px",
                   background: "linear-gradient(135deg, #d4af37 0%, #b45309 100%)",
                   color: "#ffffff",
-                  fontSize: "0.62rem",
+                  fontSize: "0.58rem",
                   fontWeight: "900",
-                  letterSpacing: "0.5px",
-                  padding: "4px 30px",
+                  letterSpacing: "0.4px",
+                  padding: "3px 26px",
                   transform: "rotate(25deg)",
-                  boxShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                  boxShadow: "0 2px 6px rgba(0,0,0,0.6)",
                   textTransform: "uppercase"
                 }}
               >
                 WIN FREE WITH ANY PURCHASE!
               </div>
 
-              {/* Perfume Bottle Image */}
+              {/* Perfume Image */}
               <div
                 style={{
                   width: "100%",
-                  height: "170px",
+                  height: "135px",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   background: "#09090b",
-                  borderRadius: "12px",
+                  borderRadius: "10px",
                   overflow: "hidden",
-                  marginBottom: "8px"
+                  marginBottom: "6px"
                 }}
               >
                 <img
@@ -336,8 +272,8 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
                     width: "100%",
                     height: "100%",
                     objectFit: "contain",
-                    filter: "drop-shadow(0 6px 14px rgba(212,175,55,0.4))",
-                    transform: "scale(1.04)"
+                    filter: "drop-shadow(0 4px 10px rgba(212,175,55,0.4))",
+                    transform: "scale(1.02)"
                   }}
                   onError={(e) => {
                     e.currentTarget.src = "/assets/logo.jpg";
@@ -347,14 +283,14 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
 
               {/* Product Info */}
               <div style={{ textAlign: "center" }}>
-                <div style={{ fontSize: "0.95rem", fontWeight: "900", color: "#fef08a" }}>
+                <div style={{ fontSize: "0.88rem", fontWeight: "900", color: "#fef08a" }}>
                   🎁 30ml Luxury Eau de Parfum
                 </div>
-                <div style={{ fontSize: "0.74rem", color: "#a1a1aa", marginTop: "2px" }}>
-                  Handcrafted French &amp; Oriental Notes • Long Lasting Scent
+                <div style={{ fontSize: "0.7rem", color: "#a1a1aa", marginTop: "1px" }}>
+                  Handcrafted French &amp; Oriental Notes • Long Lasting
                 </div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", marginTop: "6px" }}>
-                  <span style={{ fontSize: "0.78rem", color: "#71717a", textDecoration: "line-through" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", marginTop: "4px" }}>
+                  <span style={{ fontSize: "0.74rem", color: "#71717a", textDecoration: "line-through" }}>
                     Rs. 1,500
                   </span>
                   <span
@@ -362,10 +298,10 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
                       background: "rgba(16, 185, 129, 0.2)",
                       border: "1px solid #10b981",
                       color: "#34d399",
-                      fontSize: "0.78rem",
+                      fontSize: "0.74rem",
                       fontWeight: "900",
-                      padding: "2px 8px",
-                      borderRadius: "6px"
+                      padding: "1px 7px",
+                      borderRadius: "5px"
                     }}
                   >
                     100% FREE (Rs. 0)
@@ -374,42 +310,43 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
               </div>
             </div>
 
-            {/* Locked In Cart & WhatsApp Verified Badge */}
+            {/* VERIFIED NOTE */}
             <div
               style={{
                 display: "inline-block",
                 background: "#18181b",
                 border: "1px dashed #d4af37",
-                padding: "5px 12px",
-                borderRadius: "10px",
-                fontSize: "0.72rem",
+                padding: "4px 10px",
+                borderRadius: "8px",
+                fontSize: "0.68rem",
                 color: "#fef08a",
                 fontWeight: "800",
-                marginBottom: "14px"
+                marginBottom: "10px"
               }}
             >
               ✓ Code 7860 Verified • Auto-Locks to Cart &amp; WhatsApp
             </div>
 
-            {/* ACTION BUTTON: "Claim Gift & Shop Now" */}
+            {/* ACTION BUTTON: CLAIM GIFT & SHOP NOW */}
             <button
+              type="button"
               onClick={handleClaimAndShop}
               style={{
                 width: "100%",
-                padding: "13px",
-                borderRadius: "14px",
+                padding: "11px",
+                borderRadius: "12px",
                 background: "linear-gradient(135deg, #fef08a 0%, #d4af37 50%, #aa7c11 100%)",
                 color: "#18181b",
                 border: "none",
-                fontSize: "0.92rem",
+                fontSize: "0.88rem",
                 fontWeight: "900",
-                letterSpacing: "0.5px",
+                letterSpacing: "0.3px",
                 cursor: "pointer",
-                boxShadow: "0 6px 18px rgba(212,175,55,0.45)",
+                boxShadow: "0 4px 14px rgba(212,175,55,0.45)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "8px",
+                gap: "6px",
                 transition: "transform 0.15s ease"
               }}
               onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.97)")}
@@ -418,17 +355,115 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
               <span>🛒</span>
               <span>Claim Gift &amp; Shop Now</span>
             </button>
+
+            {/* SECONDARY DISMISS LINK */}
+            <button
+              type="button"
+              onClick={onClose}
+              style={{
+                background: "none",
+                border: "none",
+                color: "#a1a1aa",
+                fontSize: "0.72rem",
+                fontWeight: "600",
+                marginTop: "8px",
+                cursor: "pointer",
+                textDecoration: "underline"
+              }}
+            >
+              ✕ Dismiss &amp; Continue Browsing
+            </button>
           </div>
         ) : (
-          /* CODE INPUT & NUMERIC KEYPAD VIEW */
-          <div>
+          /* ---------------- VIEW 2: PIN ENTRY KEYPAD ---------------- */
+          <div style={{ paddingTop: "6px" }}>
+            {/* COMPACT VAULT HEADER */}
+            <div style={{ marginBottom: "10px" }}>
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "5px",
+                  background: "linear-gradient(135deg, rgba(212,175,55,0.2) 0%, rgba(212,175,55,0.05) 100%)",
+                  padding: "3px 12px",
+                  borderRadius: "16px",
+                  border: "1px solid rgba(212,175,55,0.45)",
+                  marginBottom: "6px"
+                }}
+              >
+                <span style={{ fontSize: "0.75rem", color: "#d4af37" }}>✦</span>
+                <span style={{ fontSize: "0.64rem", fontWeight: "900", letterSpacing: "1px", color: "#fef08a", textTransform: "uppercase" }}>
+                  TikTok VIP Secret Vault
+                </span>
+                <span style={{ fontSize: "0.75rem", color: "#d4af37" }}>✦</span>
+              </div>
+
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "1.3rem",
+                  fontWeight: "900",
+                  margin: "0 0 3px",
+                  letterSpacing: "0.3px",
+                  background: "linear-gradient(135deg, #fef08a 0%, #d4af37 50%, #aa7c11 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent"
+                }}
+              >
+                SHAHI TIJORI 🎁
+              </h2>
+              <p style={{ margin: 0, fontSize: "0.76rem", color: "#a1a1aa", lineHeight: "1.3" }}>
+                Enter the 4-digit code from TikTok (<b>7860</b>) to unlock your free reward!
+              </p>
+            </div>
+
+            {/* COMPACT VAULT WHEEL DOOR */}
+            <div
+              style={{
+                position: "relative",
+                width: "72px",
+                height: "72px",
+                margin: "0 auto 10px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+              }}
+            >
+              <div
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle at 40% 40%, #3f3f46 0%, #18181b 80%)",
+                  border: "3px solid #d4af37",
+                  boxShadow: "0 6px 18px rgba(0,0,0,0.7), inset 0 2px 6px rgba(255,255,255,0.2)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  transformOrigin: "center center",
+                  transform: isOpeningDoor ? "rotate(180deg) scale(0.92)" : "rotate(0deg) scale(1)",
+                  transition: "transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1)"
+                }}
+              >
+                <svg width="56" height="56" viewBox="0 0 100 100" fill="none">
+                  <circle cx="50" cy="50" r="42" stroke="#d4af37" strokeWidth="2.5" strokeDasharray="6 4" />
+                  <line x1="50" y1="8" x2="50" y2="92" stroke="#d4af37" strokeWidth="3" />
+                  <line x1="8" y1="50" x2="92" y2="50" stroke="#d4af37" strokeWidth="3" />
+                  <circle cx="50" cy="50" r="16" fill="#18181b" stroke="#fef08a" strokeWidth="3" />
+                </svg>
+                <div style={{ position: "absolute", fontSize: "1.1rem" }}>
+                  {isOpeningDoor ? "🔓" : "🔒"}
+                </div>
+              </div>
+            </div>
+
             {/* 4-DIGIT PIN DISPLAY (SHAKES ON ERROR) */}
             <div
               style={{
                 display: "flex",
                 justifyContent: "center",
-                gap: "12px",
-                marginBottom: "12px",
+                gap: "10px",
+                marginBottom: "10px",
                 transform: errorShake ? "translateX(-6px)" : "none",
                 transition: "transform 0.1s ease"
               }}
@@ -439,10 +474,10 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
                   <div
                     key={idx}
                     style={{
-                      width: "46px",
-                      height: "52px",
-                      borderRadius: "12px",
-                      background: filled ? "rgba(212, 175, 55, 0.15)" : "rgba(255,255,255,0.05)",
+                      width: "42px",
+                      height: "46px",
+                      borderRadius: "10px",
+                      background: filled ? "rgba(212, 175, 55, 0.18)" : "rgba(255,255,255,0.05)",
                       border: errorShake
                         ? "2px solid #ef4444"
                         : filled
@@ -451,11 +486,11 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      fontSize: "1.4rem",
+                      fontSize: "1.25rem",
                       fontWeight: "900",
                       color: errorShake ? "#ef4444" : "#fef08a",
-                      boxShadow: filled ? "0 0 12px rgba(212,175,55,0.3)" : "none",
-                      transition: "all 0.2s ease"
+                      boxShadow: filled ? "0 0 10px rgba(212,175,55,0.3)" : "none",
+                      transition: "all 0.15s ease"
                     }}
                   >
                     {filled ? "●" : ""}
@@ -464,18 +499,18 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
               })}
             </div>
 
-            {/* Error Message (Duplicate Claim Warning / Invalid Code) */}
+            {/* ERROR MESSAGE (ANTI-FRAUD DUPLICATE / WRONG CODE) */}
             {errorMessage && (
               <div
                 style={{
-                  background: "rgba(239, 68, 68, 0.15)",
+                  background: "rgba(239, 68, 68, 0.16)",
                   border: "1px solid #ef4444",
                   color: "#fca5a5",
-                  fontSize: "0.78rem",
+                  fontSize: "0.74rem",
                   fontWeight: "750",
-                  padding: "6px 10px",
-                  borderRadius: "10px",
-                  marginBottom: "12px",
+                  padding: "5px 8px",
+                  borderRadius: "8px",
+                  marginBottom: "10px",
                   lineHeight: "1.3"
                 }}
               >
@@ -483,14 +518,14 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
               </div>
             )}
 
-            {/* NUMERIC KEYPAD */}
+            {/* COMPACT NUMERIC KEYPAD */}
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "10px",
-                maxWidth: "280px",
-                margin: "0 auto 12px"
+                gap: "8px",
+                maxWidth: "260px",
+                margin: "0 auto 8px"
               }}
             >
               {["1", "2", "3", "4", "5", "6", "7", "8", "9", "C", "0", "⌫"].map((btn) => {
@@ -500,24 +535,25 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
                 return (
                   <button
                     key={btn}
+                    type="button"
                     onClick={() => {
                       if (isClear) handleClear();
                       else if (isBackspace) handleBackspace();
                       else handleKeyPress(btn);
                     }}
                     style={{
-                      height: "46px",
-                      borderRadius: "12px",
+                      height: "40px",
+                      borderRadius: "10px",
                       background:
                         isClear || isBackspace
                           ? "rgba(255,255,255,0.08)"
                           : "linear-gradient(180deg, #27272a 0%, #18181b 100%)",
                       border: "1px solid rgba(255,255,255,0.12)",
                       color: isClear ? "#f87171" : isBackspace ? "#fbbf24" : "#ffffff",
-                      fontSize: "1.15rem",
+                      fontSize: "1.05rem",
                       fontWeight: "800",
                       cursor: "pointer",
-                      boxShadow: "0 2px 6px rgba(0,0,0,0.3)",
+                      boxShadow: "0 2px 5px rgba(0,0,0,0.3)",
                       transition: "transform 0.1s ease, background 0.15s ease"
                     }}
                     onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.94)")}
@@ -529,8 +565,8 @@ export default function SecretRoyalVault({ isOpen: propsIsOpen, onClose: propsOn
               })}
             </div>
 
-            <div style={{ fontSize: "0.72rem", color: "#a1a1aa", marginTop: "6px" }}>
-              💡 Hint: Watch our latest TikTok video for the 4-digit code (<b>7860</b>)!
+            <div style={{ fontSize: "0.68rem", color: "#a1a1aa", marginTop: "4px" }}>
+              💡 Secret Code: <b>7860</b> (TikTok VIP Gift)
             </div>
           </div>
         )}
