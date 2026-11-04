@@ -7,6 +7,7 @@ import { INITIAL_PRODUCTS } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
 import ShahiKhanCombo from "@/components/ShahiKhanCombo";
+import KhanLookStudio from "@/components/KhanLookStudio";
 
 export default function HomePage() {
   const { products, storeConfig } = useStore();
@@ -192,6 +193,11 @@ export default function HomePage() {
             </span>
           </Link>
         </div>
+      </section>
+
+      {/* KHAN LOOK STUDIO (DIGITAL MANNEQUIN HEAD-TO-TOE AVATAR EXPERIENCE) */}
+      <section style={{ padding: "0 4% 18px", maxWidth: "1400px", margin: "0 auto" }}>
+        <KhanLookStudio />
       </section>
 
       {/* SHAHI KHAN COMBO MACHINE (3-TIER MIX & MATCH BUILDER) */}
