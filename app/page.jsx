@@ -7,14 +7,12 @@ import { INITIAL_PRODUCTS } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
 import ShahiKhanComboModal from "@/components/ShahiKhanComboModal";
-import KhanLookStudioModal from "@/components/KhanLookStudioModal";
 
 export default function HomePage() {
   const { products, storeConfig } = useStore();
   const [founderModal, setFounderModal] = useState(null);
   const [activeCategory, setActiveCategory] = useState("all");
   const [showComboModal, setShowComboModal] = useState(false);
-  const [showLookModal, setShowLookModal] = useState(false);
 
   // All Available Products - complete inventory across all categories
   const safeProducts = Array.isArray(products) && products.length > 0 ? products : INITIAL_PRODUCTS;
@@ -150,17 +148,8 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* TWO SMALL CATEGORY THUMBNAIL BUTTONS SIDE-BY-SIDE (OPEN IN SEPARATE MODALS) */}
-        <div
-          style={{
-            marginTop: "12px",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-            gap: "10px",
-            maxWidth: "700px"
-          }}
-        >
-          {/* BUTTON 1: 👑 Khan Combo */}
+        {/* COMPACT KHAN COMBO BUTTON (OPENS CLEAN ON-DEMAND MODAL) */}
+        <div style={{ marginTop: "12px", maxWidth: "420px" }}>
           <button
             type="button"
             onClick={() => setShowComboModal(true)}
@@ -182,8 +171,8 @@ export default function HomePage() {
           >
             <div
               style={{
-                width: "46px",
-                height: "46px",
+                width: "42px",
+                height: "42px",
                 borderRadius: "12px",
                 background: "#ffffff",
                 display: "flex",
@@ -192,7 +181,7 @@ export default function HomePage() {
                 overflow: "hidden",
                 boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
                 border: "1px solid rgba(0,0,0,0.06)",
-                fontSize: "1.4rem",
+                fontSize: "1.3rem",
                 flexShrink: 0
               }}
             >
@@ -209,7 +198,7 @@ export default function HomePage() {
                   lineHeight: "1.2"
                 }}
               >
-                👑 Khan Combo
+                👑 Khan Combo Machine
               </h4>
               <span
                 style={{
@@ -219,71 +208,7 @@ export default function HomePage() {
                   display: "block"
                 }}
               >
-                3-Tier Mix &amp; Match Deal →
-              </span>
-            </div>
-          </button>
-
-          {/* BUTTON 2: 👔 Khan Look Studio */}
-          <button
-            type="button"
-            onClick={() => setShowLookModal(true)}
-            className="clay-card pink category-box-card"
-            style={{
-              cursor: "pointer",
-              border: "1.5px solid rgba(240, 142, 167, 0.4)",
-              textAlign: "left",
-              padding: "10px 14px",
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-              background: "linear-gradient(135deg, #fff7fa 0%, #faedf3 100%)",
-              borderRadius: "16px",
-              boxShadow: "0 2px 10px rgba(240, 142, 167, 0.1)",
-              width: "100%",
-              transition: "transform 0.2s ease, box-shadow 0.2s ease"
-            }}
-          >
-            <div
-              style={{
-                width: "46px",
-                height: "46px",
-                borderRadius: "12px",
-                background: "#ffffff",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                overflow: "hidden",
-                boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
-                border: "1px solid rgba(0,0,0,0.06)",
-                fontSize: "1.4rem",
-                flexShrink: 0
-              }}
-            >
-              👔
-            </div>
-            <div>
-              <h4
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: "800",
-                  fontSize: "0.86rem",
-                  color: "var(--color-text-dark)",
-                  margin: "0 0 2px",
-                  lineHeight: "1.2"
-                }}
-              >
-                👔 Khan Look Studio
-              </h4>
-              <span
-                style={{
-                  fontSize: "0.7rem",
-                  color: "var(--color-accent-dark)",
-                  fontWeight: "700",
-                  display: "block"
-                }}
-              >
-                3-Piece Luxury Lookbook →
+                3-Tier Mix &amp; Match Deal (Save Rs. 1,000) →
               </span>
             </div>
           </button>
@@ -579,12 +504,6 @@ export default function HomePage() {
       <ShahiKhanComboModal
         isOpen={showComboModal}
         onClose={() => setShowComboModal(false)}
-      />
-
-      {/* KHAN LOOK STUDIO MODAL (OPENS CLEANLY ON DEMAND - REAL PRODUCTS ONLY) */}
-      <KhanLookStudioModal
-        isOpen={showLookModal}
-        onClose={() => setShowLookModal(false)}
       />
     </>
   );
