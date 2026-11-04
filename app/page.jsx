@@ -6,13 +6,15 @@ import { useStore } from "@/context/StoreContext";
 import { INITIAL_PRODUCTS } from "@/lib/data";
 import ProductCard from "@/components/ProductCard";
 import ReviewsMarquee from "@/components/ReviewsMarquee";
-import ShahiKhanCombo from "@/components/ShahiKhanCombo";
-import KhanLookStudio from "@/components/KhanLookStudio";
+import ShahiKhanComboModal from "@/components/ShahiKhanComboModal";
+import KhanLookStudioModal from "@/components/KhanLookStudioModal";
 
 export default function HomePage() {
   const { products, storeConfig } = useStore();
   const [founderModal, setFounderModal] = useState(null);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [showComboModal, setShowComboModal] = useState(false);
+  const [showLookModal, setShowLookModal] = useState(false);
 
   // All Available Products - complete inventory across all categories
   const safeProducts = Array.isArray(products) && products.length > 0 ? products : INITIAL_PRODUCTS;
@@ -148,61 +150,144 @@ export default function HomePage() {
           ))}
         </div>
 
-        {/* COMPACT 1-LINE CUSTOM GIFT BOX BUILDER (2 CATEGORIES WIDTH) */}
-        <div style={{ marginTop: "10px", display: "flex", justifyContent: "flex-start" }}>
-          <Link
-            href="/gift-builder"
-            className="clay-card pink"
+        {/* TWO SMALL CATEGORY THUMBNAIL BUTTONS SIDE-BY-SIDE (OPEN IN SEPARATE MODALS) */}
+        <div
+          style={{
+            marginTop: "12px",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gap: "10px",
+            maxWidth: "700px"
+          }}
+        >
+          {/* BUTTON 1: 👑 Khan Combo */}
+          <button
+            type="button"
+            onClick={() => setShowComboModal(true)}
+            className="clay-card lavender category-box-card"
             style={{
-              width: "100%",
-              maxWidth: "480px",
+              cursor: "pointer",
+              border: "1.5px solid rgba(167, 139, 250, 0.4)",
+              textAlign: "left",
+              padding: "10px 14px",
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
-              padding: "6px 12px",
-              textDecoration: "none",
-              borderRadius: "14px",
-              gap: "8px",
-              background: "linear-gradient(135deg, #fff7fa 0%, #faedf3 100%)",
-              border: "1.5px solid rgba(240, 142, 167, 0.4)",
-              boxShadow: "0 2px 8px rgba(240, 142, 167, 0.1)"
+              gap: "12px",
+              background: "linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)",
+              borderRadius: "16px",
+              boxShadow: "0 2px 10px rgba(124, 58, 237, 0.08)",
+              width: "100%",
+              transition: "transform 0.2s ease, box-shadow 0.2s ease"
             }}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <span style={{ fontSize: "1.1rem", lineHeight: 1 }}>🎁</span>
-              <div>
-                <span style={{ fontFamily: "var(--font-display)", fontSize: "0.82rem", fontWeight: "750", color: "var(--color-text-dark)", display: "inline-block" }}>
-                  Custom Gift Box Builder
-                </span>
-                <span style={{ fontSize: "0.68rem", color: "var(--color-accent-dark)", fontWeight: "600", marginLeft: "6px" }}>
-                  ✦ Create Your Combo
-                </span>
-              </div>
-            </div>
-            <span
-              className="clay-btn accent"
+            <div
               style={{
-                padding: "4px 10px",
-                borderRadius: "8px",
-                fontSize: "0.7rem",
-                fontWeight: "700",
-                whiteSpace: "nowrap"
+                width: "46px",
+                height: "46px",
+                borderRadius: "12px",
+                background: "#ffffff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
+                border: "1px solid rgba(0,0,0,0.06)",
+                fontSize: "1.4rem",
+                flexShrink: 0
               }}
             >
-              Build Box →
-            </span>
-          </Link>
+              👑
+            </div>
+            <div>
+              <h4
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: "800",
+                  fontSize: "0.86rem",
+                  color: "var(--color-text-dark)",
+                  margin: "0 0 2px",
+                  lineHeight: "1.2"
+                }}
+              >
+                👑 Khan Combo
+              </h4>
+              <span
+                style={{
+                  fontSize: "0.7rem",
+                  color: "#7c3aed",
+                  fontWeight: "700",
+                  display: "block"
+                }}
+              >
+                3-Tier Mix &amp; Match Deal →
+              </span>
+            </div>
+          </button>
+
+          {/* BUTTON 2: 👔 Khan Look Studio */}
+          <button
+            type="button"
+            onClick={() => setShowLookModal(true)}
+            className="clay-card pink category-box-card"
+            style={{
+              cursor: "pointer",
+              border: "1.5px solid rgba(240, 142, 167, 0.4)",
+              textAlign: "left",
+              padding: "10px 14px",
+              display: "flex",
+              alignItems: "center",
+              gap: "12px",
+              background: "linear-gradient(135deg, #fff7fa 0%, #faedf3 100%)",
+              borderRadius: "16px",
+              boxShadow: "0 2px 10px rgba(240, 142, 167, 0.1)",
+              width: "100%",
+              transition: "transform 0.2s ease, box-shadow 0.2s ease"
+            }}
+          >
+            <div
+              style={{
+                width: "46px",
+                height: "46px",
+                borderRadius: "12px",
+                background: "#ffffff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+                boxShadow: "0 2px 6px rgba(0,0,0,0.06)",
+                border: "1px solid rgba(0,0,0,0.06)",
+                fontSize: "1.4rem",
+                flexShrink: 0
+              }}
+            >
+              👔
+            </div>
+            <div>
+              <h4
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: "800",
+                  fontSize: "0.86rem",
+                  color: "var(--color-text-dark)",
+                  margin: "0 0 2px",
+                  lineHeight: "1.2"
+                }}
+              >
+                👔 Khan Look Studio
+              </h4>
+              <span
+                style={{
+                  fontSize: "0.7rem",
+                  color: "var(--color-accent-dark)",
+                  fontWeight: "700",
+                  display: "block"
+                }}
+              >
+                3-Piece Luxury Lookbook →
+              </span>
+            </div>
+          </button>
         </div>
-      </section>
-
-      {/* KHAN LOOK STUDIO (DIGITAL MANNEQUIN HEAD-TO-TOE AVATAR EXPERIENCE) */}
-      <section style={{ padding: "0 4% 18px", maxWidth: "1400px", margin: "0 auto" }}>
-        <KhanLookStudio />
-      </section>
-
-      {/* SHAHI KHAN COMBO MACHINE (3-TIER MIX & MATCH BUILDER) */}
-      <section style={{ padding: "0 4% 18px", maxWidth: "1400px", margin: "0 auto" }}>
-        <ShahiKhanCombo />
       </section>
 
       {/* COMPLETE LUXURY SHOWCASE GRID (ALL PRODUCTS) */}
@@ -489,6 +574,18 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* SHAHI KHAN COMBO MODAL (OPENS CLEANLY ON DEMAND) */}
+      <ShahiKhanComboModal
+        isOpen={showComboModal}
+        onClose={() => setShowComboModal(false)}
+      />
+
+      {/* KHAN LOOK STUDIO MODAL (OPENS CLEANLY ON DEMAND - REAL PRODUCTS ONLY) */}
+      <KhanLookStudioModal
+        isOpen={showLookModal}
+        onClose={() => setShowLookModal(false)}
+      />
     </>
   );
 }
