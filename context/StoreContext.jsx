@@ -378,22 +378,9 @@ export function StoreProvider({ children }) {
     })
     .reduce((sum, item) => sum + (item.quantity || 1), 0);
 
-  let multiWatchDiscount = 0;
-  let multiWatchTierLabel = "";
-
-  if (totalWatches === 2) {
-    multiWatchDiscount = 400;
-    multiWatchTierLabel = "2 Watches Bundle (Rs. 400 OFF)";
-  } else if (totalWatches === 3) {
-    multiWatchDiscount = 1000;
-    multiWatchTierLabel = "3 Watches Deal (Rs. 1,000 OFF)";
-  } else if (totalWatches === 4) {
-    multiWatchDiscount = 1600;
-    multiWatchTierLabel = "4 Watches VIP Deal (Rs. 1,600 OFF)";
-  } else if (totalWatches >= 5) {
-    multiWatchDiscount = totalWatches * 700;
-    multiWatchTierLabel = `${totalWatches} Watches Wholesale Tier (Rs. ${multiWatchDiscount.toLocaleString()} OFF)`;
-  }
+  // Multi-Watch Tier Discount disabled to eliminate unprompted/hidden WhatsApp discounts
+  const multiWatchDiscount = 0;
+  const multiWatchTierLabel = "";
 
   const deliveryFee =
     (storeConfig?.freeDeliveryThreshold || 0) > 0 && cartSubtotal >= (storeConfig?.freeDeliveryThreshold || 0)
