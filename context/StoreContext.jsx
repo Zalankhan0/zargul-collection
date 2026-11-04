@@ -230,6 +230,43 @@ export function StoreProvider({ children }) {
     showToast("🎉 Shahi Tijori Unlocked! +1 FREE 30ml Perfume Active!");
   };
 
+  // Claim Shahi Tijori 30ml Luxury Perfume Free Gift
+  const claimVaultFreeGift = () => {
+    const freeItem = {
+      id: "free-30ml-perfume-reward",
+      title: "🎁 + 30ml FREE Perfume (Tijori Claimed)",
+      category: "Perfumes",
+      price: 0,
+      originalPrice: 1500,
+      image: "/assets/perfumes/free_30ml_perfume_reward.jpg",
+      isFreeGift: true,
+      tag: "100% FREE GIFT",
+      description: "Exclusive Shahi Tijori 30ml Luxury Eau de Parfum reward unlocked with Secret Code 7860."
+    };
+    setCart((prev) => {
+      const existingIdx = prev.findIndex(
+        (it) => it.product?.id === "free-30ml-perfume-reward" || it.product?.isFreeGift || it.isLockedFreeGift
+      );
+      if (existingIdx !== -1) return prev;
+      const updated = [
+        {
+          product: freeItem,
+          variant: "30ml Royal EDP (Secret Code: 7860)",
+          extraPrice: 0,
+          quantity: 1,
+          isLockedFreeGift: true
+        },
+        ...prev
+      ];
+      safeStorage.setItem("zargul_cart", JSON.stringify(updated));
+      return updated;
+    });
+    safeStorage.setItem("zargul_vault_unlocked", "true");
+    setIsVaultUnlocked(true);
+    showToast("🎉 30ml FREE Perfume Locked into your Bag!");
+    setIsCartOpen(true);
+  };
+
   // Cart Functions
   const addToCart = (product, variant = "", extraPrice = 0, quantity = 1) => {
     setCart((prev) => {
@@ -254,6 +291,10 @@ export function StoreProvider({ children }) {
     setCart((prev) => {
       const updated = [...prev];
       if (updated[index]) {
+        if (updated[index].isLockedFreeGift || updated[index].product?.isFreeGift) {
+          showToast("🎁 Free Shahi Tijori Gift is locked at 1 per order!", "info");
+          return prev;
+        }
         updated[index].quantity += delta;
         if (updated[index].quantity <= 0) {
           updated.splice(index, 1);
@@ -266,6 +307,10 @@ export function StoreProvider({ children }) {
 
   const removeFromCart = (index) => {
     setCart((prev) => {
+      if (prev[index]?.isLockedFreeGift || prev[index]?.product?.isFreeGift) {
+        showToast("🎁 Free Shahi Tijori Gift cannot be removed!", "info");
+        return prev;
+      }
       const updated = prev.filter((_, idx) => idx !== index);
       safeStorage.setItem("zargul_cart", JSON.stringify(updated));
       return updated;
@@ -391,6 +436,7 @@ export function StoreProvider({ children }) {
         totalCartCount,
         isVaultUnlocked,
         unlockVault,
+        claimVaultFreeGift,
         isVaultModalOpen,
         setIsVaultModalOpen
       }}
