@@ -72,8 +72,9 @@ export default function CartDrawer() {
     if (multiWatchDiscount > 0) {
       msg += `• ⌚ Multi-Watch Deal: -Rs. ${multiWatchDiscount.toLocaleString()} (${multiWatchTierLabel})\n`;
     }
-    if (isVaultUnlocked) {
-      msg += `• 🎁 VIP VAULT REWARD: +1 FREE 30ml Luxury Perfume Applied (Secret Code: 7860 Verified)\n`;
+    const hasVaultGift = isVaultUnlocked || cart.some((it) => it.isLockedFreeGift || it.product?.isFreeGift || it.product?.id === "free-30ml-perfume-reward");
+    if (hasVaultGift) {
+      msg += `• 🎁 VIP VAULT REWARD: 🎁 + 30ml FREE Perfume (Tijori Claimed)\n`;
     }
     msg += `• Delivery: Cash on Delivery (Standard Charges)\n`;
     msg += `━━━━━━━━━━━━━━━━━━━━\n`;
@@ -150,8 +151,9 @@ export default function CartDrawer() {
     if (multiWatchDiscount > 0) {
       msg += `• ⌚ Multi-Watch Deal: -Rs. ${multiWatchDiscount.toLocaleString()} (${multiWatchTierLabel})\n`;
     }
-    if (isVaultUnlocked) {
-      msg += `• 🎁 VIP VAULT REWARD: +1 FREE 30ml Luxury Perfume Applied (Secret Code: 7860 Verified)\n`;
+    const hasVaultGiftCOD = isVaultUnlocked || cart.some((it) => it.isLockedFreeGift || it.product?.isFreeGift || it.product?.id === "free-30ml-perfume-reward");
+    if (hasVaultGiftCOD) {
+      msg += `• 🎁 VIP VAULT REWARD: 🎁 + 30ml FREE Perfume (Tijori Claimed)\n`;
     }
     msg += `• Delivery: Cash on Delivery (Standard Charges)\n`;
     msg += `━━━━━━━━━━━━━━━━━━━━\n`;
@@ -256,74 +258,113 @@ export default function CartDrawer() {
                           </span>
                         )}
                         <div style={{ fontWeight: "750", color: "var(--color-text-dark)", fontSize: "0.85rem", marginTop: "2px" }}>
-                          Rs. {(unitPrice * item.quantity).toLocaleString()}
+                          {item.isLockedFreeGift || item.product?.isFreeGift ? (
+                            <span style={{ color: "#059669", fontWeight: "900" }}>FREE (Rs. 0)</span>
+                          ) : (
+                            `Rs. ${(unitPrice * item.quantity).toLocaleString()}`
+                          )}
                         </div>
 
-                        {/* Quantity (+ / -) Controls */}
-                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "6px" }}>
-                          <button
-                            type="button"
-                            className="clay-icon-btn"
+                        {/* Quantity (+ / -) Controls or Locked Badge */}
+                        {item.isLockedFreeGift || item.product?.isFreeGift ? (
+                          <div
                             style={{
-                              width: "28px",
-                              height: "28px",
-                              fontSize: "1rem",
-                              fontWeight: "750",
-                              display: "flex",
+                              display: "inline-flex",
                               alignItems: "center",
-                              justifyContent: "center",
-                              borderRadius: "8px",
-                              border: "1px solid rgba(0,0,0,0.12)",
-                              background: "#f6f4f5",
-                              cursor: "pointer"
+                              gap: "4px",
+                              background: "linear-gradient(135deg, #fef08a 0%, #d4af37 100%)",
+                              color: "#18181b",
+                              padding: "3px 8px",
+                              borderRadius: "6px",
+                              fontSize: "0.68rem",
+                              fontWeight: "900",
+                              marginTop: "6px"
                             }}
-                            onClick={() => updateCartQty(idx, -1)}
-                            title="Decrease quantity"
                           >
-                            -
-                          </button>
-                          <span style={{ fontSize: "0.88rem", fontWeight: "800", minWidth: "18px", textAlign: "center" }}>
-                            {item.quantity}
-                          </span>
-                          <button
-                            type="button"
-                            className="clay-icon-btn"
-                            style={{
-                              width: "28px",
-                              height: "28px",
-                              fontSize: "1rem",
-                              fontWeight: "750",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              borderRadius: "8px",
-                              border: "1px solid rgba(0,0,0,0.12)",
-                              background: "#f6f4f5",
-                              cursor: "pointer"
-                            }}
-                            onClick={() => updateCartQty(idx, 1)}
-                            title="Increase quantity"
-                          >
-                            +
-                          </button>
-                        </div>
+                            <span>🔒</span>
+                            <span>100% FREE GIFT (1 PER CUSTOMER)</span>
+                          </div>
+                        ) : (
+                          <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "6px" }}>
+                            <button
+                              type="button"
+                              className="clay-icon-btn"
+                              style={{
+                                width: "28px",
+                                height: "28px",
+                                fontSize: "1rem",
+                                fontWeight: "750",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderRadius: "8px",
+                                border: "1px solid rgba(0,0,0,0.12)",
+                                background: "#f6f4f5",
+                                cursor: "pointer"
+                              }}
+                              onClick={() => updateCartQty(idx, -1)}
+                              title="Decrease quantity"
+                            >
+                              -
+                            </button>
+                            <span style={{ fontSize: "0.88rem", fontWeight: "800", minWidth: "18px", textAlign: "center" }}>
+                              {item.quantity}
+                            </span>
+                            <button
+                              type="button"
+                              className="clay-icon-btn"
+                              style={{
+                                width: "28px",
+                                height: "28px",
+                                fontSize: "1rem",
+                                fontWeight: "750",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                borderRadius: "8px",
+                                border: "1px solid rgba(0,0,0,0.12)",
+                                background: "#f6f4f5",
+                                cursor: "pointer"
+                              }}
+                              onClick={() => updateCartQty(idx, 1)}
+                              title="Increase quantity"
+                            >
+                              +
+                            </button>
+                          </div>
+                        )}
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => removeFromCart(idx)}
-                        style={{
-                          background: "none",
-                          border: "none",
-                          color: "#9e9aa0",
-                          cursor: "pointer",
-                          fontSize: "1rem",
-                          padding: "6px"
-                        }}
-                        title="Remove item"
-                      >
-                        ✕
-                      </button>
+                      {item.isLockedFreeGift || item.product?.isFreeGift ? (
+                        <span
+                          style={{
+                            fontSize: "1.1rem",
+                            padding: "6px",
+                            display: "flex",
+                            alignItems: "center",
+                            cursor: "default"
+                          }}
+                          title="Locked Shahi Tijori Gift"
+                        >
+                          🎁
+                        </span>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => removeFromCart(idx)}
+                          style={{
+                            background: "none",
+                            border: "none",
+                            color: "#9e9aa0",
+                            cursor: "pointer",
+                            fontSize: "1rem",
+                            padding: "6px"
+                          }}
+                          title="Remove item"
+                        >
+                          ✕
+                        </button>
+                      )}
                     </div>
                   );
                 })
