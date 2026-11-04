@@ -20,7 +20,10 @@ export default function CartDrawer() {
     cartTotal,
     storeConfig,
     showToast,
-    isVaultUnlocked
+    isVaultUnlocked,
+    luckySpinDiscount,
+    globalSpin,
+    spinTimeLeft
   } = useStore();
 
   const [checkoutStep, setCheckoutStep] = useState("cart"); // "cart" on open | "cod" on form view
@@ -68,6 +71,9 @@ export default function CartDrawer() {
     msg += `• Subtotal: Rs. ${cartSubtotal.toLocaleString()}\n`;
     if (comboDiscount > 0) {
       msg += `• 👑 Royal Combo Discount: -Rs. ${comboDiscount.toLocaleString()}\n`;
+    }
+    if (luckySpinDiscount > 0) {
+      msg += `• 🎁 1-Hour Lucky Voucher: -Rs. ${luckySpinDiscount.toLocaleString()} (Verified Spin)\n`;
     }
     if (multiWatchDiscount > 0) {
       msg += `• ⌚ Multi-Watch Deal: -Rs. ${multiWatchDiscount.toLocaleString()} (${multiWatchTierLabel})\n`;
@@ -147,6 +153,9 @@ export default function CartDrawer() {
     msg += `• Subtotal: Rs. ${cartSubtotal.toLocaleString()}\n`;
     if (comboDiscount > 0) {
       msg += `• 👑 Royal Combo Discount: -Rs. ${comboDiscount.toLocaleString()}\n`;
+    }
+    if (luckySpinDiscount > 0) {
+      msg += `• 🎁 1-Hour Lucky Voucher: -Rs. ${luckySpinDiscount.toLocaleString()} (Verified Spin)\n`;
     }
     if (multiWatchDiscount > 0) {
       msg += `• ⌚ Multi-Watch Deal: -Rs. ${multiWatchDiscount.toLocaleString()} (${multiWatchTierLabel})\n`;
@@ -372,6 +381,13 @@ export default function CartDrawer() {
             </div>
 
             {/* Deals & Tier Discounts */}
+            {luckySpinDiscount > 0 && (
+              <div style={{ padding: "8px 12px", background: "linear-gradient(135deg, #ecfdf5, #d1fae5)", border: "1px solid #10b981", borderRadius: "12px", fontSize: "0.78rem", fontWeight: "750", color: "#065f46", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
+                <span>🎁</span>
+                <span>1-Hour Lucky Voucher Active: -Rs. {luckySpinDiscount.toLocaleString()} Saved!</span>
+              </div>
+            )}
+
             {comboDiscount > 0 && (
               <div style={{ padding: "8px 12px", background: "var(--pastel-pink)", borderRadius: "12px", fontSize: "0.78rem", fontWeight: "700", color: "var(--brand-purple)", marginBottom: "8px", display: "flex", alignItems: "center", gap: "6px" }}>
                 <span>👑</span>
@@ -400,6 +416,13 @@ export default function CartDrawer() {
                   <span style={{ color: "var(--color-text-muted)" }}>Subtotal</span>
                   <span style={{ fontWeight: "600" }}>Rs. {cartSubtotal.toLocaleString()}</span>
                 </div>
+
+                {luckySpinDiscount > 0 && (
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px", fontSize: "0.85rem", color: "#059669", fontWeight: "700" }}>
+                    <span>🎁 1-Hour Lucky Voucher</span>
+                    <span>- Rs. {luckySpinDiscount.toLocaleString()}</span>
+                  </div>
+                )}
 
                 {comboDiscount > 0 && (
                   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px", fontSize: "0.85rem", color: "var(--color-accent-dark)", fontWeight: "600" }}>
