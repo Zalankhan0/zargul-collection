@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useStore } from "@/context/StoreContext";
 import ProductCard from "@/components/ProductCard";
+import ProductDiscountSpinner from "@/components/ProductDiscountSpinner";
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -218,6 +219,14 @@ export default function ProductDetailPage() {
               </span>
             )}
           </div>
+
+          {/* MINIMAL LIVE BARGAIN SPINNER */}
+          <ProductDiscountSpinner
+            product={product}
+            currentUnitPrice={currentUnitPrice}
+            selectedVariant={selectedVariant}
+            quantity={quantity}
+          />
 
           {/* Detailed Luxury Description */}
           <p className="detail-desc">{product.description}</p>
