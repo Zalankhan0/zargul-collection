@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useStore } from "@/context/StoreContext";
 
-const EXACT_DISCOUNTS = [100, 200, 300, 400, 500];
+const ROLLING_VALUES = [100, 200, 300, 400, 500];
 
 export default function ProductDiscountSpinner({
   product,
@@ -12,138 +12,126 @@ export default function ProductDiscountSpinner({
   quantity = 1,
   compact = false
 }) {
-  const { storeConfig, isVaultUnlocked, addToCart } = useStore();
+  const {
+    storeConfig,
+    isVaultUnlocked,
+    addToCart,
+    globalSpin,
+    hasUserSpun,
+    spinTimeLeft,
+    executeGlobalSpin
+  } = useStore();
+
   const waNumber = (storeConfig?.whatsappNumber || "923485245955").replace(/[^0-9]/g, "");
 
   const [isOpen, setIsOpen] = useState(false);
   const [isSpinning, setIsSpinning] = useState(false);
   const [displayValue, setDisplayValue] = useState(500);
-  const [wonDiscount, setWonDiscount] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(600); // 10 minutes = 600 seconds
-  const [timerActive, setTimerActive] = useState(false);
   const [addedToBag, setAddedToBag] = useState(false);
 
   const spinIntervalRef = useRef(null);
-  const countdownIntervalRef = useRef(null);
 
-  const storageKey = product?.id ? `zargul_lucky_spin_${product.id}` : null;
-
-  // Restore active won discount from session storage if valid
-  useEffect(() => {
-    if (!storageKey || typeof window === "undefined") return;
-
-    try {
-      const saved = sessionStorage.getItem(storageKey);
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.discount && parsed.expiresAt) {
-          const remainingSec = Math.floor((parsed.expiresAt - Date.now()) / 1000);
-          if (remainingSec > 0) {
-            setWonDiscount(parsed.discount);
-            setDisplayValue(parsed.discount);
-            setTimeLeft(remainingSec);
-            setTimerActive(true);
-          } else {
-            sessionStorage.removeItem(storageKey);
-          }
-        }
-      }
-    } catch (e) {}
-  }, [storageKey]);
-
-  // 10-Minute Countdown Timer
-  useEffect(() => {
-    if (!timerActive || timeLeft <= 0) {
-      if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-      return;
+  // Format seconds into HH:MM:SS (e.g., 01:00:00 -> 59:45 -> 00:30)
+  const formatTime = (totalSecs) => {
+    const h = Math.floor(totalSecs / 3600);
+    const m = Math.floor((totalSecs % 3600) / 60);
+    const s = totalSecs % 60;
+    if (h > 0) {
+      return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
     }
-
-    countdownIntervalRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(countdownIntervalRef.current);
-          setTimerActive(false);
-          setWonDiscount(null);
-          if (storageKey) {
-            try {
-              sessionStorage.removeItem(storageKey);
-            } catch (e) {}
-          }
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => {
-      if (countdownIntervalRef.current) clearInterval(countdownIntervalRef.current);
-    };
-  }, [timerActive, timeLeft, storageKey]);
-
-  // Format seconds into MM:SS
-  const formatTime = (secs) => {
-    const m = Math.floor(secs / 60);
-    const s = secs % 60;
     return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
   };
 
-  // Interactive 2.0-Second Spin
+  // Sync display value with active global spin if exists
+  useEffect(() => {
+    if (globalSpin && globalSpin.discount) {
+      setDisplayValue(globalSpin.discount);
+    }
+  }, [globalSpin]);
+
+  // Clean up interval on unmount
+  useEffect(() => {
+    return () => {
+      if (spinIntervalRef.current) clearInterval(spinIntervalRef.current);
+    };
+  }, []);
+
+  // Is there an active, unexpired global spin for THIS product?
+  const isSpunForThisProduct = Boolean(
+    globalSpin &&
+    globalSpin.productId === product?.id &&
+    spinTimeLeft > 0
+  );
+
+  // Is there an active global spin for ANOTHER product?
+  const isSpunForOtherProduct = Boolean(
+    globalSpin &&
+    globalSpin.productId !== product?.id &&
+    spinTimeLeft > 0
+  );
+
+  // 1. STRICT USER RULE: If user has already spun, button MUST immediately disappear on all other products
+  if (isSpunForOtherProduct) {
+    if (compact) {
+      // Disappear completely from other product cards on the grid
+      return null;
+    }
+    // On product detail page, show a small non-clickable notice
+    return (
+      <div style={{ marginTop: "8px", marginBottom: "12px", fontSize: "0.74rem", color: "#059669", fontWeight: "700" }}>
+        ✓ 1-Hour Lucky Voucher Active (-Rs. {globalSpin.discount} applied to order)
+      </div>
+    );
+  }
+
+  // 2. STRICT USER RULE: If spin has already been used and expired, disappear completely
+  if (hasUserSpun && (!globalSpin || spinTimeLeft <= 0)) {
+    return null;
+  }
+
+  // Interactive 2.0-Second Spin with strict weighted probabilities
   const handleStartSpin = () => {
-    if (isSpinning) return;
+    if (isSpinning || hasUserSpun) return;
     setIsSpinning(true);
 
     const startTime = Date.now();
-    const duration = 2000; // Exactly 2 seconds
+    const duration = 2000; // Exactly 2.0 seconds
 
     spinIntervalRef.current = setInterval(() => {
       const elapsed = Date.now() - startTime;
-      const randIdx = Math.floor(Math.random() * EXACT_DISCOUNTS.length);
-      setDisplayValue(EXACT_DISCOUNTS[randIdx]);
+      const randIdx = Math.floor(Math.random() * ROLLING_VALUES.length);
+      setDisplayValue(ROLLING_VALUES[randIdx]);
 
       if (elapsed >= duration) {
         clearInterval(spinIntervalRef.current);
 
-        // Fairly lands on one of: Rs. 100, 200, 300, 400, or 500 (STRICTLY MAX 500)
-        const finalVal = EXACT_DISCOUNTS[Math.floor(Math.random() * EXACT_DISCOUNTS.length)];
+        // Execute global weighted spin:
+        // Rs. 100 (45%), Rs. 200 (30%), Rs. 300 (15%), Rs. 400 (8%), Rs. 500 (2% Rare Jackpot)
+        const wonData = executeGlobalSpin(product);
 
-        setDisplayValue(finalVal);
-        setWonDiscount(finalVal);
+        setDisplayValue(wonData.discount);
         setIsSpinning(false);
-        setTimeLeft(600); // 10 minutes (600s)
-        setTimerActive(true);
-
-        if (storageKey) {
-          try {
-            sessionStorage.setItem(
-              storageKey,
-              JSON.stringify({
-                discount: finalVal,
-                expiresAt: Date.now() + 600 * 1000
-              })
-            );
-          } catch (e) {}
-        }
       }
     }, 65);
   };
 
   const unitPrice = Number(currentUnitPrice) || Number(product?.price) || 0;
-  const finalPrice = Math.max(0, unitPrice - (wonDiscount || 0));
+  const activeDiscount = isSpunForThisProduct ? globalSpin.discount : 0;
+  const finalPrice = Math.max(0, unitPrice - activeDiscount);
 
   const vaultLine = isVaultUnlocked
     ? `\n🎁 VIP VAULT REWARD: +1 FREE 30ml Luxury Perfume Applied (Secret Code: 7860 Verified)`
     : "";
 
-  // WhatsApp message ONLY includes discount if user explicitly spun & won
   const whatsappMessage = encodeURIComponent(
-    `Assalam-o-Alaikum Zargul Collection!\nI spun the Lucky Wheel for *${product?.title}* and won a verified discount:\n• Product: ${product?.title}\n• Option / Size: ${selectedVariant}\n• Quantity: ${quantity}x\n• Regular Price: Rs. ${unitPrice.toLocaleString()}\n🎉 Won Discount Voucher: -Rs. ${(wonDiscount || 0).toLocaleString()} OFF\n🔥 Final Bargain Price: Rs. ${finalPrice.toLocaleString()} (Cash on Delivery)${vaultLine}\n⏳ Claimed within 10-minute timer! Please confirm my order.`
+    `Assalam-o-Alaikum Zargul Collection!\nI spun the Lucky Wheel for *${product?.title}* and won a verified 1-hour voucher:\n• Product: ${product?.title}\n• Option / Size: ${selectedVariant}\n• Quantity: ${quantity}x\n• Regular Price: Rs. ${unitPrice.toLocaleString()}\n🎉 Lucky Voucher Won: -Rs. ${activeDiscount.toLocaleString()} OFF\n🔥 Final Bargain Price: Rs. ${finalPrice.toLocaleString()} (Cash on Delivery)${vaultLine}\n⏳ Claimed within 1-hour offer window! Please confirm dispatch.`
   );
 
   const handleAddToCartWithDiscount = () => {
     if (!product) return;
-    addToCart(product, `${selectedVariant} (🎁 Rs. ${wonDiscount} Voucher Applied)`, -(wonDiscount || 0), quantity);
+    addToCart(product, `${selectedVariant}`, 0, quantity);
     setAddedToBag(true);
-    setTimeout(() => setAddedToBag(false), 2200);
+    setTimeout(() => setAddedToBag(false), 2000);
   };
 
   return (
@@ -165,11 +153,11 @@ export default function ProductDiscountSpinner({
             textAlign: "center",
             borderRadius: "8px",
             cursor: "pointer",
-            border: wonDiscount ? "1.5px solid #10b981" : "1.5px solid #d4af37",
-            background: wonDiscount
+            border: isSpunForThisProduct ? "1.5px solid #10b981" : "1.5px solid #d4af37",
+            background: isSpunForThisProduct
               ? "linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)"
               : "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
-            color: wonDiscount ? "#065f46" : "#92400e",
+            color: isSpunForThisProduct ? "#065f46" : "#92400e",
             boxShadow: "0 1px 4px rgba(212, 175, 55, 0.15)",
             display: "flex",
             alignItems: "center",
@@ -177,12 +165,12 @@ export default function ProductDiscountSpinner({
             gap: "5px",
             transition: "all 0.15s ease"
           }}
-          title="Spin for instant discount on this item"
+          title={isSpunForThisProduct ? `Active Voucher: Rs. ${globalSpin.discount} OFF` : "Spin for instant discount on this item"}
         >
-          <span>{wonDiscount ? "🎉" : "🎁"}</span>
+          <span>{isSpunForThisProduct ? "🎉" : "🎁"}</span>
           <span>
-            {wonDiscount
-              ? `Rs. ${wonDiscount} OFF (${formatTime(timeLeft)})`
+            {isSpunForThisProduct
+              ? `Rs. ${globalSpin.discount} OFF (${formatTime(spinTimeLeft)})`
               : "🎁 Spin for Discount"}
           </span>
         </button>
@@ -200,21 +188,21 @@ export default function ProductDiscountSpinner({
               fontSize: "0.82rem",
               fontWeight: "800",
               cursor: "pointer",
-              border: wonDiscount ? "1.5px solid #10b981" : "1.5px solid #d4af37",
-              background: wonDiscount
+              border: isSpunForThisProduct ? "1.5px solid #10b981" : "1.5px solid #d4af37",
+              background: isSpunForThisProduct
                 ? "linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%)"
                 : "linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%)",
-              color: wonDiscount ? "#065f46" : "#92400e",
-              boxShadow: wonDiscount
+              color: isSpunForThisProduct ? "#065f46" : "#92400e",
+              boxShadow: isSpunForThisProduct
                 ? "0 3px 10px rgba(16, 185, 129, 0.2)"
                 : "0 3px 10px rgba(212, 175, 55, 0.25)",
               transition: "transform 0.15s ease, box-shadow 0.15s ease"
             }}
           >
-            <span>{wonDiscount ? "🎉" : "🎁"}</span>
+            <span>{isSpunForThisProduct ? "🎉" : "🎁"}</span>
             <span>
-              {wonDiscount
-                ? `Rs. ${wonDiscount} OFF Active (${formatTime(timeLeft)}) • View Voucher`
+              {isSpunForThisProduct
+                ? `Rs. ${globalSpin.discount} OFF Active (${formatTime(spinTimeLeft)} left) • View Voucher`
                 : "🎁 Spin for Discount (Win up to Rs. 500 OFF)"}
             </span>
           </button>
@@ -295,27 +283,27 @@ export default function ProductDiscountSpinner({
                 borderRadius: "14px",
                 border: isSpinning
                   ? "2px solid #fef08a"
-                  : wonDiscount
+                  : isSpunForThisProduct
                   ? "2px solid #22c55e"
                   : "2px solid #d4af37",
                 padding: "12px 10px",
                 boxShadow: isSpinning
                   ? "0 0 20px rgba(254, 240, 138, 0.7)"
-                  : wonDiscount
+                  : isSpunForThisProduct
                   ? "0 0 18px rgba(34, 197, 94, 0.45)"
                   : "0 0 12px rgba(212, 175, 55, 0.3)",
                 transition: "all 0.2s ease"
               }}
             >
-              <div style={{ fontSize: "0.65rem", fontWeight: "700", color: isSpinning ? "#fef08a" : wonDiscount ? "#86efac" : "#d4af37", textTransform: "uppercase", letterSpacing: "1px" }}>
-                {isSpinning ? "🎰 ROLLING NUMBERS..." : wonDiscount ? "🎉 DISCOUNT WON!" : "POTENTIAL REWARD"}
+              <div style={{ fontSize: "0.65rem", fontWeight: "700", color: isSpinning ? "#fef08a" : isSpunForThisProduct ? "#86efac" : "#d4af37", textTransform: "uppercase", letterSpacing: "1px" }}>
+                {isSpinning ? "🎰 ROLLING NUMBERS..." : isSpunForThisProduct ? "🎉 DISCOUNT WON!" : "POTENTIAL REWARD"}
               </div>
               <div
                 style={{
                   fontFamily: "var(--font-display)",
                   fontSize: "1.85rem",
                   fontWeight: "900",
-                  color: isSpinning ? "#fef08a" : wonDiscount ? "#ffffff" : "#d4af37",
+                  color: isSpinning ? "#fef08a" : isSpunForThisProduct ? "#ffffff" : "#d4af37",
                   marginTop: "3px",
                   lineHeight: 1.1,
                   transform: isSpinning ? "scale(1.08)" : "scale(1)",
@@ -326,15 +314,15 @@ export default function ProductDiscountSpinner({
               </div>
             </div>
 
-            {/* ACTIONS & TIMER STATE */}
+            {/* ACTIONS & 1-HOUR TIMER STATE */}
             {isSpinning ? (
               <div style={{ fontSize: "0.72rem", color: "#fef08a", margin: "8px 0", fontWeight: "700" }}>
                 ⚡ Spinning for 2 seconds... Good luck!
               </div>
-            ) : wonDiscount ? (
+            ) : isSpunForThisProduct ? (
               <div>
                 <div style={{ fontSize: "0.85rem", fontWeight: "900", color: "#86efac", marginBottom: "6px" }}>
-                  🎉 You won Rs. {wonDiscount} OFF!
+                  🎉 You won Rs. {globalSpin.discount} OFF!
                 </div>
 
                 {/* PRICE BREAKDOWN STRIP */}
@@ -354,14 +342,14 @@ export default function ProductDiscountSpinner({
                     Rs. {unitPrice.toLocaleString()}
                   </span>
                   <span style={{ color: "#ef4444", fontWeight: "800" }}>
-                    -Rs. {wonDiscount}
+                    -Rs. {globalSpin.discount}
                   </span>
                   <span style={{ color: "#fef08a", fontWeight: "900", fontSize: "0.92rem" }}>
                     Rs. {finalPrice.toLocaleString()}
                   </span>
                 </div>
 
-                {/* 3. VISIBLE 10-MINUTE DIGITAL COUNTDOWN TIMER */}
+                {/* 3. VISIBLE 1-HOUR (60 MINUTE) DIGITAL COUNTDOWN TIMER */}
                 <div
                   style={{
                     background: "rgba(220, 38, 38, 0.18)",
@@ -374,7 +362,7 @@ export default function ProductDiscountSpinner({
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "6px", color: "#fca5a5", fontSize: "0.72rem", fontWeight: "800" }}>
                     <span>⏳ OFFER EXPIRES IN:</span>
                     <span style={{ fontFamily: "monospace", fontSize: "1rem", fontWeight: "900", color: "#ffffff", background: "#b91c1c", padding: "2px 8px", borderRadius: "6px" }}>
-                      {formatTime(timeLeft)}
+                      {formatTime(spinTimeLeft)}
                     </span>
                   </div>
                   <p style={{ margin: "5px 0 0", fontSize: "0.66rem", color: "#fecaca", lineHeight: 1.25, fontWeight: "600" }}>
@@ -404,7 +392,7 @@ export default function ProductDiscountSpinner({
                       cursor: "pointer"
                     }}
                   >
-                    <span>💬 Order on WhatsApp (-Rs. {wonDiscount})</span>
+                    <span>💬 Order on WhatsApp (-Rs. {globalSpin.discount})</span>
                   </a>
 
                   <button
@@ -430,7 +418,7 @@ export default function ProductDiscountSpinner({
             ) : (
               <div>
                 <p style={{ fontSize: "0.72rem", color: "#d4d4d8", margin: "6px 0 12px", lineHeight: 1.3 }}>
-                  Tap below to roll the digital lucky wheel. Win Rs. 100 to Rs. 500 OFF instantly!
+                  Tap below to roll the lucky wheel. Limit 1 spin per customer across the website!
                 </p>
                 <button
                   type="button"
