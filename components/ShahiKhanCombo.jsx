@@ -5,7 +5,8 @@ import { useStore } from "@/context/StoreContext";
 import { INITIAL_PRODUCTS } from "@/lib/data";
 
 export default function ShahiKhanCombo() {
-  const { products, addToCart, isVaultUnlocked } = useStore();
+  const { products, addToCart, isVaultUnlocked, storeConfig } = useStore();
+  const waNumber = (storeConfig?.whatsappNumber || "923485245955").replace(/[^0-9]/g, "");
   
   // Dynamically use real shop inventory with fallback to INITIAL_PRODUCTS
   const allProducts = Array.isArray(products) && products.length > 0 ? products : INITIAL_PRODUCTS;
@@ -477,7 +478,7 @@ export default function ShahiKhanCombo() {
         </button>
 
         <a
-          href={`https://wa.me/923336712345?text=${whatsappMessage}`}
+          href={`https://wa.me/${waNumber}?text=${whatsappMessage}`}
           target="_blank"
           rel="noopener noreferrer"
           style={{
