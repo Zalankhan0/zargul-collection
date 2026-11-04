@@ -64,6 +64,11 @@ export function StoreProvider({ children }) {
   const [isVaultUnlocked, setIsVaultUnlocked] = useState(false);
   const [isVaultModalOpen, setIsVaultModalOpen] = useState(false);
 
+  // Global Lucky Bargain Spinner State (Strictly ONE spin per user total across entire website)
+  const [globalSpin, setGlobalSpin] = useState(null); // { discount, expiresAt, productId, productTitle }
+  const [hasUserSpun, setHasUserSpun] = useState(false);
+  const [spinTimeLeft, setSpinTimeLeft] = useState(0);
+
   // Initialize from safe storage on client
   useEffect(() => {
     try {
@@ -71,6 +76,30 @@ export function StoreProvider({ children }) {
       const vaultSaved = safeStorage.getItem("zargul_vault_unlocked");
       if (vaultSaved === "true") {
         setIsVaultUnlocked(true);
+      }
+
+      // 0.1 Global Lucky Spin State (1-Hour Expiry & 1-Spin Total Limit)
+      const spinUsed = safeStorage.getItem("zargul_spin_used");
+      if (spinUsed === "true") {
+        setHasUserSpun(true);
+      }
+      const savedSpin = safeStorage.getItem("zargul_global_spin");
+      if (savedSpin) {
+        try {
+          const parsed = JSON.parse(savedSpin);
+          if (parsed && parsed.discount && parsed.expiresAt) {
+            const remaining = Math.max(0, Math.floor((parsed.expiresAt - Date.now()) / 1000));
+            if (remaining > 0) {
+              setGlobalSpin(parsed);
+              setSpinTimeLeft(remaining);
+              setHasUserSpun(true);
+            } else {
+              setGlobalSpin(null);
+              setSpinTimeLeft(0);
+              safeStorage.removeItem("zargul_global_spin");
+            }
+          }
+        } catch {}
       }
       // 1. Products - Always ensure all 62 INITIAL_PRODUCTS are present
       const localProducts = safeStorage.getItem("zargul_products");
@@ -202,6 +231,64 @@ export function StoreProvider({ children }) {
       };
     } catch {}
   }, []);
+
+  // 1-Hour Global Countdown Timer Sync
+  useEffect(() => {
+    if (!globalSpin || !globalSpin.expiresAt) return;
+
+    const tick = () => {
+      const remaining = Math.max(0, Math.floor((globalSpin.expiresAt - Date.now()) / 1000));
+      setSpinTimeLeft(remaining);
+      if (remaining <= 0) {
+        setGlobalSpin(null);
+        safeStorage.removeItem("zargul_global_spin");
+      }
+    };
+
+    tick();
+    const interval = setInterval(tick, 1000);
+    return () => clearInterval(interval);
+  }, [globalSpin]);
+
+  // Execute Global Weighted Spin (Strictly ONE spin per user total across entire website)
+  const executeGlobalSpin = (prod) => {
+    if (hasUserSpun && globalSpin && spinTimeLeft > 0) {
+      return globalSpin;
+    }
+
+    // Strict weighted probabilities:
+    // Rs. 100 (45%), Rs. 200 (30%), Rs. 300 (15%), Rs. 400 (8%), Rs. 500 (2% Rare Jackpot)
+    const rand = Math.random() * 100;
+    let discount = 100;
+    if (rand < 45) {
+      discount = 100; // 45% - Most Common
+    } else if (rand < 75) {
+      discount = 200; // 30%
+    } else if (rand < 90) {
+      discount = 300; // 15%
+    } else if (rand < 98) {
+      discount = 400; // 8% - Hard
+    } else {
+      discount = 500; // 2% - Very Rare Jackpot
+    }
+
+    const expiresAt = Date.now() + 60 * 60 * 1000; // Exactly 60 Minutes (3600 seconds)
+    const spinData = {
+      discount,
+      expiresAt,
+      productId: prod?.id || null,
+      productTitle: prod?.title || "Special Lucky Voucher"
+    };
+
+    setGlobalSpin(spinData);
+    setHasUserSpun(true);
+    setSpinTimeLeft(3600);
+
+    safeStorage.setItem("zargul_global_spin", JSON.stringify(spinData));
+    safeStorage.setItem("zargul_spin_used", "true");
+
+    return spinData;
+  };
 
   // Listen for Secret Trigger: Ctrl + Shift + Z
   useEffect(() => {
@@ -387,7 +474,9 @@ export function StoreProvider({ children }) {
       ? 0
       : storeConfig?.deliveryFee || 0;
 
-  const totalDiscount = comboDiscount + multiWatchDiscount;
+  // Single discount per order from Lucky Spin (only 1 voucher total across entire cart)
+  const luckySpinDiscount = (globalSpin && spinTimeLeft > 0) ? globalSpin.discount : 0;
+  const totalDiscount = comboDiscount + luckySpinDiscount;
   const cartTotal = Math.max(0, cartSubtotal - totalDiscount + deliveryFee);
   const totalCartCount = safeCart.reduce((sum, item) => sum + (item.quantity || 1), 0);
 
@@ -425,7 +514,12 @@ export function StoreProvider({ children }) {
         unlockVault,
         claimVaultFreeGift,
         isVaultModalOpen,
-        setIsVaultModalOpen
+        setIsVaultModalOpen,
+        globalSpin,
+        hasUserSpun,
+        spinTimeLeft,
+        executeGlobalSpin,
+        luckySpinDiscount
       }}
     >
       {children}
