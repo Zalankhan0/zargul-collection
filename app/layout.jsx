@@ -5,6 +5,8 @@ import Footer from "@/components/Footer";
 import CartDrawer from "@/components/CartDrawer";
 import SecretAdminModal from "@/components/SecretAdminModal";
 import Toast from "@/components/Toast";
+import FloatingShahiTijori from "@/components/FloatingShahiTijori";
+import SecretRoyalVault from "@/components/SecretRoyalVault";
 import { Analytics } from "@vercel/analytics/next";
 
 export const viewport = {
@@ -109,6 +111,12 @@ export default function RootLayout({ children }) {
 
           {/* Reactive Toast Notification */}
           <Toast />
+
+          {/* Secret Royal Vault Modal (TikTok 7860 Unlock & Free Perfume Showcase) */}
+          <SecretRoyalVault />
+
+          {/* Floating Shahi Tijori Gift Widget (Bottom Right) */}
+          <FloatingShahiTijori />
 
           {/* Floating Contact Buttons (Email & WhatsApp) */}
           <div className="floating-contact-container">
