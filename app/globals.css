@@ -51,6 +51,9 @@ html {
   font-size: 16px;
   background-color: #fbf8f5 !important;
   color-scheme: only light !important;
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+  width: 100% !important;
 }
 
 body {
@@ -68,7 +71,9 @@ body {
   font-family: var(--font-body);
   color: var(--color-text-dark);
   line-height: 1.6;
-  overflow-x: hidden;
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+  width: 100% !important;
   position: relative;
   min-height: 100vh;
   display: flex;
