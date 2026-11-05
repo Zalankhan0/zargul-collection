@@ -5,6 +5,7 @@ import React from "react";
 import Link from "next/link";
 import { useStore } from "@/context/StoreContext";
 import ProductDiscountSpinner from "@/components/ProductDiscountSpinner";
+import ErrorBoundary from "@/components/ErrorBoundary";
 
 export default function ProductCard({ product, priority = false }) {
   const { addToCart } = useStore();
@@ -103,11 +104,13 @@ export default function ProductCard({ product, priority = false }) {
 
         {/* VISIBLE "🎁 Spin for Discount" BUTTON */}
         {!isSoldOut && (
-          <ProductDiscountSpinner
-            product={product}
-            currentUnitPrice={priceNum}
-            compact={true}
-          />
+          <ErrorBoundary>
+            <ProductDiscountSpinner
+              product={product}
+              currentUnitPrice={priceNum}
+              compact={true}
+            />
+          </ErrorBoundary>
         )}
 
         {/* Action Button: Opens Cart Drawer for Quantity Adjustment & WhatsApp Order */}
