@@ -7,6 +7,7 @@ import SecretAdminModal from "@/components/SecretAdminModal";
 import Toast from "@/components/Toast";
 import FloatingShahiTijori from "@/components/FloatingShahiTijori";
 import SecretRoyalVault from "@/components/SecretRoyalVault";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import { Analytics } from "@vercel/analytics/next";
 
 export const viewport = {
@@ -62,7 +63,7 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en" style={{ backgroundColor: "#fbf8f5", colorScheme: "only light" }} suppressHydrationWarning>
+    <html lang="en" style={{ backgroundColor: "#fbf8f5", colorScheme: "only light", maxWidth: "100vw", overflowX: "hidden", width: "100%" }} suppressHydrationWarning>
       <head>
         <meta name="theme-color" content="#fbf8f5" />
         <meta name="color-scheme" content="only light" />
@@ -88,6 +89,9 @@ export default function RootLayout({ children }) {
           colorScheme: "only light",
           color: "#2a2026",
           minHeight: "100vh",
+          maxWidth: "100vw",
+          overflowX: "hidden",
+          width: "100%",
           margin: 0,
           padding: 0
         }}
@@ -97,8 +101,10 @@ export default function RootLayout({ children }) {
           {/* Sticky Navigation Bar */}
           <Navbar />
 
-          {/* Page Body */}
-          <main>{children}</main>
+          {/* Page Body Protected by Error Boundary */}
+          <ErrorBoundary>
+            <main>{children}</main>
+          </ErrorBoundary>
 
           {/* Luxury Footer with 5-tap mobile trigger */}
           <Footer />
@@ -115,8 +121,10 @@ export default function RootLayout({ children }) {
           {/* Secret Royal Vault Modal (TikTok 7860 Unlock & Free Perfume Showcase) */}
           <SecretRoyalVault />
 
-          {/* Floating Shahi Tijori Gift Widget (Bottom Right) */}
-          <FloatingShahiTijori />
+          {/* Floating Shahi Tijori Gift Widget (Bottom Right) Protected by Error Boundary */}
+          <ErrorBoundary>
+            <FloatingShahiTijori />
+          </ErrorBoundary>
 
           {/* Floating Contact Buttons (Email & WhatsApp) */}
           <div className="floating-contact-container">
